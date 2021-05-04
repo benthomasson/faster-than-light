@@ -6,6 +6,7 @@ import asyncio
 import tempfile
 import shutil
 import json
+from pprint import pprint
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -54,7 +55,7 @@ async def test_1():
 async def test_2():
     os.chdir(HERE)
     output = await run_module(['modules'], 'timetest')
-    print(output)
+    pprint(output)
     assert output
 
 
@@ -62,5 +63,5 @@ async def test_2():
 async def test_3():
     os.chdir(HERE)
     output = await run_module(['modules'], 'argtest')
-    print(output)
+    pprint(output)
     assert output
