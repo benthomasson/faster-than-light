@@ -6,6 +6,9 @@ verify_ssl = true
 [dev-packages]
 pytest-asyncio = "*"
 pytest = "*"
+flake8 = "*"
+autopep8 = "*"
+pyyaml = "*"
 
 [packages]
 
