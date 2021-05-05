@@ -98,8 +98,25 @@ async def check_output(cmd):
     return stdout
 
 
+async def run_ftl_module_on_host(hostname, host, module_path):
+
+    if host.get('ansible_connection') == 'local':
+        with open(module_path, 'rb') as f:
+            module_compiled = compile(f.read(), module_path, 'exec')
+
+        globals = {'__file__': module_path}
+        locals = {}
+
+        exec(module_compiled, globals, locals)
+        result = await locals['main']()
+        return hostname, result
+    else:
+        # TODO: implement remote execution
+        return hostname, None
+
+
 @pytest.mark.asyncio
-async def test_1():
+async def test_checkoutput():
     os.chdir(HERE)
     output = await check_output('ping')
     print(output)
@@ -107,7 +124,7 @@ async def test_1():
 
 
 @pytest.mark.asyncio
-async def test_2():
+async def test_run_module_timetest():
     os.chdir(HERE)
     output = await run_module(load_inventory('inventory.yml'), ['modules'], 'timetest')
     pprint(output)
@@ -115,8 +132,17 @@ async def test_2():
 
 
 @pytest.mark.asyncio
-async def test_3():
+async def test_run_module_argtest():
     os.chdir(HERE)
     output = await run_module(load_inventory('inventory.yml'), ['modules'], 'argtest')
     pprint(output)
     assert output['localhost']
+
+
+@pytest.mark.asyncio
+async def test_run_ftl_module_on_host():
+    os.chdir(HERE)
+    hostname, output = await run_ftl_module_on_host('localhost', dict(ansible_connection='local'), os.path.join(HERE, 'ftl_modules', 'argtest.py'))
+    pprint(output)
+    assert hostname == 'localhost'
+    assert output == {'args': (), 'kwargs': {}}
