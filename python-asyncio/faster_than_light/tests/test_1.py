@@ -50,6 +50,29 @@ async def run_module_on_host(host_name, host, module):
         return host_name, None
 
 
+def unique_hosts(inventory):
+
+    hosts = {}
+
+    for group_name, group in inventory.items():
+        for host_name, host in group.get('hosts').items():
+            hosts[host_name] = host
+
+    return hosts
+
+
+def extract_task_results(tasks):
+
+    # Extract results
+    results = {}
+    for task in tasks:
+        host_name, result = task.result()
+        print(host_name)
+        print(result)
+        results[host_name] = result
+    return results
+
+
 async def run_module(inventory, module_dirs, module_name):
 
     '''
@@ -61,31 +84,45 @@ async def run_module(inventory, module_dirs, module_name):
     if module is None:
         raise Exception('Module not found')
 
-    hosts = dict()
-
-    tasks = []
-
     # Make a set of unique hosts
-    for group_name, group in inventory.items():
-        for host_name, host in group.get('hosts').items():
-            hosts[host_name] = host
+
+    hosts = unique_hosts(inventory)
 
     # Create a set of tasks to run concurrently
+    tasks = []
     for host_name, host in hosts.items():
         tasks.append(asyncio.create_task(run_module_on_host(host_name, host, module)))
 
     # Await all the tasks
     await asyncio.gather(*tasks)
 
-    # Extract results
-    results = {}
-    for task in tasks:
-        host_name, result = task.result()
-        print(host_name)
-        print(result)
-        results[host_name] = result
+    return extract_task_results(tasks)
 
-    return results
+
+async def run_ftl_module(inventory, module_dirs, module_name):
+
+    '''
+    Runs a module on all items in an inventory concurrently.
+    '''
+
+    module = find_module(module_dirs, module_name)
+
+    if module is None:
+        raise Exception('Module not found')
+
+    # Make a set of unique hosts
+
+    hosts = unique_hosts(inventory)
+
+    # Create a set of tasks to run concurrently
+    tasks = []
+    for host_name, host in hosts.items():
+        tasks.append(asyncio.create_task(run_ftl_module_on_host(host_name, host, module)))
+
+    # Await all the tasks
+    await asyncio.gather(*tasks)
+
+    return extract_task_results(tasks)
 
 
 async def check_output(cmd):
@@ -142,7 +179,20 @@ async def test_run_module_argtest():
 @pytest.mark.asyncio
 async def test_run_ftl_module_on_host():
     os.chdir(HERE)
-    hostname, output = await run_ftl_module_on_host('localhost', dict(ansible_connection='local'), os.path.join(HERE, 'ftl_modules', 'argtest.py'))
+    hostname, output = await run_ftl_module_on_host('localhost',
+                                                    dict(ansible_connection='local'),
+                                                    os.path.join(HERE, 'ftl_modules', 'argtest.py'))
     pprint(output)
     assert hostname == 'localhost'
     assert output == {'args': (), 'kwargs': {}}
+
+
+@pytest.mark.asyncio
+async def test_run_ftl_module():
+    os.chdir(HERE)
+    output = await run_ftl_module(load_inventory('inventory.yml'),
+                                  ['ftl_modules'],
+                                  'argtest')
+    pprint(output)
+    assert output['localhost']
+    assert output['localhost'] == {'args': (), 'kwargs': {}}
