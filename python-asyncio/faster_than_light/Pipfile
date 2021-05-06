@@ -11,6 +11,8 @@ autopep8 = "*"
 pyyaml = "*"
 
 [packages]
+pyyaml = "*"
+asyncssh = "*"
 
 [requires]
 python_version = "3.8"

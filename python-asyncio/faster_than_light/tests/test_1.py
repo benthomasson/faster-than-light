@@ -1,11 +1,12 @@
 
 
+import asyncio
+import asyncssh
+import json
 import os
 import pytest
-import asyncio
-import tempfile
 import shutil
-import json
+import tempfile
 import yaml
 from pprint import pprint
 
@@ -33,7 +34,7 @@ def find_module(module_dirs, module_name):
 
 
 async def run_module_on_host(host_name, host, module):
-    if host.get('ansible_connection') == 'local':
+    if host and host.get('ansible_connection') == 'local':
         tmp = tempfile.mkdtemp()
         tmp_module = os.path.join(tmp, 'module.py')
         shutil.copy(module, tmp_module)
@@ -47,6 +48,23 @@ async def run_module_on_host(host_name, host, module):
     else:
         # Remote connection
         # TODO: Implement remote connection
+        module_name = os.path.basename(module)
+        async with asyncssh.connect(host_name) as conn:
+            try:
+                result = await conn.run('mkdir /tmp/ftl', check=True)
+                print(result.exit_status)
+                result = await conn.run('touch /tmp/ftl/args', check=True)
+                print(result.exit_status)
+                async with conn.start_sftp_client() as sftp:
+                    await sftp.put(module, f'/tmp/ftl/')
+                result = await conn.run(f'python /tmp/ftl/{module_name} /tmp/ftl/args')
+                print(result.stderr, end='')
+                print(result.stdout, end='')
+                print(result.exit_status)
+                return host_name, json.loads(result.stdout)
+            finally:
+                result = await conn.run('rm -rf /tmp/ftl', check=True)
+                print(result.exit_status)
         return host_name, None
 
 
@@ -137,7 +155,7 @@ async def check_output(cmd):
 
 async def run_ftl_module_on_host(hostname, host, module_path):
 
-    if host.get('ansible_connection') == 'local':
+    if host and host.get('ansible_connection') == 'local':
         with open(module_path, 'rb') as f:
             module_compiled = compile(f.read(), module_path, 'exec')
 
@@ -172,6 +190,14 @@ async def test_run_module_timetest():
 async def test_run_module_argtest():
     os.chdir(HERE)
     output = await run_module(load_inventory('inventory.yml'), ['modules'], 'argtest')
+    pprint(output)
+    assert output['localhost']
+
+
+@pytest.mark.asyncio
+async def test_run_module_argtest_remote():
+    os.chdir(HERE)
+    output = await run_module(load_inventory('inventory2.yml'), ['modules'], 'argtest')
     pprint(output)
     assert output['localhost']
 
