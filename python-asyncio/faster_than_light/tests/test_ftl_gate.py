@@ -76,11 +76,39 @@ async def test_run_module():
 
         with open(find_module(['modules'], 'argtest'), 'rb') as f:
             module = base64.b64encode(f.read()).decode()
-        send_message(proc.stdin, 'Module', dict(module=module))
+        send_message(proc.stdin, 'Module', dict(module=module, module_name='argtest'))
         message = await read_message(proc.stdout)
         assert message[0] == "ModuleResult"
         assert message[1] != {}
         assert message[1]['stdout']
+    finally:
+        send_message(proc.stdin, 'Shutdown', {})
+        await proc.wait()
+        os.unlink(ftl_gate)
+
+@pytest.mark.asyncio
+async def test_run_ftl_module():
+    os.chdir(HERE)
+    ftl_gate = build_ftl_gate()
+    proc = await asyncio.create_subprocess_shell(
+        ftl_gate,
+        stdin=asyncio.subprocess.PIPE,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE)
+
+    try:
+        send_message(proc.stdin, 'Hello', {})
+        message = await read_message(proc.stdout)
+        assert message[0] == "Hello"
+        assert message[1] == {}
+
+        with open(find_module(['ftl_modules'], 'argtest'), 'rb') as f:
+            module = base64.b64encode(f.read()).decode()
+        send_message(proc.stdin, 'FTLModule', dict(module=module, module_name='argtest'))
+        message = await read_message(proc.stdout)
+        assert message[0] == "FTLModuleResult"
+        assert message[1] != {}
+        assert message[1]['result']
     finally:
         send_message(proc.stdin, 'Shutdown', {})
         await proc.wait()

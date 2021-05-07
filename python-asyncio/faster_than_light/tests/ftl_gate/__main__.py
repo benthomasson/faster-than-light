@@ -81,13 +81,13 @@ async def check_output(cmd):
     proc = await asyncio.create_subprocess_shell(
         cmd,
         stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.STDOUT)
+        stderr=asyncio.subprocess.PIPE)
 
     stdout, stderr = await proc.communicate()
-    return stdout
+    return stdout, stderr
 
 
-async def run_module(writer, module):
+async def run_module(writer, module_name, module):
     tempdir = tempfile.mkdtemp()
     module_file = os.path.join(tempdir, "module.py")
     with open(module_file, 'wb') as f:
@@ -95,8 +95,21 @@ async def run_module(writer, module):
     args = os.path.join(tempdir, 'args')
     with open(args, 'w') as f:
         f.write('some args')
-    stdout = await check_output(f'{sys.executable} {module_file} {args}')
-    send_message(writer, 'ModuleResult', dict(stdout=stdout.decode()))
+    stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}')
+    send_message(writer, 'ModuleResult', dict(stdout=stdout.decode(),
+                                              stderr=stderr.decode()))
+
+
+async def run_ftl_module(writer, module_name, module):
+
+    module_compiled = compile(base64.b64decode(module), module_name, 'exec')
+
+    globals = {'__file__': module_name}
+    locals = {}
+
+    exec(module_compiled, globals, locals)
+    result = await locals['main']()
+    send_message(writer, 'FTLModuleResult', dict(result=result))
 
 
 async def main(args):
@@ -105,15 +118,21 @@ async def main(args):
 
     while True:
 
-        msg_type, data = await read_message(reader)
-        if msg_type == 'Hello':
-            send_message(writer, msg_type, data)
-        elif msg_type == 'Module':
-            await run_module(writer, **data)
-        elif msg_type == 'Shutdown':
-            return
-        else:
-            send_message(writer, 'Error', dict(message=f'Unknown message type {msg_type}'))
+        try:
+            msg_type, data = await read_message(reader)
+            if msg_type == 'Hello':
+                send_message(writer, msg_type, data)
+            elif msg_type == 'Module':
+                await run_module(writer, **data)
+            elif msg_type == 'FTLModule':
+                await run_ftl_module(writer, **data)
+            elif msg_type == 'Shutdown':
+                return
+            else:
+                send_message(writer, 'Error', dict(message=f'Unknown message type {msg_type}'))
+        except BaseException as e:
+            send_message(writer, 'GateSystemError', dict(message=f'Exception {e}'))
+            return 1
 
 
 if __name__ == "__main__":
