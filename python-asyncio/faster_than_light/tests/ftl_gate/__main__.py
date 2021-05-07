@@ -1,0 +1,120 @@
+
+import asyncio
+import json
+import os
+import sys
+import tempfile
+import base64
+
+
+async def connect_stdin_stdout():
+    loop = asyncio.get_event_loop()
+    reader = asyncio.StreamReader()
+    protocol = asyncio.StreamReaderProtocol(reader)
+    await loop.connect_read_pipe(lambda: protocol, sys.stdin)
+    w_transport, w_protocol = await loop.connect_write_pipe(asyncio.streams.FlowControlMixin, sys.stdout)
+    writer = asyncio.StreamWriter(w_transport, w_protocol, reader, loop)
+    return reader, writer
+
+
+async def read_message(reader):
+
+    while True:
+
+        # Messages are Length Value
+        # Length is a 8 byte field in hexadecimal
+        # Value is a length byte field
+
+        value = b''
+        length_hexadecimal = b'0'
+        length = 0
+
+        # Read length
+        length_hexadecimal = await reader.read(8)
+        # If the length_hexadecimal is None then the channel was closed
+        if not length_hexadecimal:
+            return None
+
+        # Read value
+        if length_hexadecimal.strip():
+            length = int(length_hexadecimal.strip(), 16)
+            if length == 0:
+                continue
+            # If value is a new-line try the read operation again
+            while True:
+                value = await reader.read(length)
+                # If the value is None then the channel was closed
+                if not value:
+                    return None
+                value = value.strip()
+                # Keep reading until we get a value
+                # This is useful for manual debugging
+                # Run with python __main__.py
+                # Enter: 0000000d
+                # Enter: ["Hello", {}]
+                # Response should be  0000000d["Hello", {}]
+                if value:
+                    try:
+                        return json.loads(value)
+                    except BaseException:
+                        print(value)
+                        raise
+                else:
+                    continue
+
+
+def send_message(writer, msg_type, data):
+
+    # A message has a Length[Type, Data] format.
+    # The first 8 bytes are the length in hexadecimal
+    # The next Length bytes are JSON encoded data.
+    # The JSON encoded data is a pair where the first
+    # item is the message type and the second
+    # item is the data.
+    message = json.dumps([msg_type, data]).encode()
+    assert len(message) < 16**8, f'Message {msg_type} is too big.  Break up messages into less than 16**8 bytes'
+    writer.write('{:08x}'.format(len(message)).encode())
+    writer.write(message)
+
+
+async def check_output(cmd):
+    proc = await asyncio.create_subprocess_shell(
+        cmd,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.STDOUT)
+
+    stdout, stderr = await proc.communicate()
+    return stdout
+
+
+async def run_module(writer, module):
+    tempdir = tempfile.mkdtemp()
+    module_file = os.path.join(tempdir, "module.py")
+    with open(module_file, 'wb') as f:
+        f.write(base64.b64decode(module))
+    args = os.path.join(tempdir, 'args')
+    with open(args, 'w') as f:
+        f.write('some args')
+    stdout = await check_output(f'{sys.executable} {module_file} {args}')
+    send_message(writer, 'ModuleResult', dict(stdout=stdout.decode()))
+
+
+async def main(args):
+
+    reader, writer = await connect_stdin_stdout()
+
+    while True:
+
+        msg_type, data = await read_message(reader)
+        if msg_type == 'Hello':
+            send_message(writer, msg_type, data)
+        elif msg_type == 'Module':
+            await run_module(writer, **data)
+        elif msg_type == 'Shutdown':
+            return
+        else:
+            send_message(writer, 'Error', dict(message=f'Unknown message type {msg_type}'))
+
+
+if __name__ == "__main__":
+    asyncio.run(main(sys.argv[1:]))
