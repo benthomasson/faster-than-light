@@ -1,92 +1,16 @@
 
 
 import asyncio
-import json
 import os
 import pytest
-import sys
-import tempfile
-import zipapp
-import shutil
 import base64
-import asyncssh
 from pprint import pprint
 
-from .test_1 import find_module
+from faster_than_light.message import read_message, send_message
+from faster_than_light.gate import build_ftl_gate
+from faster_than_light.module import run_module_on_host, find_module
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-
-
-def send_message(writer, msg_type, msg_data):
-    message = json.dumps([msg_type, msg_data]).encode()
-    print('{:08x}'.format(len(message)).encode())
-    print(message)
-    writer.write('{:08x}'.format(len(message)).encode())
-    writer.write(message)
-
-
-def send_message_str(writer, msg_type, msg_data):
-    message = json.dumps([msg_type, msg_data])
-    print('{:08x}'.format(len(message)))
-    print(message)
-    writer.write('{:08x}'.format(len(message)))
-    writer.write(message)
-
-
-async def read_message(reader):
-    while True:
-        length = await reader.read(8)
-        try:
-            value = await reader.read(int(length, 16))
-        except ValueError:
-            print(f'length {length}')
-            raise
-        return json.loads(value)
-
-
-def build_ftl_gate():
-
-    tempdir = tempfile.mkdtemp()
-    shutil.copytree(os.path.join(HERE, 'ftl_gate'), os.path.join(tempdir, 'ftl_gate'))
-    zipapp.create_archive(os.path.join(tempdir, 'ftl_gate'),
-                          os.path.join(tempdir, 'ftl_gate.pyz'),
-                          sys.executable)
-    shutil.rmtree(os.path.join(tempdir, 'ftl_gate'))
-    return os.path.join(tempdir, 'ftl_gate.pyz')
-
-
-async def run_module_on_host(host_name, host, module):
-    if host and host.get('ansible_connection') == 'local':
-        raise NotImplementedError()
-    else:
-        # Remote connection
-        # TODO: Implement remote connection
-        module_name = os.path.basename(module)
-        async with asyncssh.connect(host_name) as conn:
-            try:
-                ftl_gate = build_ftl_gate()
-                result = await conn.run('mkdir /tmp/ftl', check=True)
-                print(result.exit_status)
-                result = await conn.run('touch /tmp/ftl/args', check=True)
-                print(result.exit_status)
-                async with conn.start_sftp_client() as sftp:
-                    await sftp.put(ftl_gate, '/tmp/ftl/')
-                result = await conn.run('chmod 700 /tmp/ftl/ftl_gate.pyz', check=True)
-                print(result.exit_status)
-                process = await conn.create_process('/tmp/ftl/ftl_gate.pyz')
-                send_message_str(process.stdin, "Hello", {})
-                assert await read_message(process.stdout) == ['Hello', {}]
-                with open(module, 'rb') as f:
-                    module_text = base64.b64encode(f.read()).decode()
-                send_message_str(process.stdin, 'Module', dict(module=module_text, module_name=module_name))
-                return host_name, await read_message(process.stdout)
-            finally:
-                send_message_str(process.stdin, "Shutdown", {})
-                if process.exit_status is not None:
-                    print(await process.stderr.read())
-                result = await conn.run('rm -rf /tmp/ftl', check=True)
-                print(result.exit_status)
-        return host_name, None
 
 
 @pytest.mark.asyncio

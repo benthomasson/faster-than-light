@@ -9,10 +9,13 @@ pytest = "*"
 flake8 = "*"
 autopep8 = "*"
 pyyaml = "*"
+coverage = "*"
 
 [packages]
 pyyaml = "*"
 asyncssh = "*"
+docopt = "*"
+pytest-cov = "*"
 
 [requires]
 python_version = "3.8"

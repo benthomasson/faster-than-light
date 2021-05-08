@@ -44,4 +44,9 @@ setup(
     url='https://github.com/benthomasson/faster_than_light',
     version='0.1.0',
     zip_safe=False,
+    entry_points={
+        'console_scripts': [
+            'ftl = faster_than_light.cli:main',
+        ],
+    }
 )
