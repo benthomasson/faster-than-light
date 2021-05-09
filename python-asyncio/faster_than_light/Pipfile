@@ -16,6 +16,7 @@ pyyaml = "*"
 asyncssh = "*"
 docopt = "*"
 pytest-cov = "*"
+importlib-resources = "*"
 
 [requires]
 python_version = "3.8"
