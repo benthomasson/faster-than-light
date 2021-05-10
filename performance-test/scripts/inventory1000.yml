@@ -1,0 +1,2003 @@
+all:
+  hosts:
+    localhost0:
+      ansible_connection: local
+    localhost1:
+      ansible_connection: local
+    localhost10:
+      ansible_connection: local
+    localhost100:
+      ansible_connection: local
+    localhost101:
+      ansible_connection: local
+    localhost102:
+      ansible_connection: local
+    localhost103:
+      ansible_connection: local
+    localhost104:
+      ansible_connection: local
+    localhost105:
+      ansible_connection: local
+    localhost106:
+      ansible_connection: local
+    localhost107:
+      ansible_connection: local
+    localhost108:
+      ansible_connection: local
+    localhost109:
+      ansible_connection: local
+    localhost11:
+      ansible_connection: local
+    localhost110:
+      ansible_connection: local
+    localhost111:
+      ansible_connection: local
+    localhost112:
+      ansible_connection: local
+    localhost113:
+      ansible_connection: local
+    localhost114:
+      ansible_connection: local
+    localhost115:
+      ansible_connection: local
+    localhost116:
+      ansible_connection: local
+    localhost117:
+      ansible_connection: local
+    localhost118:
+      ansible_connection: local
+    localhost119:
+      ansible_connection: local
+    localhost12:
+      ansible_connection: local
+    localhost120:
+      ansible_connection: local
+    localhost121:
+      ansible_connection: local
+    localhost122:
+      ansible_connection: local
+    localhost123:
+      ansible_connection: local
+    localhost124:
+      ansible_connection: local
+    localhost125:
+      ansible_connection: local
+    localhost126:
+      ansible_connection: local
+    localhost127:
+      ansible_connection: local
+    localhost128:
+      ansible_connection: local
+    localhost129:
+      ansible_connection: local
+    localhost13:
+      ansible_connection: local
+    localhost130:
+      ansible_connection: local
+    localhost131:
+      ansible_connection: local
+    localhost132:
+      ansible_connection: local
+    localhost133:
+      ansible_connection: local
+    localhost134:
+      ansible_connection: local
+    localhost135:
+      ansible_connection: local
+    localhost136:
+      ansible_connection: local
+    localhost137:
+      ansible_connection: local
+    localhost138:
+      ansible_connection: local
+    localhost139:
+      ansible_connection: local
+    localhost14:
+      ansible_connection: local
+    localhost140:
+      ansible_connection: local
+    localhost141:
+      ansible_connection: local
+    localhost142:
+      ansible_connection: local
+    localhost143:
+      ansible_connection: local
+    localhost144:
+      ansible_connection: local
+    localhost145:
+      ansible_connection: local
+    localhost146:
+      ansible_connection: local
+    localhost147:
+      ansible_connection: local
+    localhost148:
+      ansible_connection: local
+    localhost149:
+      ansible_connection: local
+    localhost15:
+      ansible_connection: local
+    localhost150:
+      ansible_connection: local
+    localhost151:
+      ansible_connection: local
+    localhost152:
+      ansible_connection: local
+    localhost153:
+      ansible_connection: local
+    localhost154:
+      ansible_connection: local
+    localhost155:
+      ansible_connection: local
+    localhost156:
+      ansible_connection: local
+    localhost157:
+      ansible_connection: local
+    localhost158:
+      ansible_connection: local
+    localhost159:
+      ansible_connection: local
+    localhost16:
+      ansible_connection: local
+    localhost160:
+      ansible_connection: local
+    localhost161:
+      ansible_connection: local
+    localhost162:
+      ansible_connection: local
+    localhost163:
+      ansible_connection: local
+    localhost164:
+      ansible_connection: local
+    localhost165:
+      ansible_connection: local
+    localhost166:
+      ansible_connection: local
+    localhost167:
+      ansible_connection: local
+    localhost168:
+      ansible_connection: local
+    localhost169:
+      ansible_connection: local
+    localhost17:
+      ansible_connection: local
+    localhost170:
+      ansible_connection: local
+    localhost171:
+      ansible_connection: local
+    localhost172:
+      ansible_connection: local
+    localhost173:
+      ansible_connection: local
+    localhost174:
+      ansible_connection: local
+    localhost175:
+      ansible_connection: local
+    localhost176:
+      ansible_connection: local
+    localhost177:
+      ansible_connection: local
+    localhost178:
+      ansible_connection: local
+    localhost179:
+      ansible_connection: local
+    localhost18:
+      ansible_connection: local
+    localhost180:
+      ansible_connection: local
+    localhost181:
+      ansible_connection: local
+    localhost182:
+      ansible_connection: local
+    localhost183:
+      ansible_connection: local
+    localhost184:
+      ansible_connection: local
+    localhost185:
+      ansible_connection: local
+    localhost186:
+      ansible_connection: local
+    localhost187:
+      ansible_connection: local
+    localhost188:
+      ansible_connection: local
+    localhost189:
+      ansible_connection: local
+    localhost19:
+      ansible_connection: local
+    localhost190:
+      ansible_connection: local
+    localhost191:
+      ansible_connection: local
+    localhost192:
+      ansible_connection: local
+    localhost193:
+      ansible_connection: local
+    localhost194:
+      ansible_connection: local
+    localhost195:
+      ansible_connection: local
+    localhost196:
+      ansible_connection: local
+    localhost197:
+      ansible_connection: local
+    localhost198:
+      ansible_connection: local
+    localhost199:
+      ansible_connection: local
+    localhost2:
+      ansible_connection: local
+    localhost20:
+      ansible_connection: local
+    localhost200:
+      ansible_connection: local
+    localhost201:
+      ansible_connection: local
+    localhost202:
+      ansible_connection: local
+    localhost203:
+      ansible_connection: local
+    localhost204:
+      ansible_connection: local
+    localhost205:
+      ansible_connection: local
+    localhost206:
+      ansible_connection: local
+    localhost207:
+      ansible_connection: local
+    localhost208:
+      ansible_connection: local
+    localhost209:
+      ansible_connection: local
+    localhost21:
+      ansible_connection: local
+    localhost210:
+      ansible_connection: local
+    localhost211:
+      ansible_connection: local
+    localhost212:
+      ansible_connection: local
+    localhost213:
+      ansible_connection: local
+    localhost214:
+      ansible_connection: local
+    localhost215:
+      ansible_connection: local
+    localhost216:
+      ansible_connection: local
+    localhost217:
+      ansible_connection: local
+    localhost218:
+      ansible_connection: local
+    localhost219:
+      ansible_connection: local
+    localhost22:
+      ansible_connection: local
+    localhost220:
+      ansible_connection: local
+    localhost221:
+      ansible_connection: local
+    localhost222:
+      ansible_connection: local
+    localhost223:
+      ansible_connection: local
+    localhost224:
+      ansible_connection: local
+    localhost225:
+      ansible_connection: local
+    localhost226:
+      ansible_connection: local
+    localhost227:
+      ansible_connection: local
+    localhost228:
+      ansible_connection: local
+    localhost229:
+      ansible_connection: local
+    localhost23:
+      ansible_connection: local
+    localhost230:
+      ansible_connection: local
+    localhost231:
+      ansible_connection: local
+    localhost232:
+      ansible_connection: local
+    localhost233:
+      ansible_connection: local
+    localhost234:
+      ansible_connection: local
+    localhost235:
+      ansible_connection: local
+    localhost236:
+      ansible_connection: local
+    localhost237:
+      ansible_connection: local
+    localhost238:
+      ansible_connection: local
+    localhost239:
+      ansible_connection: local
+    localhost24:
+      ansible_connection: local
+    localhost240:
+      ansible_connection: local
+    localhost241:
+      ansible_connection: local
+    localhost242:
+      ansible_connection: local
+    localhost243:
+      ansible_connection: local
+    localhost244:
+      ansible_connection: local
+    localhost245:
+      ansible_connection: local
+    localhost246:
+      ansible_connection: local
+    localhost247:
+      ansible_connection: local
+    localhost248:
+      ansible_connection: local
+    localhost249:
+      ansible_connection: local
+    localhost25:
+      ansible_connection: local
+    localhost250:
+      ansible_connection: local
+    localhost251:
+      ansible_connection: local
+    localhost252:
+      ansible_connection: local
+    localhost253:
+      ansible_connection: local
+    localhost254:
+      ansible_connection: local
+    localhost255:
+      ansible_connection: local
+    localhost256:
+      ansible_connection: local
+    localhost257:
+      ansible_connection: local
+    localhost258:
+      ansible_connection: local
+    localhost259:
+      ansible_connection: local
+    localhost26:
+      ansible_connection: local
+    localhost260:
+      ansible_connection: local
+    localhost261:
+      ansible_connection: local
+    localhost262:
+      ansible_connection: local
+    localhost263:
+      ansible_connection: local
+    localhost264:
+      ansible_connection: local
+    localhost265:
+      ansible_connection: local
+    localhost266:
+      ansible_connection: local
+    localhost267:
+      ansible_connection: local
+    localhost268:
+      ansible_connection: local
+    localhost269:
+      ansible_connection: local
+    localhost27:
+      ansible_connection: local
+    localhost270:
+      ansible_connection: local
+    localhost271:
+      ansible_connection: local
+    localhost272:
+      ansible_connection: local
+    localhost273:
+      ansible_connection: local
+    localhost274:
+      ansible_connection: local
+    localhost275:
+      ansible_connection: local
+    localhost276:
+      ansible_connection: local
+    localhost277:
+      ansible_connection: local
+    localhost278:
+      ansible_connection: local
+    localhost279:
+      ansible_connection: local
+    localhost28:
+      ansible_connection: local
+    localhost280:
+      ansible_connection: local
+    localhost281:
+      ansible_connection: local
+    localhost282:
+      ansible_connection: local
+    localhost283:
+      ansible_connection: local
+    localhost284:
+      ansible_connection: local
+    localhost285:
+      ansible_connection: local
+    localhost286:
+      ansible_connection: local
+    localhost287:
+      ansible_connection: local
+    localhost288:
+      ansible_connection: local
+    localhost289:
+      ansible_connection: local
+    localhost29:
+      ansible_connection: local
+    localhost290:
+      ansible_connection: local
+    localhost291:
+      ansible_connection: local
+    localhost292:
+      ansible_connection: local
+    localhost293:
+      ansible_connection: local
+    localhost294:
+      ansible_connection: local
+    localhost295:
+      ansible_connection: local
+    localhost296:
+      ansible_connection: local
+    localhost297:
+      ansible_connection: local
+    localhost298:
+      ansible_connection: local
+    localhost299:
+      ansible_connection: local
+    localhost3:
+      ansible_connection: local
+    localhost30:
+      ansible_connection: local
+    localhost300:
+      ansible_connection: local
+    localhost301:
+      ansible_connection: local
+    localhost302:
+      ansible_connection: local
+    localhost303:
+      ansible_connection: local
+    localhost304:
+      ansible_connection: local
+    localhost305:
+      ansible_connection: local
+    localhost306:
+      ansible_connection: local
+    localhost307:
+      ansible_connection: local
+    localhost308:
+      ansible_connection: local
+    localhost309:
+      ansible_connection: local
+    localhost31:
+      ansible_connection: local
+    localhost310:
+      ansible_connection: local
+    localhost311:
+      ansible_connection: local
+    localhost312:
+      ansible_connection: local
+    localhost313:
+      ansible_connection: local
+    localhost314:
+      ansible_connection: local
+    localhost315:
+      ansible_connection: local
+    localhost316:
+      ansible_connection: local
+    localhost317:
+      ansible_connection: local
+    localhost318:
+      ansible_connection: local
+    localhost319:
+      ansible_connection: local
+    localhost32:
+      ansible_connection: local
+    localhost320:
+      ansible_connection: local
+    localhost321:
+      ansible_connection: local
+    localhost322:
+      ansible_connection: local
+    localhost323:
+      ansible_connection: local
+    localhost324:
+      ansible_connection: local
+    localhost325:
+      ansible_connection: local
+    localhost326:
+      ansible_connection: local
+    localhost327:
+      ansible_connection: local
+    localhost328:
+      ansible_connection: local
+    localhost329:
+      ansible_connection: local
+    localhost33:
+      ansible_connection: local
+    localhost330:
+      ansible_connection: local
+    localhost331:
+      ansible_connection: local
+    localhost332:
+      ansible_connection: local
+    localhost333:
+      ansible_connection: local
+    localhost334:
+      ansible_connection: local
+    localhost335:
+      ansible_connection: local
+    localhost336:
+      ansible_connection: local
+    localhost337:
+      ansible_connection: local
+    localhost338:
+      ansible_connection: local
+    localhost339:
+      ansible_connection: local
+    localhost34:
+      ansible_connection: local
+    localhost340:
+      ansible_connection: local
+    localhost341:
+      ansible_connection: local
+    localhost342:
+      ansible_connection: local
+    localhost343:
+      ansible_connection: local
+    localhost344:
+      ansible_connection: local
+    localhost345:
+      ansible_connection: local
+    localhost346:
+      ansible_connection: local
+    localhost347:
+      ansible_connection: local
+    localhost348:
+      ansible_connection: local
+    localhost349:
+      ansible_connection: local
+    localhost35:
+      ansible_connection: local
+    localhost350:
+      ansible_connection: local
+    localhost351:
+      ansible_connection: local
+    localhost352:
+      ansible_connection: local
+    localhost353:
+      ansible_connection: local
+    localhost354:
+      ansible_connection: local
+    localhost355:
+      ansible_connection: local
+    localhost356:
+      ansible_connection: local
+    localhost357:
+      ansible_connection: local
+    localhost358:
+      ansible_connection: local
+    localhost359:
+      ansible_connection: local
+    localhost36:
+      ansible_connection: local
+    localhost360:
+      ansible_connection: local
+    localhost361:
+      ansible_connection: local
+    localhost362:
+      ansible_connection: local
+    localhost363:
+      ansible_connection: local
+    localhost364:
+      ansible_connection: local
+    localhost365:
+      ansible_connection: local
+    localhost366:
+      ansible_connection: local
+    localhost367:
+      ansible_connection: local
+    localhost368:
+      ansible_connection: local
+    localhost369:
+      ansible_connection: local
+    localhost37:
+      ansible_connection: local
+    localhost370:
+      ansible_connection: local
+    localhost371:
+      ansible_connection: local
+    localhost372:
+      ansible_connection: local
+    localhost373:
+      ansible_connection: local
+    localhost374:
+      ansible_connection: local
+    localhost375:
+      ansible_connection: local
+    localhost376:
+      ansible_connection: local
+    localhost377:
+      ansible_connection: local
+    localhost378:
+      ansible_connection: local
+    localhost379:
+      ansible_connection: local
+    localhost38:
+      ansible_connection: local
+    localhost380:
+      ansible_connection: local
+    localhost381:
+      ansible_connection: local
+    localhost382:
+      ansible_connection: local
+    localhost383:
+      ansible_connection: local
+    localhost384:
+      ansible_connection: local
+    localhost385:
+      ansible_connection: local
+    localhost386:
+      ansible_connection: local
+    localhost387:
+      ansible_connection: local
+    localhost388:
+      ansible_connection: local
+    localhost389:
+      ansible_connection: local
+    localhost39:
+      ansible_connection: local
+    localhost390:
+      ansible_connection: local
+    localhost391:
+      ansible_connection: local
+    localhost392:
+      ansible_connection: local
+    localhost393:
+      ansible_connection: local
+    localhost394:
+      ansible_connection: local
+    localhost395:
+      ansible_connection: local
+    localhost396:
+      ansible_connection: local
+    localhost397:
+      ansible_connection: local
+    localhost398:
+      ansible_connection: local
+    localhost399:
+      ansible_connection: local
+    localhost4:
+      ansible_connection: local
+    localhost40:
+      ansible_connection: local
+    localhost400:
+      ansible_connection: local
+    localhost401:
+      ansible_connection: local
+    localhost402:
+      ansible_connection: local
+    localhost403:
+      ansible_connection: local
+    localhost404:
+      ansible_connection: local
+    localhost405:
+      ansible_connection: local
+    localhost406:
+      ansible_connection: local
+    localhost407:
+      ansible_connection: local
+    localhost408:
+      ansible_connection: local
+    localhost409:
+      ansible_connection: local
+    localhost41:
+      ansible_connection: local
+    localhost410:
+      ansible_connection: local
+    localhost411:
+      ansible_connection: local
+    localhost412:
+      ansible_connection: local
+    localhost413:
+      ansible_connection: local
+    localhost414:
+      ansible_connection: local
+    localhost415:
+      ansible_connection: local
+    localhost416:
+      ansible_connection: local
+    localhost417:
+      ansible_connection: local
+    localhost418:
+      ansible_connection: local
+    localhost419:
+      ansible_connection: local
+    localhost42:
+      ansible_connection: local
+    localhost420:
+      ansible_connection: local
+    localhost421:
+      ansible_connection: local
+    localhost422:
+      ansible_connection: local
+    localhost423:
+      ansible_connection: local
+    localhost424:
+      ansible_connection: local
+    localhost425:
+      ansible_connection: local
+    localhost426:
+      ansible_connection: local
+    localhost427:
+      ansible_connection: local
+    localhost428:
+      ansible_connection: local
+    localhost429:
+      ansible_connection: local
+    localhost43:
+      ansible_connection: local
+    localhost430:
+      ansible_connection: local
+    localhost431:
+      ansible_connection: local
+    localhost432:
+      ansible_connection: local
+    localhost433:
+      ansible_connection: local
+    localhost434:
+      ansible_connection: local
+    localhost435:
+      ansible_connection: local
+    localhost436:
+      ansible_connection: local
+    localhost437:
+      ansible_connection: local
+    localhost438:
+      ansible_connection: local
+    localhost439:
+      ansible_connection: local
+    localhost44:
+      ansible_connection: local
+    localhost440:
+      ansible_connection: local
+    localhost441:
+      ansible_connection: local
+    localhost442:
+      ansible_connection: local
+    localhost443:
+      ansible_connection: local
+    localhost444:
+      ansible_connection: local
+    localhost445:
+      ansible_connection: local
+    localhost446:
+      ansible_connection: local
+    localhost447:
+      ansible_connection: local
+    localhost448:
+      ansible_connection: local
+    localhost449:
+      ansible_connection: local
+    localhost45:
+      ansible_connection: local
+    localhost450:
+      ansible_connection: local
+    localhost451:
+      ansible_connection: local
+    localhost452:
+      ansible_connection: local
+    localhost453:
+      ansible_connection: local
+    localhost454:
+      ansible_connection: local
+    localhost455:
+      ansible_connection: local
+    localhost456:
+      ansible_connection: local
+    localhost457:
+      ansible_connection: local
+    localhost458:
+      ansible_connection: local
+    localhost459:
+      ansible_connection: local
+    localhost46:
+      ansible_connection: local
+    localhost460:
+      ansible_connection: local
+    localhost461:
+      ansible_connection: local
+    localhost462:
+      ansible_connection: local
+    localhost463:
+      ansible_connection: local
+    localhost464:
+      ansible_connection: local
+    localhost465:
+      ansible_connection: local
+    localhost466:
+      ansible_connection: local
+    localhost467:
+      ansible_connection: local
+    localhost468:
+      ansible_connection: local
+    localhost469:
+      ansible_connection: local
+    localhost47:
+      ansible_connection: local
+    localhost470:
+      ansible_connection: local
+    localhost471:
+      ansible_connection: local
+    localhost472:
+      ansible_connection: local
+    localhost473:
+      ansible_connection: local
+    localhost474:
+      ansible_connection: local
+    localhost475:
+      ansible_connection: local
+    localhost476:
+      ansible_connection: local
+    localhost477:
+      ansible_connection: local
+    localhost478:
+      ansible_connection: local
+    localhost479:
+      ansible_connection: local
+    localhost48:
+      ansible_connection: local
+    localhost480:
+      ansible_connection: local
+    localhost481:
+      ansible_connection: local
+    localhost482:
+      ansible_connection: local
+    localhost483:
+      ansible_connection: local
+    localhost484:
+      ansible_connection: local
+    localhost485:
+      ansible_connection: local
+    localhost486:
+      ansible_connection: local
+    localhost487:
+      ansible_connection: local
+    localhost488:
+      ansible_connection: local
+    localhost489:
+      ansible_connection: local
+    localhost49:
+      ansible_connection: local
+    localhost490:
+      ansible_connection: local
+    localhost491:
+      ansible_connection: local
+    localhost492:
+      ansible_connection: local
+    localhost493:
+      ansible_connection: local
+    localhost494:
+      ansible_connection: local
+    localhost495:
+      ansible_connection: local
+    localhost496:
+      ansible_connection: local
+    localhost497:
+      ansible_connection: local
+    localhost498:
+      ansible_connection: local
+    localhost499:
+      ansible_connection: local
+    localhost5:
+      ansible_connection: local
+    localhost50:
+      ansible_connection: local
+    localhost500:
+      ansible_connection: local
+    localhost501:
+      ansible_connection: local
+    localhost502:
+      ansible_connection: local
+    localhost503:
+      ansible_connection: local
+    localhost504:
+      ansible_connection: local
+    localhost505:
+      ansible_connection: local
+    localhost506:
+      ansible_connection: local
+    localhost507:
+      ansible_connection: local
+    localhost508:
+      ansible_connection: local
+    localhost509:
+      ansible_connection: local
+    localhost51:
+      ansible_connection: local
+    localhost510:
+      ansible_connection: local
+    localhost511:
+      ansible_connection: local
+    localhost512:
+      ansible_connection: local
+    localhost513:
+      ansible_connection: local
+    localhost514:
+      ansible_connection: local
+    localhost515:
+      ansible_connection: local
+    localhost516:
+      ansible_connection: local
+    localhost517:
+      ansible_connection: local
+    localhost518:
+      ansible_connection: local
+    localhost519:
+      ansible_connection: local
+    localhost52:
+      ansible_connection: local
+    localhost520:
+      ansible_connection: local
+    localhost521:
+      ansible_connection: local
+    localhost522:
+      ansible_connection: local
+    localhost523:
+      ansible_connection: local
+    localhost524:
+      ansible_connection: local
+    localhost525:
+      ansible_connection: local
+    localhost526:
+      ansible_connection: local
+    localhost527:
+      ansible_connection: local
+    localhost528:
+      ansible_connection: local
+    localhost529:
+      ansible_connection: local
+    localhost53:
+      ansible_connection: local
+    localhost530:
+      ansible_connection: local
+    localhost531:
+      ansible_connection: local
+    localhost532:
+      ansible_connection: local
+    localhost533:
+      ansible_connection: local
+    localhost534:
+      ansible_connection: local
+    localhost535:
+      ansible_connection: local
+    localhost536:
+      ansible_connection: local
+    localhost537:
+      ansible_connection: local
+    localhost538:
+      ansible_connection: local
+    localhost539:
+      ansible_connection: local
+    localhost54:
+      ansible_connection: local
+    localhost540:
+      ansible_connection: local
+    localhost541:
+      ansible_connection: local
+    localhost542:
+      ansible_connection: local
+    localhost543:
+      ansible_connection: local
+    localhost544:
+      ansible_connection: local
+    localhost545:
+      ansible_connection: local
+    localhost546:
+      ansible_connection: local
+    localhost547:
+      ansible_connection: local
+    localhost548:
+      ansible_connection: local
+    localhost549:
+      ansible_connection: local
+    localhost55:
+      ansible_connection: local
+    localhost550:
+      ansible_connection: local
+    localhost551:
+      ansible_connection: local
+    localhost552:
+      ansible_connection: local
+    localhost553:
+      ansible_connection: local
+    localhost554:
+      ansible_connection: local
+    localhost555:
+      ansible_connection: local
+    localhost556:
+      ansible_connection: local
+    localhost557:
+      ansible_connection: local
+    localhost558:
+      ansible_connection: local
+    localhost559:
+      ansible_connection: local
+    localhost56:
+      ansible_connection: local
+    localhost560:
+      ansible_connection: local
+    localhost561:
+      ansible_connection: local
+    localhost562:
+      ansible_connection: local
+    localhost563:
+      ansible_connection: local
+    localhost564:
+      ansible_connection: local
+    localhost565:
+      ansible_connection: local
+    localhost566:
+      ansible_connection: local
+    localhost567:
+      ansible_connection: local
+    localhost568:
+      ansible_connection: local
+    localhost569:
+      ansible_connection: local
+    localhost57:
+      ansible_connection: local
+    localhost570:
+      ansible_connection: local
+    localhost571:
+      ansible_connection: local
+    localhost572:
+      ansible_connection: local
+    localhost573:
+      ansible_connection: local
+    localhost574:
+      ansible_connection: local
+    localhost575:
+      ansible_connection: local
+    localhost576:
+      ansible_connection: local
+    localhost577:
+      ansible_connection: local
+    localhost578:
+      ansible_connection: local
+    localhost579:
+      ansible_connection: local
+    localhost58:
+      ansible_connection: local
+    localhost580:
+      ansible_connection: local
+    localhost581:
+      ansible_connection: local
+    localhost582:
+      ansible_connection: local
+    localhost583:
+      ansible_connection: local
+    localhost584:
+      ansible_connection: local
+    localhost585:
+      ansible_connection: local
+    localhost586:
+      ansible_connection: local
+    localhost587:
+      ansible_connection: local
+    localhost588:
+      ansible_connection: local
+    localhost589:
+      ansible_connection: local
+    localhost59:
+      ansible_connection: local
+    localhost590:
+      ansible_connection: local
+    localhost591:
+      ansible_connection: local
+    localhost592:
+      ansible_connection: local
+    localhost593:
+      ansible_connection: local
+    localhost594:
+      ansible_connection: local
+    localhost595:
+      ansible_connection: local
+    localhost596:
+      ansible_connection: local
+    localhost597:
+      ansible_connection: local
+    localhost598:
+      ansible_connection: local
+    localhost599:
+      ansible_connection: local
+    localhost6:
+      ansible_connection: local
+    localhost60:
+      ansible_connection: local
+    localhost600:
+      ansible_connection: local
+    localhost601:
+      ansible_connection: local
+    localhost602:
+      ansible_connection: local
+    localhost603:
+      ansible_connection: local
+    localhost604:
+      ansible_connection: local
+    localhost605:
+      ansible_connection: local
+    localhost606:
+      ansible_connection: local
+    localhost607:
+      ansible_connection: local
+    localhost608:
+      ansible_connection: local
+    localhost609:
+      ansible_connection: local
+    localhost61:
+      ansible_connection: local
+    localhost610:
+      ansible_connection: local
+    localhost611:
+      ansible_connection: local
+    localhost612:
+      ansible_connection: local
+    localhost613:
+      ansible_connection: local
+    localhost614:
+      ansible_connection: local
+    localhost615:
+      ansible_connection: local
+    localhost616:
+      ansible_connection: local
+    localhost617:
+      ansible_connection: local
+    localhost618:
+      ansible_connection: local
+    localhost619:
+      ansible_connection: local
+    localhost62:
+      ansible_connection: local
+    localhost620:
+      ansible_connection: local
+    localhost621:
+      ansible_connection: local
+    localhost622:
+      ansible_connection: local
+    localhost623:
+      ansible_connection: local
+    localhost624:
+      ansible_connection: local
+    localhost625:
+      ansible_connection: local
+    localhost626:
+      ansible_connection: local
+    localhost627:
+      ansible_connection: local
+    localhost628:
+      ansible_connection: local
+    localhost629:
+      ansible_connection: local
+    localhost63:
+      ansible_connection: local
+    localhost630:
+      ansible_connection: local
+    localhost631:
+      ansible_connection: local
+    localhost632:
+      ansible_connection: local
+    localhost633:
+      ansible_connection: local
+    localhost634:
+      ansible_connection: local
+    localhost635:
+      ansible_connection: local
+    localhost636:
+      ansible_connection: local
+    localhost637:
+      ansible_connection: local
+    localhost638:
+      ansible_connection: local
+    localhost639:
+      ansible_connection: local
+    localhost64:
+      ansible_connection: local
+    localhost640:
+      ansible_connection: local
+    localhost641:
+      ansible_connection: local
+    localhost642:
+      ansible_connection: local
+    localhost643:
+      ansible_connection: local
+    localhost644:
+      ansible_connection: local
+    localhost645:
+      ansible_connection: local
+    localhost646:
+      ansible_connection: local
+    localhost647:
+      ansible_connection: local
+    localhost648:
+      ansible_connection: local
+    localhost649:
+      ansible_connection: local
+    localhost65:
+      ansible_connection: local
+    localhost650:
+      ansible_connection: local
+    localhost651:
+      ansible_connection: local
+    localhost652:
+      ansible_connection: local
+    localhost653:
+      ansible_connection: local
+    localhost654:
+      ansible_connection: local
+    localhost655:
+      ansible_connection: local
+    localhost656:
+      ansible_connection: local
+    localhost657:
+      ansible_connection: local
+    localhost658:
+      ansible_connection: local
+    localhost659:
+      ansible_connection: local
+    localhost66:
+      ansible_connection: local
+    localhost660:
+      ansible_connection: local
+    localhost661:
+      ansible_connection: local
+    localhost662:
+      ansible_connection: local
+    localhost663:
+      ansible_connection: local
+    localhost664:
+      ansible_connection: local
+    localhost665:
+      ansible_connection: local
+    localhost666:
+      ansible_connection: local
+    localhost667:
+      ansible_connection: local
+    localhost668:
+      ansible_connection: local
+    localhost669:
+      ansible_connection: local
+    localhost67:
+      ansible_connection: local
+    localhost670:
+      ansible_connection: local
+    localhost671:
+      ansible_connection: local
+    localhost672:
+      ansible_connection: local
+    localhost673:
+      ansible_connection: local
+    localhost674:
+      ansible_connection: local
+    localhost675:
+      ansible_connection: local
+    localhost676:
+      ansible_connection: local
+    localhost677:
+      ansible_connection: local
+    localhost678:
+      ansible_connection: local
+    localhost679:
+      ansible_connection: local
+    localhost68:
+      ansible_connection: local
+    localhost680:
+      ansible_connection: local
+    localhost681:
+      ansible_connection: local
+    localhost682:
+      ansible_connection: local
+    localhost683:
+      ansible_connection: local
+    localhost684:
+      ansible_connection: local
+    localhost685:
+      ansible_connection: local
+    localhost686:
+      ansible_connection: local
+    localhost687:
+      ansible_connection: local
+    localhost688:
+      ansible_connection: local
+    localhost689:
+      ansible_connection: local
+    localhost69:
+      ansible_connection: local
+    localhost690:
+      ansible_connection: local
+    localhost691:
+      ansible_connection: local
+    localhost692:
+      ansible_connection: local
+    localhost693:
+      ansible_connection: local
+    localhost694:
+      ansible_connection: local
+    localhost695:
+      ansible_connection: local
+    localhost696:
+      ansible_connection: local
+    localhost697:
+      ansible_connection: local
+    localhost698:
+      ansible_connection: local
+    localhost699:
+      ansible_connection: local
+    localhost7:
+      ansible_connection: local
+    localhost70:
+      ansible_connection: local
+    localhost700:
+      ansible_connection: local
+    localhost701:
+      ansible_connection: local
+    localhost702:
+      ansible_connection: local
+    localhost703:
+      ansible_connection: local
+    localhost704:
+      ansible_connection: local
+    localhost705:
+      ansible_connection: local
+    localhost706:
+      ansible_connection: local
+    localhost707:
+      ansible_connection: local
+    localhost708:
+      ansible_connection: local
+    localhost709:
+      ansible_connection: local
+    localhost71:
+      ansible_connection: local
+    localhost710:
+      ansible_connection: local
+    localhost711:
+      ansible_connection: local
+    localhost712:
+      ansible_connection: local
+    localhost713:
+      ansible_connection: local
+    localhost714:
+      ansible_connection: local
+    localhost715:
+      ansible_connection: local
+    localhost716:
+      ansible_connection: local
+    localhost717:
+      ansible_connection: local
+    localhost718:
+      ansible_connection: local
+    localhost719:
+      ansible_connection: local
+    localhost72:
+      ansible_connection: local
+    localhost720:
+      ansible_connection: local
+    localhost721:
+      ansible_connection: local
+    localhost722:
+      ansible_connection: local
+    localhost723:
+      ansible_connection: local
+    localhost724:
+      ansible_connection: local
+    localhost725:
+      ansible_connection: local
+    localhost726:
+      ansible_connection: local
+    localhost727:
+      ansible_connection: local
+    localhost728:
+      ansible_connection: local
+    localhost729:
+      ansible_connection: local
+    localhost73:
+      ansible_connection: local
+    localhost730:
+      ansible_connection: local
+    localhost731:
+      ansible_connection: local
+    localhost732:
+      ansible_connection: local
+    localhost733:
+      ansible_connection: local
+    localhost734:
+      ansible_connection: local
+    localhost735:
+      ansible_connection: local
+    localhost736:
+      ansible_connection: local
+    localhost737:
+      ansible_connection: local
+    localhost738:
+      ansible_connection: local
+    localhost739:
+      ansible_connection: local
+    localhost74:
+      ansible_connection: local
+    localhost740:
+      ansible_connection: local
+    localhost741:
+      ansible_connection: local
+    localhost742:
+      ansible_connection: local
+    localhost743:
+      ansible_connection: local
+    localhost744:
+      ansible_connection: local
+    localhost745:
+      ansible_connection: local
+    localhost746:
+      ansible_connection: local
+    localhost747:
+      ansible_connection: local
+    localhost748:
+      ansible_connection: local
+    localhost749:
+      ansible_connection: local
+    localhost75:
+      ansible_connection: local
+    localhost750:
+      ansible_connection: local
+    localhost751:
+      ansible_connection: local
+    localhost752:
+      ansible_connection: local
+    localhost753:
+      ansible_connection: local
+    localhost754:
+      ansible_connection: local
+    localhost755:
+      ansible_connection: local
+    localhost756:
+      ansible_connection: local
+    localhost757:
+      ansible_connection: local
+    localhost758:
+      ansible_connection: local
+    localhost759:
+      ansible_connection: local
+    localhost76:
+      ansible_connection: local
+    localhost760:
+      ansible_connection: local
+    localhost761:
+      ansible_connection: local
+    localhost762:
+      ansible_connection: local
+    localhost763:
+      ansible_connection: local
+    localhost764:
+      ansible_connection: local
+    localhost765:
+      ansible_connection: local
+    localhost766:
+      ansible_connection: local
+    localhost767:
+      ansible_connection: local
+    localhost768:
+      ansible_connection: local
+    localhost769:
+      ansible_connection: local
+    localhost77:
+      ansible_connection: local
+    localhost770:
+      ansible_connection: local
+    localhost771:
+      ansible_connection: local
+    localhost772:
+      ansible_connection: local
+    localhost773:
+      ansible_connection: local
+    localhost774:
+      ansible_connection: local
+    localhost775:
+      ansible_connection: local
+    localhost776:
+      ansible_connection: local
+    localhost777:
+      ansible_connection: local
+    localhost778:
+      ansible_connection: local
+    localhost779:
+      ansible_connection: local
+    localhost78:
+      ansible_connection: local
+    localhost780:
+      ansible_connection: local
+    localhost781:
+      ansible_connection: local
+    localhost782:
+      ansible_connection: local
+    localhost783:
+      ansible_connection: local
+    localhost784:
+      ansible_connection: local
+    localhost785:
+      ansible_connection: local
+    localhost786:
+      ansible_connection: local
+    localhost787:
+      ansible_connection: local
+    localhost788:
+      ansible_connection: local
+    localhost789:
+      ansible_connection: local
+    localhost79:
+      ansible_connection: local
+    localhost790:
+      ansible_connection: local
+    localhost791:
+      ansible_connection: local
+    localhost792:
+      ansible_connection: local
+    localhost793:
+      ansible_connection: local
+    localhost794:
+      ansible_connection: local
+    localhost795:
+      ansible_connection: local
+    localhost796:
+      ansible_connection: local
+    localhost797:
+      ansible_connection: local
+    localhost798:
+      ansible_connection: local
+    localhost799:
+      ansible_connection: local
+    localhost8:
+      ansible_connection: local
+    localhost80:
+      ansible_connection: local
+    localhost800:
+      ansible_connection: local
+    localhost801:
+      ansible_connection: local
+    localhost802:
+      ansible_connection: local
+    localhost803:
+      ansible_connection: local
+    localhost804:
+      ansible_connection: local
+    localhost805:
+      ansible_connection: local
+    localhost806:
+      ansible_connection: local
+    localhost807:
+      ansible_connection: local
+    localhost808:
+      ansible_connection: local
+    localhost809:
+      ansible_connection: local
+    localhost81:
+      ansible_connection: local
+    localhost810:
+      ansible_connection: local
+    localhost811:
+      ansible_connection: local
+    localhost812:
+      ansible_connection: local
+    localhost813:
+      ansible_connection: local
+    localhost814:
+      ansible_connection: local
+    localhost815:
+      ansible_connection: local
+    localhost816:
+      ansible_connection: local
+    localhost817:
+      ansible_connection: local
+    localhost818:
+      ansible_connection: local
+    localhost819:
+      ansible_connection: local
+    localhost82:
+      ansible_connection: local
+    localhost820:
+      ansible_connection: local
+    localhost821:
+      ansible_connection: local
+    localhost822:
+      ansible_connection: local
+    localhost823:
+      ansible_connection: local
+    localhost824:
+      ansible_connection: local
+    localhost825:
+      ansible_connection: local
+    localhost826:
+      ansible_connection: local
+    localhost827:
+      ansible_connection: local
+    localhost828:
+      ansible_connection: local
+    localhost829:
+      ansible_connection: local
+    localhost83:
+      ansible_connection: local
+    localhost830:
+      ansible_connection: local
+    localhost831:
+      ansible_connection: local
+    localhost832:
+      ansible_connection: local
+    localhost833:
+      ansible_connection: local
+    localhost834:
+      ansible_connection: local
+    localhost835:
+      ansible_connection: local
+    localhost836:
+      ansible_connection: local
+    localhost837:
+      ansible_connection: local
+    localhost838:
+      ansible_connection: local
+    localhost839:
+      ansible_connection: local
+    localhost84:
+      ansible_connection: local
+    localhost840:
+      ansible_connection: local
+    localhost841:
+      ansible_connection: local
+    localhost842:
+      ansible_connection: local
+    localhost843:
+      ansible_connection: local
+    localhost844:
+      ansible_connection: local
+    localhost845:
+      ansible_connection: local
+    localhost846:
+      ansible_connection: local
+    localhost847:
+      ansible_connection: local
+    localhost848:
+      ansible_connection: local
+    localhost849:
+      ansible_connection: local
+    localhost85:
+      ansible_connection: local
+    localhost850:
+      ansible_connection: local
+    localhost851:
+      ansible_connection: local
+    localhost852:
+      ansible_connection: local
+    localhost853:
+      ansible_connection: local
+    localhost854:
+      ansible_connection: local
+    localhost855:
+      ansible_connection: local
+    localhost856:
+      ansible_connection: local
+    localhost857:
+      ansible_connection: local
+    localhost858:
+      ansible_connection: local
+    localhost859:
+      ansible_connection: local
+    localhost86:
+      ansible_connection: local
+    localhost860:
+      ansible_connection: local
+    localhost861:
+      ansible_connection: local
+    localhost862:
+      ansible_connection: local
+    localhost863:
+      ansible_connection: local
+    localhost864:
+      ansible_connection: local
+    localhost865:
+      ansible_connection: local
+    localhost866:
+      ansible_connection: local
+    localhost867:
+      ansible_connection: local
+    localhost868:
+      ansible_connection: local
+    localhost869:
+      ansible_connection: local
+    localhost87:
+      ansible_connection: local
+    localhost870:
+      ansible_connection: local
+    localhost871:
+      ansible_connection: local
+    localhost872:
+      ansible_connection: local
+    localhost873:
+      ansible_connection: local
+    localhost874:
+      ansible_connection: local
+    localhost875:
+      ansible_connection: local
+    localhost876:
+      ansible_connection: local
+    localhost877:
+      ansible_connection: local
+    localhost878:
+      ansible_connection: local
+    localhost879:
+      ansible_connection: local
+    localhost88:
+      ansible_connection: local
+    localhost880:
+      ansible_connection: local
+    localhost881:
+      ansible_connection: local
+    localhost882:
+      ansible_connection: local
+    localhost883:
+      ansible_connection: local
+    localhost884:
+      ansible_connection: local
+    localhost885:
+      ansible_connection: local
+    localhost886:
+      ansible_connection: local
+    localhost887:
+      ansible_connection: local
+    localhost888:
+      ansible_connection: local
+    localhost889:
+      ansible_connection: local
+    localhost89:
+      ansible_connection: local
+    localhost890:
+      ansible_connection: local
+    localhost891:
+      ansible_connection: local
+    localhost892:
+      ansible_connection: local
+    localhost893:
+      ansible_connection: local
+    localhost894:
+      ansible_connection: local
+    localhost895:
+      ansible_connection: local
+    localhost896:
+      ansible_connection: local
+    localhost897:
+      ansible_connection: local
+    localhost898:
+      ansible_connection: local
+    localhost899:
+      ansible_connection: local
+    localhost9:
+      ansible_connection: local
+    localhost90:
+      ansible_connection: local
+    localhost900:
+      ansible_connection: local
+    localhost901:
+      ansible_connection: local
+    localhost902:
+      ansible_connection: local
+    localhost903:
+      ansible_connection: local
+    localhost904:
+      ansible_connection: local
+    localhost905:
+      ansible_connection: local
+    localhost906:
+      ansible_connection: local
+    localhost907:
+      ansible_connection: local
+    localhost908:
+      ansible_connection: local
+    localhost909:
+      ansible_connection: local
+    localhost91:
+      ansible_connection: local
+    localhost910:
+      ansible_connection: local
+    localhost911:
+      ansible_connection: local
+    localhost912:
+      ansible_connection: local
+    localhost913:
+      ansible_connection: local
+    localhost914:
+      ansible_connection: local
+    localhost915:
+      ansible_connection: local
+    localhost916:
+      ansible_connection: local
+    localhost917:
+      ansible_connection: local
+    localhost918:
+      ansible_connection: local
+    localhost919:
+      ansible_connection: local
+    localhost92:
+      ansible_connection: local
+    localhost920:
+      ansible_connection: local
+    localhost921:
+      ansible_connection: local
+    localhost922:
+      ansible_connection: local
+    localhost923:
+      ansible_connection: local
+    localhost924:
+      ansible_connection: local
+    localhost925:
+      ansible_connection: local
+    localhost926:
+      ansible_connection: local
+    localhost927:
+      ansible_connection: local
+    localhost928:
+      ansible_connection: local
+    localhost929:
+      ansible_connection: local
+    localhost93:
+      ansible_connection: local
+    localhost930:
+      ansible_connection: local
+    localhost931:
+      ansible_connection: local
+    localhost932:
+      ansible_connection: local
+    localhost933:
+      ansible_connection: local
+    localhost934:
+      ansible_connection: local
+    localhost935:
+      ansible_connection: local
+    localhost936:
+      ansible_connection: local
+    localhost937:
+      ansible_connection: local
+    localhost938:
+      ansible_connection: local
+    localhost939:
+      ansible_connection: local
+    localhost94:
+      ansible_connection: local
+    localhost940:
+      ansible_connection: local
+    localhost941:
+      ansible_connection: local
+    localhost942:
+      ansible_connection: local
+    localhost943:
+      ansible_connection: local
+    localhost944:
+      ansible_connection: local
+    localhost945:
+      ansible_connection: local
+    localhost946:
+      ansible_connection: local
+    localhost947:
+      ansible_connection: local
+    localhost948:
+      ansible_connection: local
+    localhost949:
+      ansible_connection: local
+    localhost95:
+      ansible_connection: local
+    localhost950:
+      ansible_connection: local
+    localhost951:
+      ansible_connection: local
+    localhost952:
+      ansible_connection: local
+    localhost953:
+      ansible_connection: local
+    localhost954:
+      ansible_connection: local
+    localhost955:
+      ansible_connection: local
+    localhost956:
+      ansible_connection: local
+    localhost957:
+      ansible_connection: local
+    localhost958:
+      ansible_connection: local
+    localhost959:
+      ansible_connection: local
+    localhost96:
+      ansible_connection: local
+    localhost960:
+      ansible_connection: local
+    localhost961:
+      ansible_connection: local
+    localhost962:
+      ansible_connection: local
+    localhost963:
+      ansible_connection: local
+    localhost964:
+      ansible_connection: local
+    localhost965:
+      ansible_connection: local
+    localhost966:
+      ansible_connection: local
+    localhost967:
+      ansible_connection: local
+    localhost968:
+      ansible_connection: local
+    localhost969:
+      ansible_connection: local
+    localhost97:
+      ansible_connection: local
+    localhost970:
+      ansible_connection: local
+    localhost971:
+      ansible_connection: local
+    localhost972:
+      ansible_connection: local
+    localhost973:
+      ansible_connection: local
+    localhost974:
+      ansible_connection: local
+    localhost975:
+      ansible_connection: local
+    localhost976:
+      ansible_connection: local
+    localhost977:
+      ansible_connection: local
+    localhost978:
+      ansible_connection: local
+    localhost979:
+      ansible_connection: local
+    localhost98:
+      ansible_connection: local
+    localhost980:
+      ansible_connection: local
+    localhost981:
+      ansible_connection: local
+    localhost982:
+      ansible_connection: local
+    localhost983:
+      ansible_connection: local
+    localhost984:
+      ansible_connection: local
+    localhost985:
+      ansible_connection: local
+    localhost986:
+      ansible_connection: local
+    localhost987:
+      ansible_connection: local
+    localhost988:
+      ansible_connection: local
+    localhost989:
+      ansible_connection: local
+    localhost99:
+      ansible_connection: local
+    localhost990:
+      ansible_connection: local
+    localhost991:
+      ansible_connection: local
+    localhost992:
+      ansible_connection: local
+    localhost993:
+      ansible_connection: local
+    localhost994:
+      ansible_connection: local
+    localhost995:
+      ansible_connection: local
+    localhost996:
+      ansible_connection: local
+    localhost997:
+      ansible_connection: local
+    localhost998:
+      ansible_connection: local
+    localhost999:
+      ansible_connection: local
+

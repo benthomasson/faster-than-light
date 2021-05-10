@@ -46,7 +46,7 @@ setup(
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'ftl = faster_than_light.cli:main',
+            'ftl = faster_than_light.cli:entry_point',
         ],
     }
 )
