@@ -61,13 +61,13 @@ async def run_module_on_host(host_name, host, module):
                         tempdir = f'/tmp/ftl-{uuid.uuid4()}'
                         ftl_gate = build_ftl_gate()
                         result = await conn.run(f'mkdir {tempdir}', check=True)
-                        print(result.exit_status)
+                        #print(result.exit_status)
                         result = await conn.run(f'touch {os.path.join(tempdir, "args")}', check=True)
-                        print(result.exit_status)
+                        #print(result.exit_status)
                         async with conn.start_sftp_client() as sftp:
                             await sftp.put(ftl_gate, f'{tempdir}/')
                         result = await conn.run(f'chmod 700 {tempdir}/ftl_gate.pyz', check=True)
-                        print(result.exit_status)
+                        #print(result.exit_status)
                         process = await conn.create_process(f'{tempdir}/ftl_gate.pyz')
                         send_message_str(process.stdin, "Hello", {})
                         assert await read_message(process.stdout) == ['Hello', {}]
@@ -79,9 +79,10 @@ async def run_module_on_host(host_name, host, module):
                         if process is not None:
                             send_message_str(process.stdin, "Shutdown", {})
                         if process is not None and process.exit_status is not None:
-                            print(await process.stderr.read())
+                            #print(await process.stderr.read())
+                            await process.stderr.read()
                         result = await conn.run(f'rm -rf {tempdir}', check=True)
-                    print(result.exit_status)
+                    #print(result.exit_status)
                 break
             except ConnectionResetError:
                 await asyncio.sleep(1)
@@ -159,8 +160,8 @@ def extract_task_results(tasks):
     results = {}
     for task in tasks:
         host_name, result = task.result()
-        print(host_name)
-        print(result)
+        #print(host_name)
+        #print(result)
         results[host_name] = result
     return results
 
