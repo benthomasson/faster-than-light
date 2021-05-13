@@ -1,0 +1,33 @@
+all:
+  hosts:
+    localhost0:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost1:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost2:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost3:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost4:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost5:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost6:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost7:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost8:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost9:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+

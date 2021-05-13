@@ -10,6 +10,8 @@ Options:
     -h, --help        Show this page
     --debug            Show debug logging
     --verbose        Show verbose logging
+    --local
+    --python=<p>
 """
 from docopt import docopt
 import logging
@@ -33,7 +35,14 @@ def main(args=None):
     inventory = dict(all=dict(hosts={}))
 
     for i in range(int(parsed_args['<n>'])):
-        inventory['all']['hosts'][f'localhost{i}'] = dict(ansible_connection='local')
+        data = dict()
+        if parsed_args['--local']:
+            data['ansible_connection'] = 'local'
+        else:
+            data['ansible_host'] = 'localhost'
+        if parsed_args['--python']:
+            data['ansible_python_interpreter'] = parsed_args['--python']
+        inventory['all']['hosts'][f'localhost{i}'] = data
 
     print(yaml.dump(inventory, default_flow_style=False))
 
