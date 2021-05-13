@@ -1,0 +1,5 @@
+cmd,name,type,n,time
+ansible -M modules -i inventory1.yml -m argtest all,ansible,argtest,1,1.0193872451782227
+ansible -M modules -i inventory10.yml -m argtest all,ansible,argtest,10,1.1764378547668457
+ansible -M modules -i inventory100.yml -m argtest all,ansible,argtest,100,16.929328203201294
+ansible -M modules -i inventory1000.yml -m argtest all,ansible,argtest,1000,194.17230486869812

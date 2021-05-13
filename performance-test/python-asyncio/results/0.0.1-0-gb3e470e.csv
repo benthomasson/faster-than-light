@@ -1,0 +1,9 @@
+cmd,name,type,n,time
+ftl -i inventory1.yml -M modules -m argtest,ftl,argtest,1,0.2933969497680664
+ftl -i inventory1.yml -M ftl_modules -f argtest,ftl_async,argtest,1,0.20861220359802246
+ftl -i inventory10.yml -M modules -m argtest,ftl,argtest,10,0.44858813285827637
+ftl -i inventory10.yml -M ftl_modules -f argtest,ftl_async,argtest,10,0.23966121673583984
+ftl -i inventory100.yml -M modules -m argtest,ftl,argtest,100,2.2972378730773926
+ftl -i inventory100.yml -M ftl_modules -f argtest,ftl_async,argtest,100,0.25252318382263184
+ftl -i inventory1000.yml -M modules -m argtest,ftl,argtest,1000,19.479360103607178
+ftl -i inventory1000.yml -M ftl_modules -f argtest,ftl_async,argtest,1000,0.7149660587310791

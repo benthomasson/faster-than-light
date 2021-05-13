@@ -8,6 +8,7 @@ pytest = "*"
 ansible = "*"
 
 [packages]
+docopt = "*"
 
 [requires]
 python_version = "3.8"
