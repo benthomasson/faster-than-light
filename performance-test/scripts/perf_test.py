@@ -39,7 +39,11 @@ def main(args=None):
     if parsed_args['--only-header']:
         return
     start = time.time()
-    subprocess.check_output(parsed_args['<cmd>'], shell=True)
+    try:
+        subprocess.check_output(parsed_args['<cmd>'], shell=True)
+    except BaseException as e:
+        print(parsed_args['<cmd>'])
+        raise
     end = time.time()
     writer.writerow(dict(cmd=parsed_args['<cmd>'], name=parsed_args['<name>'], type=parsed_args['<type>'], n=parsed_args['<n>'], time=end-start))
 

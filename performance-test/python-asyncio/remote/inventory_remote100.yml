@@ -1,0 +1,303 @@
+all:
+  hosts:
+    localhost0:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost1:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost10:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost11:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost12:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost13:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost14:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost15:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost16:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost17:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost18:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost19:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost2:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost20:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost21:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost22:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost23:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost24:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost25:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost26:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost27:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost28:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost29:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost3:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost30:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost31:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost32:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost33:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost34:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost35:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost36:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost37:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost38:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost39:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost4:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost40:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost41:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost42:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost43:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost44:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost45:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost46:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost47:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost48:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost49:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost5:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost50:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost51:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost52:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost53:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost54:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost55:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost56:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost57:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost58:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost59:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost6:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost60:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost61:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost62:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost63:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost64:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost65:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost66:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost67:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost68:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost69:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost7:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost70:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost71:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost72:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost73:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost74:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost75:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost76:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost77:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost78:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost79:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost8:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost80:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost81:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost82:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost83:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost84:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost85:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost86:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost87:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost88:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost89:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost9:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost90:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost91:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost92:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost93:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost94:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost95:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost96:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost97:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost98:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+    localhost99:
+      ansible_host: localhost
+      ansible_python_interpreter: /usr/bin/python
+
