@@ -7,8 +7,16 @@ import shutil
 from importlib_resources import files
 import faster_than_light.ftl_gate
 
+from .util import ensure_directory
+
 
 def build_ftl_gate():
+
+    cache = ensure_directory('~/.ftl')
+
+    cached_gate = os.path.join(cache, 'ftl_gate.pyz')
+    if os.path.exists(cached_gate):
+        return cached_gate
 
     tempdir = tempfile.mkdtemp()
     os.mkdir(os.path.join(tempdir, 'ftl_gate'))
@@ -18,4 +26,6 @@ def build_ftl_gate():
                           os.path.join(tempdir, 'ftl_gate.pyz'),
                           sys.executable)
     shutil.rmtree(os.path.join(tempdir, 'ftl_gate'))
-    return os.path.join(tempdir, 'ftl_gate.pyz')
+    shutil.copy(os.path.join(tempdir, 'ftl_gate.pyz'), cached_gate)
+
+    return cached_gate

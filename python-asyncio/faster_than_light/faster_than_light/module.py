@@ -10,6 +10,7 @@ import uuid
 
 from .message import send_message_str, read_message
 from .gate import build_ftl_gate
+from .util import chunk
 
 
 async def check_output(cmd):
@@ -85,6 +86,7 @@ async def run_module_on_host(host_name, host, module):
                     #print(result.exit_status)
                 break
             except ConnectionResetError:
+                print('retry connection')
                 await asyncio.sleep(1)
                 continue
 
@@ -107,14 +109,15 @@ async def run_module(inventory, module_dirs, module_name):
     hosts = unique_hosts(inventory)
 
     # Create a set of tasks to run concurrently
-    tasks = []
-    for host_name, host in hosts.items():
-        tasks.append(asyncio.create_task(run_module_on_host(host_name, host, module)))
+    all_tasks = []
+    for c in chunk(list(hosts.items()), 10):
+        tasks = []
+        for host_name, host in c:
+            tasks.append(asyncio.create_task(run_module_on_host(host_name, host, module)))
+        await asyncio.gather(*tasks)
+        all_tasks.extend(tasks)
 
-    # Await all the tasks
-    await asyncio.gather(*tasks)
-
-    return extract_task_results(tasks)
+    return extract_task_results(all_tasks)
 
 
 async def run_ftl_module(inventory, module_dirs, module_name):
