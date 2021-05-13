@@ -3,3 +3,8 @@
 __author__ = """Ben Thomasson"""
 __email__ = 'benthomasson@gmail.com'
 __version__ = '0.1.0'
+
+from .module import run_module, run_ftl_module
+from .inventory import load_inventory
+
+__all__ = ['run_module', 'run_ftl_module', 'load_inventory']
