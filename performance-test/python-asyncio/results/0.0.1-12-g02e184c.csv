@@ -1,0 +1,5 @@
+cmd,name,type,n,time
+ftl -i inventory_remote1.yml -M ftl_modules -f argtest,ftl_async_remote,argtest,1,0.7095272541046143
+ftl -i inventory_remote10.yml -M ftl_modules -f argtest,ftl_async_remote,argtest,10,0.9361989498138428
+ftl -i inventory_remote100.yml -M ftl_modules -f argtest,ftl_async_remote,argtest,100,10.236780166625977
+ftl -i inventory_remote1000.yml -M ftl_modules -f argtest,ftl_async_remote,argtest,1000,100.98856997489929
