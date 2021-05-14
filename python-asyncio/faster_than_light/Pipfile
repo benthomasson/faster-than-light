@@ -12,6 +12,7 @@ pyyaml = "*"
 coverage = "*"
 twine = "*"
 pytest-cov = "*"
+bumpversion = "*"
 
 [packages]
 pyyaml = "*"
