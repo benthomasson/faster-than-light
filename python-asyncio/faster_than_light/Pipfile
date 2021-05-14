@@ -10,12 +10,13 @@ flake8 = "*"
 autopep8 = "*"
 pyyaml = "*"
 coverage = "*"
+twine = "*"
+pytest-cov = "*"
 
 [packages]
 pyyaml = "*"
 asyncssh = "*"
 docopt = "*"
-pytest-cov = "*"
 importlib-resources = "*"
 
 [requires]
