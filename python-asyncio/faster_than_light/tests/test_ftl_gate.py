@@ -90,14 +90,3 @@ async def test_run_ftl_module():
         send_message(proc.stdin, 'Shutdown', {})
         await proc.wait()
         os.unlink(ftl_gate)
-
-
-@pytest.mark.asyncio
-async def test_run_module_on_host():
-    os.chdir(HERE)
-    hostname, output = await run_module_on_host('localhost',
-                                                dict(),
-                                                os.path.join(HERE, 'modules', 'argtest.py'))
-    pprint(output)
-    assert hostname == 'localhost'
-    assert output[0] == 'ModuleResult'

@@ -91,7 +91,34 @@ async def run_ftl_module_locally(host_name, host, module_path):
     return host_name, result
 
 
-async def run_module_on_host(host_name, host, module, local_runner, remote_runner):
+async def connect_gate(ssh_host):
+    while True:
+        try:
+            conn = await asyncssh.connect(ssh_host)
+            tempdir = f'/tmp/ftl-{uuid.uuid4()}'
+            result = await conn.run(f'mkdir {tempdir}', check=True)
+            result = await conn.run(f'touch {os.path.join(tempdir, "args")}', check=True)
+            assert result.exit_status == 0
+            await send_gate(conn, tempdir)
+            gate_process = await open_gate(conn, tempdir)
+            return conn, gate_process, tempdir
+        except ConnectionResetError:
+            print('retry connection')
+            await asyncio.sleep(1)
+            continue
+
+
+async def close_gate(conn, gate_process, tempdir):
+
+    if gate_process is not None:
+        send_message_str(gate_process.stdin, "Shutdown", {})
+    if gate_process is not None and gate_process.exit_status is not None:
+        await gate_process.stderr.read()
+    result = await conn.run(f'rm -rf {tempdir}', check=True)
+    assert result.exit_status == 0
+
+
+async def run_module_on_host(host_name, host, module, local_runner, remote_runner, gate_cache=None):
     if host and host.get('ansible_connection') == 'local':
         return await local_runner(host_name, host, module)
     else:
@@ -102,25 +129,17 @@ async def run_module_on_host(host_name, host, module, local_runner, remote_runne
             ssh_host = host_name
         while True:
             try:
-                async with asyncssh.connect(ssh_host) as conn:
-                    process = None
-                    try:
-                        tempdir = f'/tmp/ftl-{uuid.uuid4()}'
-                        result = await conn.run(f'mkdir {tempdir}', check=True)
-                        result = await conn.run(f'touch {os.path.join(tempdir, "args")}', check=True)
-                        assert result.exit_status == 0
-                        await send_gate(conn, tempdir)
-                        gate_process = await open_gate(conn, tempdir)
-                        return host_name, await remote_runner(gate_process, module, module_name)
-                    finally:
-                        if process is not None:
-                            send_message_str(process.stdin, "Shutdown", {})
-                        if process is not None and process.exit_status is not None:
-                            # print(await process.stderr.read())
-                            await process.stderr.read()
-                        result = await conn.run(f'rm -rf {tempdir}', check=True)
-                        assert result.exit_status == 0
-                    # print(result.exit_status)
+                if gate_cache is not None and gate_cache.get(host_name):
+                    conn, gate_process, tempdir = gate_cache.get(host_name)
+                else:
+                    conn, gate_process, tempdir = await connect_gate(ssh_host)
+                    if gate_cache is not None:
+                        gate_cache[host_name] = (conn, gate_process, tempdir)
+                try:
+                    return host_name, await remote_runner(gate_process, module, module_name)
+                finally:
+                    if gate_cache is None:
+                        await close_gate(conn, gate_process, tempdir)
                 break
             except ConnectionResetError:
                 print('retry connection')
@@ -150,7 +169,7 @@ def extract_task_results(tasks):
     return results
 
 
-async def _run_module(inventory, module_dirs, module_name, local_runner, remote_runner):
+async def _run_module(inventory, module_dirs, module_name, local_runner, remote_runner, gate_cache):
 
     module = find_module(module_dirs, module_name)
 
@@ -165,24 +184,39 @@ async def _run_module(inventory, module_dirs, module_name, local_runner, remote_
     for c in chunk(list(hosts.items()), 10):
         tasks = []
         for host_name, host in c:
-            tasks.append(asyncio.create_task(run_module_on_host(host_name, host, module, local_runner, remote_runner)))
+            tasks.append(asyncio.create_task(run_module_on_host(host_name,
+                                                                host,
+                                                                module,
+                                                                local_runner,
+                                                                remote_runner,
+                                                                gate_cache)))
         await asyncio.gather(*tasks)
         all_tasks.extend(tasks)
 
     return extract_task_results(all_tasks)
 
 
-async def run_module(inventory, module_dirs, module_name):
+async def run_module(inventory, module_dirs, module_name, gate_cache=None):
     '''
     Runs a module on all items in an inventory concurrently.
     '''
 
-    return await _run_module(inventory, module_dirs, module_name, run_module_locally, run_module_through_gate)
+    return await _run_module(inventory,
+                             module_dirs,
+                             module_name,
+                             run_module_locally,
+                             run_module_through_gate,
+                             gate_cache)
 
 
-async def run_ftl_module(inventory, module_dirs, module_name):
+async def run_ftl_module(inventory, module_dirs, module_name, gate_cache=None):
     '''
     Runs a module on all items in an inventory concurrently.
     '''
 
-    return await _run_module(inventory, module_dirs, module_name, run_ftl_module_locally, run_ftl_module_through_gate)
+    return await _run_module(inventory,
+                             module_dirs,
+                             module_name,
+                             run_ftl_module_locally,
+                             run_ftl_module_through_gate,
+                             gate_cache)

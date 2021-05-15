@@ -87,7 +87,7 @@ async def check_output(cmd):
     return stdout, stderr
 
 
-async def run_module(writer, module_name, module):
+async def gate_run_module(writer, module_name, module):
     tempdir = tempfile.mkdtemp()
     module_file = os.path.join(tempdir, "module.py")
     with open(module_file, 'wb') as f:
@@ -123,7 +123,7 @@ async def main(args):
             if msg_type == 'Hello':
                 send_message(writer, msg_type, data)
             elif msg_type == 'Module':
-                await run_module(writer, **data)
+                await gate_run_module(writer, **data)
             elif msg_type == 'FTLModule':
                 await run_ftl_module(writer, **data)
             elif msg_type == 'Shutdown':
