@@ -7,10 +7,11 @@ import os
 import shutil
 import tempfile
 import uuid
+from functools import partial
 
 from .message import send_message_str, read_message
 from .gate import build_ftl_gate
-from .util import chunk
+from .util import chunk, find_module
 
 
 async def check_output(cmd):
@@ -23,23 +24,10 @@ async def check_output(cmd):
     return stdout
 
 
-def find_module(module_dirs, module_name):
-
-    # Find the module in module_dirs
-    for d in module_dirs:
-        module = os.path.join(d, f'{module_name}.py')
-        if os.path.exists(module):
-            break
-        else:
-            module = None
-
-    return module
-
-
-async def send_gate(conn, tempdir):
-    ftl_gate = build_ftl_gate()
+async def send_gate(gate_builder, conn, tempdir):
+    ftl_gate = gate_builder()
     async with conn.start_sftp_client() as sftp:
-        await sftp.put(ftl_gate, f'{tempdir}/')
+        await sftp.put(ftl_gate, f'{tempdir}/ftl_gate.pyz')
     result = await conn.run(f'chmod 700 {tempdir}/ftl_gate.pyz', check=True)
     assert result.exit_status == 0
 
@@ -91,7 +79,7 @@ async def run_ftl_module_locally(host_name, host, module_path):
     return host_name, result
 
 
-async def connect_gate(ssh_host):
+async def connect_gate(gate_builder, ssh_host):
     while True:
         try:
             conn = await asyncssh.connect(ssh_host)
@@ -99,7 +87,7 @@ async def connect_gate(ssh_host):
             result = await conn.run(f'mkdir {tempdir}', check=True)
             result = await conn.run(f'touch {os.path.join(tempdir, "args")}', check=True)
             assert result.exit_status == 0
-            await send_gate(conn, tempdir)
+            await send_gate(gate_builder, conn, tempdir)
             gate_process = await open_gate(conn, tempdir)
             return conn, gate_process, tempdir
         except ConnectionResetError:
@@ -118,7 +106,8 @@ async def close_gate(conn, gate_process, tempdir):
     assert result.exit_status == 0
 
 
-async def run_module_on_host(host_name, host, module, local_runner, remote_runner, gate_cache=None):
+async def run_module_on_host(host_name, host, module, local_runner, remote_runner,
+                             gate_cache, gate_builder):
     if host and host.get('ansible_connection') == 'local':
         return await local_runner(host_name, host, module)
     else:
@@ -132,7 +121,7 @@ async def run_module_on_host(host_name, host, module, local_runner, remote_runne
                 if gate_cache is not None and gate_cache.get(host_name):
                     conn, gate_process, tempdir = gate_cache.get(host_name)
                 else:
-                    conn, gate_process, tempdir = await connect_gate(ssh_host)
+                    conn, gate_process, tempdir = await connect_gate(gate_builder, ssh_host)
                     if gate_cache is not None:
                         gate_cache[host_name] = (conn, gate_process, tempdir)
                 try:
@@ -169,7 +158,8 @@ def extract_task_results(tasks):
     return results
 
 
-async def _run_module(inventory, module_dirs, module_name, local_runner, remote_runner, gate_cache):
+async def _run_module(inventory, module_dirs, module_name, local_runner,
+                      remote_runner, gate_cache, modules, dependencies):
 
     module = find_module(module_dirs, module_name)
 
@@ -177,6 +167,8 @@ async def _run_module(inventory, module_dirs, module_name, local_runner, remote_
         raise Exception('Module not found')
 
     hosts = unique_hosts(inventory)
+
+    gate_builder = partial(build_ftl_gate, modules=modules, module_dirs=module_dirs, dependencies=dependencies)
 
     all_tasks = []
     # Run the tasks in chunks of 10 to reduce contention for remote connections.
@@ -189,14 +181,15 @@ async def _run_module(inventory, module_dirs, module_name, local_runner, remote_
                                                                 module,
                                                                 local_runner,
                                                                 remote_runner,
-                                                                gate_cache)))
+                                                                gate_cache,
+                                                                gate_builder)))
         await asyncio.gather(*tasks)
         all_tasks.extend(tasks)
 
     return extract_task_results(all_tasks)
 
 
-async def run_module(inventory, module_dirs, module_name, gate_cache=None):
+async def run_module(inventory, module_dirs, module_name, gate_cache=None, modules=None, dependencies=None):
     '''
     Runs a module on all items in an inventory concurrently.
     '''
@@ -206,10 +199,12 @@ async def run_module(inventory, module_dirs, module_name, gate_cache=None):
                              module_name,
                              run_module_locally,
                              run_module_through_gate,
-                             gate_cache)
+                             gate_cache,
+                             modules,
+                             dependencies)
 
 
-async def run_ftl_module(inventory, module_dirs, module_name, gate_cache=None):
+async def run_ftl_module(inventory, module_dirs, module_name, gate_cache=None, modules=None, dependencies=None):
     '''
     Runs a module on all items in an inventory concurrently.
     '''
@@ -219,4 +214,6 @@ async def run_ftl_module(inventory, module_dirs, module_name, gate_cache=None):
                              module_name,
                              run_ftl_module_locally,
                              run_ftl_module_through_gate,
-                             gate_cache)
+                             gate_cache,
+                             modules,
+                             dependencies)

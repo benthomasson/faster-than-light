@@ -10,6 +10,7 @@ Options:
     -m=<m>, --module=<m>        Module
     -M=<M>, --module-dir=<M>    Module directory
     -i=<i>, --inventory=<i>     Inventory
+    -r=<r>, --requirements      Python requirements
     --debug                     Show debug logging
     --verbose                   Show verbose logging
 """
@@ -35,10 +36,16 @@ async def main(args=None):
     else:
         logging.basicConfig(level=logging.WARNING)
 
+    dependencies = None
+    if parsed_args['--requirements']:
+        with open(parsed_args['--requirements']) as f:
+            dependencies = [x for x in f.read().splitlines() if x]
+
     if parsed_args['--module']:
         output = await run_module(load_inventory(parsed_args['--inventory']),
                                   [parsed_args['--module-dir']],
-                                  parsed_args['--module'])
+                                  parsed_args['--module'],
+                                  dependencies=dependencies)
         print(output)
     elif parsed_args['--ftl-module']:
         output = await run_ftl_module(load_inventory(parsed_args['--inventory']),

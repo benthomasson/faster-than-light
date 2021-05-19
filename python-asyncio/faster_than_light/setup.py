@@ -13,7 +13,8 @@ with open('HISTORY.rst') as history_file:
 requirements = [ 'asyncssh',
                  'importlib_resources',
                  'pyyaml',
-                 'docopt', ]
+                 'docopt',
+                 'pip']
 
 setup_requirements = ['pytest-runner', ]
 
