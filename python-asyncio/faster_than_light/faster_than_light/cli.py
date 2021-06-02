@@ -45,6 +45,7 @@ async def main(args=None):
         output = await run_module(load_inventory(parsed_args['--inventory']),
                                   [parsed_args['--module-dir']],
                                   parsed_args['--module'],
+                                  modules=[parsed_args['--module']],
                                   dependencies=dependencies)
         print(output)
     elif parsed_args['--ftl-module']:

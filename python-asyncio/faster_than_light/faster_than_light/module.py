@@ -40,8 +40,9 @@ async def open_gate(conn, tempdir):
 
 
 async def run_module_through_gate(gate_process, module, module_name):
-    with open(module, 'rb') as f:
-        module_text = base64.b64encode(f.read()).decode()
+    #with open(module, 'rb') as f:
+    #    module_text = base64.b64encode(f.read()).decode()
+    module_text=None
     send_message_str(gate_process.stdin, 'Module', dict(module=module_text, module_name=module_name))
     return await read_message(gate_process.stdout)
 
@@ -102,8 +103,8 @@ async def close_gate(conn, gate_process, tempdir):
         send_message_str(gate_process.stdin, "Shutdown", {})
     if gate_process is not None and gate_process.exit_status is not None:
         await gate_process.stderr.read()
-    result = await conn.run(f'rm -rf {tempdir}', check=True)
-    assert result.exit_status == 0
+    #result = await conn.run(f'rm -rf {tempdir}', check=True)
+    #assert result.exit_status == 0
 
 
 async def run_module_on_host(host_name, host, module, local_runner, remote_runner,

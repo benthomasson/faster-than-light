@@ -16,6 +16,12 @@ def chunk(lst, n):
 
 def find_module(module_dirs, module_name):
 
+    '''
+    Finds a module file path in the module_dirs with the name module_name.
+
+    Returns a file path.
+    '''
+
     # Find the module in module_dirs
     for d in module_dirs:
         module = os.path.join(d, f'{module_name}.py')
@@ -31,3 +37,9 @@ def encode_module(module_dirs, module_name):
 
     with open(find_module(module_dirs, module_name), 'rb') as f:
         return base64.b64encode(f.read()).decode()
+
+
+def read_module(module_dirs, module_name):
+
+    with open(find_module(module_dirs, module_name), 'rb') as f:
+        return f.read()

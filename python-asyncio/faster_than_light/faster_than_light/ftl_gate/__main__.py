@@ -5,6 +5,8 @@ import os
 import sys
 import tempfile
 import base64
+import ftl_gate
+import importlib.resources
 
 
 async def connect_stdin_stdout():
@@ -87,11 +89,16 @@ async def check_output(cmd):
     return stdout, stderr
 
 
-async def gate_run_module(writer, module_name, module):
+async def gate_run_module(writer, module_name, module=None):
     tempdir = tempfile.mkdtemp()
-    module_file = os.path.join(tempdir, "module.py")
-    with open(module_file, 'wb') as f:
-        f.write(base64.b64decode(module))
+    module_file = os.path.join(tempdir, f"{module_name}.py")
+    if module is not None:
+        with open(module_file, 'wb') as f:
+            f.write(base64.b64decode(module))
+    else:
+        modules = importlib.resources.files(ftl_gate)
+        with open(module_file, 'wb') as f2:
+            f2.write(importlib.resources.read_binary(ftl_gate, module_name))
     args = os.path.join(tempdir, 'args')
     with open(args, 'w') as f:
         f.write('some args')

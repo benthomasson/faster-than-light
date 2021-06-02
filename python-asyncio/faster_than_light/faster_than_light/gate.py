@@ -10,7 +10,7 @@ from importlib_resources import files
 import faster_than_light.ftl_gate
 from subprocess import check_output
 
-from .util import ensure_directory, encode_module
+from .util import ensure_directory, read_module
 
 
 def build_ftl_gate(modules=None, module_dirs=None, dependencies=None):
@@ -23,10 +23,6 @@ def build_ftl_gate(modules=None, module_dirs=None, dependencies=None):
         module_dirs = []
     if dependencies is None:
         dependencies = []
-
-    input_tuples = tuple([tuple(modules),
-                         tuple(module_dirs),
-                         tuple(dependencies)])
 
     inputs = []
     inputs.extend(modules)
@@ -46,17 +42,23 @@ def build_ftl_gate(modules=None, module_dirs=None, dependencies=None):
 
     # Install modules
     if modules:
-        module_dir = os.path.join(tempdir, "modules")
+        module_dir = os.path.join(tempdir, "ftl_gate", "ftl_gate")
+        os.makedirs(module_dir)
+        with open(os.path.join(module_dir, "__init__.py"), 'w') as f:
+            f.write("")
         for module in modules:
-            with open(os.path.join(module_dir, module), 'w') as f:
-                f.write(encode_module(module_dirs))
+            with open(os.path.join(module_dir, f'{module}.py'), 'wb') as f:
+                f.write(read_module(module_dirs, module))
 
     # Install dependencies for Gate
     if dependencies:
         requirements = os.path.join(tempdir, 'requirements.txt')
         with open(requirements, 'w') as f:
             f.write("\n".join(dependencies))
-        output = check_output([sys.executable, '-m', 'pip', 'install', '-r', requirements, '--target', tempdir])
+        output = check_output([sys.executable, '-m', 'pip',
+                               'install',
+                               '-r', requirements,
+                               '--target', os.path.join(tempdir, "ftl_gate")])
         print(output)
 
     zipapp.create_archive(os.path.join(tempdir, 'ftl_gate'),
