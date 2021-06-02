@@ -99,10 +99,13 @@ async def connect_gate(gate_builder, ssh_host):
 
 async def close_gate(conn, gate_process, tempdir):
 
-    if gate_process is not None:
-        send_message_str(gate_process.stdin, "Shutdown", {})
-    if gate_process is not None and gate_process.exit_status is not None:
-        await gate_process.stderr.read()
+    try:
+        if gate_process is not None:
+            send_message_str(gate_process.stdin, "Shutdown", {})
+        if gate_process is not None and gate_process.exit_status is not None:
+            await gate_process.stderr.read()
+    finally:
+        conn.close()
     #result = await conn.run(f'rm -rf {tempdir}', check=True)
     #assert result.exit_status == 0
 
