@@ -40,12 +40,13 @@ def build_ftl_gate(modules=None, module_dirs=None, dependencies=None):
     with open(os.path.join(tempdir, 'ftl_gate', '__main__.py'), 'w') as f:
         f.write(files(faster_than_light.ftl_gate).joinpath('__main__.py').read_text())
 
+    module_dir = os.path.join(tempdir, "ftl_gate", "ftl_gate")
+    os.makedirs(module_dir)
+    with open(os.path.join(module_dir, "__init__.py"), 'w') as f:
+        f.write("")
+
     # Install modules
     if modules:
-        module_dir = os.path.join(tempdir, "ftl_gate", "ftl_gate")
-        os.makedirs(module_dir)
-        with open(os.path.join(module_dir, "__init__.py"), 'w') as f:
-            f.write("")
         for module in modules:
             with open(os.path.join(module_dir, f'{module}.py'), 'wb') as f:
                 f.write(read_module(module_dirs, module))

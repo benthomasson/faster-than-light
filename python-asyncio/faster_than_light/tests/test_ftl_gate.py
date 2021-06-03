@@ -14,6 +14,29 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 
 
 @pytest.mark.asyncio
+async def test_read_message():
+    os.chdir(HERE)
+    ftl_gate = build_ftl_gate()
+    proc = await asyncio.create_subprocess_shell(
+        ftl_gate,
+        stdin=asyncio.subprocess.PIPE,
+        stdout=asyncio.subprocess.PIPE,
+        stderr=asyncio.subprocess.PIPE)
+
+    try:
+        proc.stdin.write(b'0000000d["Hello", {}]')
+        message = await read_message(proc.stdout)
+        assert message[0] == "Hello"
+        assert message[1] == {}
+    except Exception:
+        print((await proc.stderr.read()).decode())
+        raise
+    finally:
+        send_message(proc.stdin, 'Shutdown', {})
+        await proc.wait()
+        os.unlink(ftl_gate)
+
+@pytest.mark.asyncio
 async def test_build_ftl_gate():
     os.chdir(HERE)
     ftl_gate = build_ftl_gate()
