@@ -13,7 +13,7 @@ from subprocess import check_output
 from .util import ensure_directory, read_module
 
 
-def build_ftl_gate(modules=None, module_dirs=None, dependencies=None):
+def build_ftl_gate(modules=None, module_dirs=None, dependencies=None, interpreter=sys.executable):
 
     cache = ensure_directory('~/.ftl')
 
@@ -28,6 +28,7 @@ def build_ftl_gate(modules=None, module_dirs=None, dependencies=None):
     inputs.extend(modules)
     inputs.extend(module_dirs)
     inputs.extend(dependencies)
+    inputs.extend(interpreter)
 
     gate_hash = hashlib.sha256("".join(inputs).encode()).hexdigest()
 
@@ -56,7 +57,7 @@ def build_ftl_gate(modules=None, module_dirs=None, dependencies=None):
         requirements = os.path.join(tempdir, 'requirements.txt')
         with open(requirements, 'w') as f:
             f.write("\n".join(dependencies))
-        output = check_output([sys.executable, '-m', 'pip',
+        output = check_output([interpreter, '-m', 'pip',
                                'install',
                                '-r', requirements,
                                '--target', os.path.join(tempdir, "ftl_gate")])
@@ -64,7 +65,7 @@ def build_ftl_gate(modules=None, module_dirs=None, dependencies=None):
 
     zipapp.create_archive(os.path.join(tempdir, 'ftl_gate'),
                           os.path.join(tempdir, 'ftl_gate.pyz'),
-                          sys.executable)
+                          interpreter)
     shutil.rmtree(os.path.join(tempdir, 'ftl_gate'))
     shutil.copy(os.path.join(tempdir, 'ftl_gate.pyz'), cached_gate)
 

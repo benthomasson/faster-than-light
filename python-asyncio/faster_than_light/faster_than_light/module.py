@@ -1,9 +1,11 @@
 
 import asyncio
 import asyncssh
+import asyncssh.misc
 import base64
 import json
 import os
+import sys
 import shutil
 import tempfile
 import uuid
@@ -24,8 +26,8 @@ async def check_output(cmd):
     return stdout
 
 
-async def send_gate(gate_builder, conn, tempdir):
-    ftl_gate = gate_builder()
+async def send_gate(gate_builder, conn, tempdir, interpreter):
+    ftl_gate = gate_builder(interpreter=interpreter)
     async with conn.start_sftp_client() as sftp:
         await sftp.put(ftl_gate, f'{tempdir}/ftl_gate.pyz')
     result = await conn.run(f'chmod 700 {tempdir}/ftl_gate.pyz', check=True)
@@ -87,7 +89,7 @@ async def remove_item_from_cache(gate_cache):
         print('closed gate', item)
 
 
-async def connect_gate(gate_builder, ssh_host, gate_cache):
+async def connect_gate(gate_builder, ssh_host, gate_cache, interpreter):
     while True:
         try:
             conn = await asyncssh.connect(ssh_host)
@@ -95,10 +97,14 @@ async def connect_gate(gate_builder, ssh_host, gate_cache):
             result = await conn.run(f'mkdir {tempdir}', check=True)
             result = await conn.run(f'touch {os.path.join(tempdir, "args")}', check=True)
             assert result.exit_status == 0
-            await send_gate(gate_builder, conn, tempdir)
+            await send_gate(gate_builder, conn, tempdir, interpreter)
             gate_process = await open_gate(conn, tempdir)
             return conn, gate_process, tempdir
         except ConnectionResetError:
+            print('retry connection')
+            await remove_item_from_cache(gate_cache)
+            continue
+        except asyncssh.misc.ConnectionLost:
             print('retry connection')
             await remove_item_from_cache(gate_cache)
             continue
@@ -127,13 +133,17 @@ async def run_module_on_host(host_name, host, module, local_runner, remote_runne
             ssh_host = host.get('ansible_host')
         else:
             ssh_host = host_name
+        if host and host.get('ansible_python_interpreter'):
+            interpreter = host.get('ansible_python_interpreter')
+        else:
+            interpreter = sys.executable
         while True:
             try:
                 if gate_cache is not None and gate_cache.get(host_name):
                     conn, gate_process, tempdir = gate_cache.get(host_name)
                     del gate_cache[host_name]
                 else:
-                    conn, gate_process, tempdir = await connect_gate(gate_builder, ssh_host, gate_cache)
+                    conn, gate_process, tempdir = await connect_gate(gate_builder, ssh_host, gate_cache, interpreter)
                 try:
                     return host_name, await remote_runner(gate_process, module, module_name)
                 finally:
