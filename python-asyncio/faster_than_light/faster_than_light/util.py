@@ -1,5 +1,7 @@
-import os
 import base64
+import glob
+import os
+import shutil
 
 
 def ensure_directory(d):
@@ -43,3 +45,15 @@ def read_module(module_dirs, module_name):
 
     with open(find_module(module_dirs, module_name), 'rb') as f:
         return f.read()
+
+
+def clean_up_ftl_cache():
+    cache = os.path.abspath(os.path.expanduser("~/.ftl"))
+    if os.path.exists(cache) and os.path.isdir(cache) and ".ftl" in cache:
+        shutil.rmtree(cache)
+
+
+def clean_up_tmp():
+    for d in glob.glob('/tmp/ftl-*'):
+        if os.path.exists(d) and os.path.isdir(d) and 'tmp' in d and 'ftl' in d:
+            shutil.rmtree(d)

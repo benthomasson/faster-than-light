@@ -9,6 +9,7 @@ from pprint import pprint
 from faster_than_light.message import read_message, send_message
 from faster_than_light.gate import build_ftl_gate
 from faster_than_light.module import run_module_on_host, find_module
+from faster_than_light.util import clean_up_ftl_cache, clean_up_tmp
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -35,6 +36,8 @@ async def test_read_message():
         send_message(proc.stdin, 'Shutdown', {})
         await proc.wait()
         os.unlink(ftl_gate)
+        clean_up_ftl_cache()
+        clean_up_tmp()
 
 @pytest.mark.asyncio
 async def test_build_ftl_gate():
@@ -55,6 +58,8 @@ async def test_build_ftl_gate():
         send_message(proc.stdin, 'Shutdown', {})
         await proc.wait()
         os.unlink(ftl_gate)
+        clean_up_ftl_cache()
+        clean_up_tmp()
 
 
 @pytest.mark.asyncio
@@ -84,6 +89,8 @@ async def test_run_module():
         send_message(proc.stdin, 'Shutdown', {})
         await proc.wait()
         os.unlink(ftl_gate)
+        clean_up_ftl_cache()
+        clean_up_tmp()
 
 
 @pytest.mark.asyncio
@@ -113,3 +120,4 @@ async def test_run_ftl_module():
         send_message(proc.stdin, 'Shutdown', {})
         await proc.wait()
         os.unlink(ftl_gate)
+        clean_up_tmp()
