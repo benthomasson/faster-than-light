@@ -80,7 +80,14 @@ async def run_ftl_module_locally(host_name, host, module_path):
     return host_name, result
 
 
-async def connect_gate(gate_builder, ssh_host):
+async def remove_item_from_cache(gate_cache):
+    if gate_cache is not None and gate_cache:
+        item, (conn, gate_process, tempdir) = gate_cache.popitem()
+        await close_gate(conn, gate_process, tempdir)
+        print('closed gate', item)
+
+
+async def connect_gate(gate_builder, ssh_host, gate_cache):
     while True:
         try:
             conn = await asyncssh.connect(ssh_host)
@@ -93,7 +100,7 @@ async def connect_gate(gate_builder, ssh_host):
             return conn, gate_process, tempdir
         except ConnectionResetError:
             print('retry connection')
-            await asyncio.sleep(1)
+            await remove_item_from_cache(gate_cache)
             continue
 
 
@@ -124,19 +131,21 @@ async def run_module_on_host(host_name, host, module, local_runner, remote_runne
             try:
                 if gate_cache is not None and gate_cache.get(host_name):
                     conn, gate_process, tempdir = gate_cache.get(host_name)
+                    del gate_cache[host_name]
                 else:
-                    conn, gate_process, tempdir = await connect_gate(gate_builder, ssh_host)
-                    if gate_cache is not None:
-                        gate_cache[host_name] = (conn, gate_process, tempdir)
+                    conn, gate_process, tempdir = await connect_gate(gate_builder, ssh_host, gate_cache)
                 try:
                     return host_name, await remote_runner(gate_process, module, module_name)
                 finally:
                     if gate_cache is None:
                         await close_gate(conn, gate_process, tempdir)
+                    else:
+                        gate_cache[host_name] = (conn, gate_process, tempdir)
                 break
             except ConnectionResetError:
                 print('retry connection')
-                await asyncio.sleep(1)
+                #Randomly close a connection in the cache
+                await remove_item_from_cache(gate_cache)
                 continue
 
         return host_name, None
