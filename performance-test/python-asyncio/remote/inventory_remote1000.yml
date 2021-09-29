@@ -2,3002 +2,3002 @@ all:
   hosts:
     localhost0:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost1:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost10:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost100:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost101:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost102:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost103:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost104:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost105:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost106:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost107:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost108:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost109:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost11:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost110:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost111:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost112:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost113:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost114:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost115:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost116:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost117:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost118:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost119:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost12:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost120:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost121:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost122:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost123:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost124:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost125:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost126:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost127:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost128:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost129:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost13:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost130:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost131:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost132:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost133:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost134:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost135:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost136:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost137:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost138:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost139:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost14:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost140:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost141:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost142:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost143:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost144:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost145:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost146:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost147:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost148:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost149:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost15:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost150:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost151:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost152:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost153:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost154:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost155:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost156:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost157:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost158:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost159:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost16:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost160:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost161:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost162:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost163:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost164:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost165:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost166:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost167:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost168:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost169:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost17:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost170:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost171:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost172:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost173:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost174:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost175:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost176:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost177:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost178:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost179:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost18:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost180:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost181:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost182:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost183:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost184:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost185:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost186:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost187:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost188:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost189:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost19:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost190:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost191:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost192:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost193:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost194:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost195:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost196:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost197:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost198:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost199:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost2:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost20:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost200:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost201:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost202:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost203:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost204:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost205:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost206:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost207:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost208:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost209:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost21:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost210:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost211:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost212:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost213:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost214:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost215:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost216:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost217:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost218:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost219:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost22:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost220:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost221:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost222:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost223:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost224:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost225:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost226:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost227:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost228:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost229:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost23:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost230:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost231:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost232:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost233:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost234:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost235:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost236:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost237:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost238:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost239:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost24:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost240:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost241:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost242:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost243:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost244:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost245:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost246:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost247:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost248:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost249:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost25:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost250:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost251:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost252:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost253:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost254:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost255:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost256:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost257:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost258:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost259:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost26:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost260:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost261:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost262:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost263:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost264:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost265:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost266:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost267:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost268:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost269:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost27:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost270:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost271:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost272:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost273:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost274:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost275:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost276:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost277:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost278:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost279:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost28:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost280:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost281:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost282:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost283:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost284:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost285:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost286:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost287:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost288:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost289:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost29:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost290:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost291:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost292:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost293:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost294:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost295:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost296:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost297:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost298:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost299:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost3:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost30:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost300:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost301:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost302:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost303:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost304:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost305:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost306:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost307:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost308:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost309:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost31:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost310:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost311:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost312:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost313:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost314:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost315:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost316:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost317:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost318:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost319:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost32:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost320:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost321:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost322:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost323:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost324:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost325:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost326:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost327:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost328:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost329:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost33:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost330:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost331:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost332:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost333:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost334:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost335:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost336:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost337:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost338:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost339:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost34:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost340:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost341:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost342:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost343:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost344:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost345:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost346:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost347:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost348:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost349:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost35:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost350:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost351:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost352:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost353:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost354:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost355:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost356:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost357:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost358:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost359:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost36:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost360:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost361:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost362:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost363:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost364:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost365:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost366:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost367:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost368:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost369:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost37:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost370:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost371:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost372:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost373:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost374:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost375:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost376:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost377:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost378:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost379:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost38:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost380:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost381:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost382:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost383:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost384:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost385:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost386:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost387:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost388:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost389:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost39:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost390:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost391:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost392:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost393:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost394:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost395:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost396:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost397:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost398:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost399:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost4:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost40:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost400:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost401:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost402:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost403:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost404:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost405:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost406:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost407:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost408:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost409:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost41:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost410:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost411:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost412:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost413:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost414:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost415:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost416:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost417:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost418:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost419:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost42:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost420:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost421:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost422:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost423:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost424:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost425:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost426:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost427:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost428:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost429:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost43:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost430:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost431:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost432:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost433:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost434:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost435:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost436:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost437:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost438:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost439:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost44:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost440:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost441:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost442:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost443:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost444:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost445:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost446:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost447:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost448:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost449:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost45:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost450:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost451:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost452:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost453:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost454:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost455:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost456:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost457:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost458:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost459:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost46:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost460:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost461:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost462:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost463:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost464:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost465:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost466:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost467:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost468:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost469:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost47:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost470:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost471:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost472:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost473:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost474:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost475:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost476:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost477:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost478:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost479:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost48:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost480:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost481:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost482:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost483:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost484:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost485:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost486:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost487:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost488:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost489:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost49:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost490:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost491:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost492:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost493:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost494:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost495:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost496:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost497:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost498:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost499:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost5:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost50:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost500:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost501:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost502:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost503:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost504:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost505:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost506:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost507:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost508:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost509:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost51:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost510:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost511:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost512:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost513:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost514:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost515:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost516:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost517:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost518:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost519:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost52:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost520:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost521:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost522:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost523:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost524:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost525:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost526:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost527:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost528:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost529:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost53:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost530:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost531:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost532:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost533:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost534:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost535:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost536:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost537:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost538:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost539:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost54:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost540:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost541:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost542:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost543:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost544:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost545:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost546:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost547:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost548:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost549:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost55:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost550:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost551:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost552:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost553:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost554:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost555:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost556:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost557:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost558:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost559:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost56:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost560:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost561:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost562:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost563:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost564:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost565:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost566:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost567:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost568:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost569:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost57:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost570:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost571:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost572:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost573:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost574:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost575:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost576:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost577:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost578:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost579:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost58:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost580:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost581:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost582:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost583:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost584:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost585:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost586:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost587:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost588:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost589:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost59:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost590:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost591:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost592:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost593:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost594:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost595:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost596:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost597:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost598:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost599:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost6:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost60:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost600:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost601:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost602:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost603:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost604:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost605:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost606:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost607:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost608:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost609:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost61:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost610:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost611:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost612:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost613:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost614:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost615:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost616:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost617:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost618:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost619:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost62:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost620:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost621:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost622:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost623:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost624:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost625:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost626:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost627:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost628:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost629:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost63:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost630:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost631:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost632:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost633:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost634:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost635:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost636:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost637:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost638:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost639:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost64:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost640:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost641:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost642:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost643:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost644:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost645:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost646:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost647:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost648:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost649:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost65:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost650:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost651:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost652:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost653:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost654:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost655:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost656:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost657:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost658:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost659:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost66:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost660:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost661:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost662:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost663:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost664:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost665:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost666:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost667:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost668:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost669:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost67:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost670:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost671:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost672:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost673:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost674:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost675:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost676:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost677:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost678:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost679:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost68:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost680:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost681:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost682:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost683:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost684:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost685:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost686:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost687:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost688:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost689:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost69:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost690:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost691:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost692:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost693:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost694:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost695:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost696:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost697:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost698:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost699:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost7:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost70:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost700:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost701:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost702:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost703:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost704:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost705:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost706:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost707:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost708:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost709:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost71:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost710:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost711:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost712:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost713:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost714:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost715:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost716:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost717:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost718:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost719:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost72:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost720:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost721:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost722:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost723:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost724:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost725:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost726:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost727:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost728:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost729:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost73:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost730:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost731:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost732:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost733:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost734:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost735:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost736:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost737:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost738:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost739:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost74:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost740:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost741:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost742:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost743:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost744:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost745:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost746:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost747:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost748:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost749:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost75:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost750:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost751:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost752:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost753:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost754:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost755:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost756:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost757:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost758:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost759:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost76:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost760:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost761:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost762:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost763:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost764:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost765:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost766:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost767:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost768:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost769:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost77:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost770:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost771:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost772:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost773:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost774:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost775:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost776:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost777:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost778:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost779:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost78:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost780:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost781:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost782:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost783:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost784:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost785:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost786:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost787:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost788:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost789:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost79:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost790:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost791:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost792:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost793:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost794:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost795:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost796:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost797:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost798:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost799:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost8:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost80:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost800:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost801:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost802:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost803:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost804:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost805:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost806:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost807:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost808:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost809:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost81:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost810:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost811:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost812:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost813:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost814:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost815:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost816:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost817:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost818:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost819:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost82:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost820:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost821:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost822:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost823:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost824:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost825:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost826:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost827:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost828:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost829:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost83:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost830:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost831:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost832:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost833:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost834:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost835:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost836:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost837:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost838:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost839:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost84:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost840:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost841:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost842:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost843:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost844:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost845:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost846:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost847:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost848:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost849:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost85:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost850:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost851:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost852:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost853:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost854:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost855:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost856:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost857:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost858:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost859:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost86:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost860:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost861:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost862:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost863:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost864:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost865:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost866:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost867:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost868:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost869:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost87:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost870:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost871:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost872:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost873:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost874:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost875:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost876:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost877:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost878:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost879:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost88:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost880:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost881:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost882:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost883:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost884:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost885:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost886:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost887:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost888:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost889:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost89:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost890:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost891:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost892:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost893:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost894:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost895:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost896:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost897:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost898:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost899:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost9:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost90:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost900:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost901:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost902:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost903:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost904:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost905:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost906:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost907:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost908:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost909:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost91:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost910:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost911:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost912:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost913:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost914:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost915:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost916:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost917:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost918:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost919:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost92:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost920:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost921:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost922:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost923:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost924:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost925:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost926:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost927:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost928:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost929:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost93:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost930:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost931:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost932:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost933:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost934:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost935:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost936:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost937:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost938:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost939:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost94:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost940:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost941:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost942:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost943:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost944:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost945:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost946:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost947:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost948:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost949:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost95:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost950:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost951:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost952:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost953:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost954:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost955:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost956:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost957:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost958:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost959:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost96:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost960:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost961:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost962:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost963:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost964:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost965:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost966:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost967:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost968:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost969:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost97:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost970:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost971:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost972:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost973:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost974:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost975:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost976:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost977:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost978:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost979:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost98:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost980:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost981:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost982:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost983:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost984:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost985:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost986:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost987:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost988:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost989:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost99:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost990:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost991:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost992:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost993:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost994:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost995:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost996:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost997:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost998:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
     localhost999:
       ansible_host: localhost
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/local/bin/python3.9
 
