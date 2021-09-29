@@ -7,6 +7,7 @@ import tempfile
 import base64
 import ftl_gate
 import importlib.resources
+import shutil
 
 
 async def connect_stdin_stdout():
@@ -90,21 +91,24 @@ async def check_output(cmd):
 
 
 async def gate_run_module(writer, module_name, module=None):
-    tempdir = tempfile.mkdtemp()
-    module_file = os.path.join(tempdir, f"{module_name}.py")
-    if module is not None:
-        with open(module_file, 'wb') as f:
-            f.write(base64.b64decode(module))
-    else:
-        modules = importlib.resources.files(ftl_gate)
-        with open(module_file, 'wb') as f2:
-            f2.write(importlib.resources.read_binary(ftl_gate, module_name))
-    args = os.path.join(tempdir, 'args')
-    with open(args, 'w') as f:
-        f.write('some args')
-    stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}')
-    send_message(writer, 'ModuleResult', dict(stdout=stdout.decode(),
-                                              stderr=stderr.decode()))
+    tempdir = tempfile.mkdtemp(prefix="ftl-module")
+    try:
+        module_file = os.path.join(tempdir, module_name)
+        if module is not None:
+            with open(module_file, 'wb') as f:
+                f.write(base64.b64decode(module))
+        else:
+            modules = importlib.resources.files(ftl_gate)
+            with open(module_file, 'wb') as f2:
+                f2.write(importlib.resources.read_binary(ftl_gate, module_name))
+        args = os.path.join(tempdir, 'args')
+        with open(args, 'w') as f:
+            f.write('some args')
+        stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}')
+        send_message(writer, 'ModuleResult', dict(stdout=stdout.decode(),
+                                                  stderr=stderr.decode()))
+    finally:
+        shutil.rmtree(tempdir)
 
 
 async def run_ftl_module(writer, module_name, module):
