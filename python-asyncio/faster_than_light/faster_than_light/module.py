@@ -26,6 +26,18 @@ async def check_output(cmd):
     return stdout
 
 
+async def check_version(conn, interpreter):
+    print(f'{interpreter} --version')
+    result = await conn.run(f'{interpreter} --version')
+    python_version = result.stderr
+    for line in python_version.split('\n'):
+        line = line.strip()
+        if line.startswith('Python '):
+            _, _, version = line.partition(' ')
+            major, _, _ = version.split('.')
+            if int(major) < 3:
+                raise Exception('Python 3 or greater required for interpreter')
+
 async def send_gate(gate_builder, conn, tempdir, interpreter):
     ftl_gate = gate_builder(interpreter=interpreter)
     async with conn.start_sftp_client() as sftp:
@@ -93,6 +105,7 @@ async def connect_gate(gate_builder, ssh_host, gate_cache, interpreter):
     while True:
         try:
             conn = await asyncssh.connect(ssh_host)
+            await check_version(conn, interpreter)
             tempdir = f'/tmp/ftl-{uuid.uuid4()}'
             result = await conn.run(f'mkdir {tempdir}', check=True)
             result = await conn.run(f'touch {os.path.join(tempdir, "args")}', check=True)
