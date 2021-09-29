@@ -27,9 +27,8 @@ async def check_output(cmd):
 
 
 async def check_version(conn, interpreter):
-    print(f'{interpreter} --version')
     result = await conn.run(f'{interpreter} --version')
-    python_version = result.stderr
+    python_version = result.stdout.strip()
     for line in python_version.split('\n'):
         line = line.strip()
         if line.startswith('Python '):
@@ -37,6 +36,8 @@ async def check_version(conn, interpreter):
             major, _, _ = version.split('.')
             if int(major) < 3:
                 raise Exception('Python 3 or greater required for interpreter')
+        else:
+            raise Exception(f'Ensure that non-interactive shells emit no text: {line}')
 
 async def send_gate(gate_builder, conn, tempdir, interpreter):
     ftl_gate = gate_builder(interpreter=interpreter)
