@@ -201,7 +201,7 @@ async def _run_module(inventory, module_dirs, module_name, local_runner,
     module = find_module(module_dirs, module_name)
 
     if module is None:
-        raise Exception('Module not found')
+        raise Exception(f'Module {module_name} not found in {module_dirs}')
 
     hosts = unique_hosts(inventory)
 
@@ -221,6 +221,9 @@ async def _run_module(inventory, module_dirs, module_name, local_runner,
                                                                 gate_cache,
                                                                 gate_builder)))
         await asyncio.gather(*tasks)
+        for i in extract_task_results(tasks):
+            print('ok:', f'[{i}]')
+
         all_tasks.extend(tasks)
 
     return extract_task_results(all_tasks)
