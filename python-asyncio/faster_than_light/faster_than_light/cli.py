@@ -11,6 +11,7 @@ Options:
     -M=<M>, --module-dir=<M>    Module directory
     -i=<i>, --inventory=<i>     Inventory
     -r=<r>, --requirements      Python requirements
+    -a=<a>, --args=<a>          Module arguments
     --debug                     Show debug logging
     --verbose                   Show verbose logging
 """
@@ -23,6 +24,11 @@ from .module import run_ftl_module
 from .inventory import load_inventory
 
 logger = logging.getLogger('cli')
+
+
+def parse_module_args(args):
+    key_value_pairs = args.split(' ')
+    return dict([tuple(i.split('=')) for i in key_value_pairs])
 
 
 async def main(args=None):
@@ -46,6 +52,7 @@ async def main(args=None):
                                   [parsed_args['--module-dir']],
                                   parsed_args['--module'],
                                   modules=[parsed_args['--module']],
+                                  module_args=parse_module_args(parsed_args['--args']),
                                   dependencies=dependencies)
         print(output)
     elif parsed_args['--ftl-module']:

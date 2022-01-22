@@ -5,6 +5,7 @@ import asyncssh.misc
 import base64
 import json
 import os
+import io
 import sys
 import shutil
 import tempfile
@@ -16,13 +17,15 @@ from .gate import build_ftl_gate
 from .util import chunk, find_module
 
 
-async def check_output(cmd):
+async def check_output(cmd, env=None, stdin=None):
     proc = await asyncio.create_subprocess_shell(
         cmd,
+        stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.STDOUT)
+        stderr=asyncio.subprocess.STDOUT,
+        env=env)
 
-    stdout, stderr = await proc.communicate()
+    stdout, stderr = await proc.communicate(stdin)
     return stdout
 
 
@@ -69,7 +72,12 @@ async def run_ftl_module_through_gate(gate_process, module, module_name):
     return await read_message(gate_process.stdout)
 
 
-async def run_module_locally(host_name, host, module):
+
+def is_new_style_module(module):
+    return True
+
+
+async def run_module_locally(host_name, host, module, module_args):
     tmp = tempfile.mkdtemp()
     tmp_module = os.path.join(tmp, 'module.py')
     shutil.copy(module, tmp_module)
@@ -77,9 +85,17 @@ async def run_module_locally(host_name, host, module):
     # TODO: add utf-8 encoding line
     args = os.path.join(tmp, 'args')
     with open(args, 'w') as f:
-        f.write('some args')
-    output = await check_output(f'{tmp_module} {args}')
-    return host_name, json.loads(output)
+        f.write(json.dumps(module_args))
+    interpreter = host.get('ansible_python_interpreter', '/usr/bin/python')
+    if is_new_style_module(module):
+        output = await check_output(f'{interpreter} {tmp_module}', stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode())
+    else:
+        output = await check_output(f'{interpreter} {tmp_module} {args}')
+    try:
+        return host_name, json.loads(output)
+    except Exception:
+        print(output)
+        return host_name, dict(error=output)
 
 
 async def run_ftl_module_locally(host_name, host, module_path):
@@ -137,10 +153,10 @@ async def close_gate(conn, gate_process, tempdir):
     #assert result.exit_status == 0
 
 
-async def run_module_on_host(host_name, host, module, local_runner, remote_runner,
+async def run_module_on_host(host_name, host, module, module_args, local_runner, remote_runner,
                              gate_cache, gate_builder):
     if host and host.get('ansible_connection') == 'local':
-        return await local_runner(host_name, host, module)
+        return await local_runner(host_name, host, module, module_args)
     else:
         module_name = os.path.basename(module)
         if host and host.get('ansible_host'):
@@ -196,7 +212,7 @@ def extract_task_results(tasks):
 
 
 async def _run_module(inventory, module_dirs, module_name, local_runner,
-                      remote_runner, gate_cache, modules, dependencies):
+                      remote_runner, gate_cache, modules, dependencies, module_args):
 
     module = find_module(module_dirs, module_name)
 
@@ -216,6 +232,7 @@ async def _run_module(inventory, module_dirs, module_name, local_runner,
             tasks.append(asyncio.create_task(run_module_on_host(host_name,
                                                                 host,
                                                                 module,
+                                                                module_args,
                                                                 local_runner,
                                                                 remote_runner,
                                                                 gate_cache,
@@ -229,7 +246,7 @@ async def _run_module(inventory, module_dirs, module_name, local_runner,
     return extract_task_results(all_tasks)
 
 
-async def run_module(inventory, module_dirs, module_name, gate_cache=None, modules=None, dependencies=None):
+async def run_module(inventory, module_dirs, module_name, gate_cache=None, modules=None, dependencies=None, module_args=None):
     '''
     Runs a module on all items in an inventory concurrently.
     '''
@@ -241,7 +258,8 @@ async def run_module(inventory, module_dirs, module_name, gate_cache=None, modul
                              run_module_through_gate,
                              gate_cache,
                              modules,
-                             dependencies)
+                             dependencies,
+                             module_args)
 
 
 async def run_ftl_module(inventory, module_dirs, module_name, gate_cache=None, modules=None, dependencies=None):
