@@ -72,9 +72,13 @@ async def run_ftl_module_through_gate(gate_process, module, module_name):
     return await read_message(gate_process.stdout)
 
 
-
 def is_new_style_module(module):
-    return True
+    with open(module) as f:
+        for line in f.readlines():
+            if 'AnsibleModule(' in line:
+                return True
+
+    return False
 
 
 async def run_module_locally(host_name, host, module, module_args):
