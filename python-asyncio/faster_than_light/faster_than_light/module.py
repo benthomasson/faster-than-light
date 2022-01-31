@@ -102,7 +102,7 @@ async def run_module_locally(host_name, host, module, module_args):
         return host_name, dict(error=output)
 
 
-async def run_ftl_module_locally(host_name, host, module_path):
+async def run_ftl_module_locally(host_name, host, module_path, module_args):
 
     with open(module_path, 'rb') as f:
         module_compiled = compile(f.read(), module_path, 'exec')
@@ -266,7 +266,7 @@ async def run_module(inventory, module_dirs, module_name, gate_cache=None, modul
                              module_args)
 
 
-async def run_ftl_module(inventory, module_dirs, module_name, gate_cache=None, modules=None, dependencies=None):
+async def run_ftl_module(inventory, module_dirs, module_name, gate_cache=None, modules=None, dependencies=None, module_args=None):
     '''
     Runs a module on all items in an inventory concurrently.
     '''
@@ -278,4 +278,5 @@ async def run_ftl_module(inventory, module_dirs, module_name, gate_cache=None, m
                              run_ftl_module_through_gate,
                              gate_cache,
                              modules,
-                             dependencies)
+                             dependencies,
+                             module_args)

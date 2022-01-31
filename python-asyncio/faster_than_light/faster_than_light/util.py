@@ -35,12 +35,6 @@ def find_module(module_dirs, module_name):
     return module
 
 
-def encode_module(module_dirs, module_name):
-
-    with open(find_module(module_dirs, module_name), 'rb') as f:
-        return base64.b64encode(f.read()).decode()
-
-
 def read_module(module_dirs, module_name):
 
     with open(find_module(module_dirs, module_name), 'rb') as f:
