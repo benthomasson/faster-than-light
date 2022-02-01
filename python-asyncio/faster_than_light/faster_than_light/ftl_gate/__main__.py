@@ -84,15 +84,28 @@ def send_message(writer, msg_type, data):
     writer.write(message)
 
 
-async def check_output(cmd):
+async def check_output(cmd, stdin=None):
     proc = await asyncio.create_subprocess_shell(
         cmd,
+        stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE)
 
-    stdout, stderr = await proc.communicate()
+    stdout, stderr = await proc.communicate(stdin)
     return stdout, stderr
 
+
+def is_new_style_module(module):
+    if b'AnsibleModule(' in module:
+        return True
+    else:
+        return False
+
+def is_want_json_module(module):
+    if b'WANT_JSON' in module:
+        return True
+    else:
+        return False
 
 async def gate_run_module(writer, module_name, module=None, module_args=None):
     logger.info(module_name)
@@ -106,14 +119,23 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
             logger.info("loading from ftl_gate")
             modules = importlib.resources.files(ftl_gate)
             with open(module_file, 'wb') as f2:
-                f2.write(importlib.resources.read_binary(ftl_gate, module_name))
-        args = os.path.join(tempdir, 'args')
-        with open(args, 'w') as f:
-            if module_args is not None:
-                f.write(" ".join(["=".join([k, v]) for k, v in module_args.items()]))
-            else:
-                f.write('')
-        stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}')
+                module = importlib.resources.read_binary(ftl_gate, module_name)
+                f2.write(module)
+        if is_new_style_module(module):
+            stdout, stderr = await check_output(f'{sys.executable} {module_file}', stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode())
+        elif is_want_json_module(module):
+            args = os.path.join(tempdir, 'args')
+            with open(args, 'w') as f:
+                f.write(json.dumps(module_args))
+            stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}')
+        else:
+            args = os.path.join(tempdir, 'args')
+            with open(args, 'w') as f:
+                if module_args is not None:
+                    f.write(" ".join(["=".join([k, v]) for k, v in module_args.items()]))
+                else:
+                    f.write('')
+            stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}')
         send_message(writer, 'ModuleResult', dict(stdout=stdout.decode(),
                                                   stderr=stderr.decode()))
     finally:

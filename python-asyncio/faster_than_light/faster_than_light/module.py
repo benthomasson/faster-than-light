@@ -17,13 +17,12 @@ from .gate import build_ftl_gate
 from .util import chunk, find_module
 
 
-async def check_output(cmd, env=None, stdin=None):
+async def check_output(cmd, stdin=None):
     proc = await asyncio.create_subprocess_shell(
         cmd,
         stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.STDOUT,
-        env=env)
+        stderr=asyncio.subprocess.STDOUT)
 
     stdout, stderr = await proc.communicate(stdin)
     return stdout
