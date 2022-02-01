@@ -251,6 +251,11 @@ async def _run_module(inventory, module_dirs, module_name, local_runner,
 
     module = find_module(module_dirs, module_name)
 
+    if modules is None:
+        modules = []
+    if module_name not in modules:
+        modules.append(module_name)
+
     if module is None:
         raise Exception(f'Module {module_name} not found in {module_dirs}')
 

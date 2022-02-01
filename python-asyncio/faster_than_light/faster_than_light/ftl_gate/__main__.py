@@ -109,7 +109,10 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
                 f2.write(importlib.resources.read_binary(ftl_gate, module_name))
         args = os.path.join(tempdir, 'args')
         with open(args, 'w') as f:
-            f.write('some args')
+            if module_args is not None:
+                f.write(" ".join(["=".join([k, v]) for k, v in module_args.items()]))
+            else:
+                f.write('')
         stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}')
         send_message(writer, 'ModuleResult', dict(stdout=stdout.decode(),
                                                   stderr=stderr.decode()))

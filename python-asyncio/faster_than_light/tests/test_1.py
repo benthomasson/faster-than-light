@@ -63,7 +63,6 @@ async def test_run_module_argtest_remote():
     assert output['localhost']['files']
     clean_up_ftl_cache()
     clean_up_tmp()
-    assert False
 
 
 @pytest.mark.asyncio
