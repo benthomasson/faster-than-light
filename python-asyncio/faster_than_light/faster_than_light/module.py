@@ -57,7 +57,7 @@ async def open_gate(conn, tempdir):
     return process
 
 
-async def run_module_through_gate(gate_process, module, module_name):
+async def run_module_through_gate(gate_process, module, module_name, modules_args):
     #with open(module, 'rb') as f:
     #    module_text = base64.b64encode(f.read()).decode()
     module_text=None
@@ -65,7 +65,7 @@ async def run_module_through_gate(gate_process, module, module_name):
     return await read_message(gate_process.stdout)
 
 
-async def run_ftl_module_through_gate(gate_process, module, module_name):
+async def run_ftl_module_through_gate(gate_process, module, module_name, module_args):
     with open(module, 'rb') as f:
         module_text = base64.b64encode(f.read()).decode()
     send_message_str(gate_process.stdin, 'FTLModule', dict(module=module_text, module_name=module_name))
@@ -179,7 +179,7 @@ async def run_module_on_host(host_name, host, module, module_args, local_runner,
                 else:
                     conn, gate_process, tempdir = await connect_gate(gate_builder, ssh_host, gate_cache, interpreter)
                 try:
-                    return host_name, await remote_runner(gate_process, module, module_name)
+                    return host_name, await remote_runner(gate_process, module, module_name, module_args)
                 finally:
                     if gate_cache is None:
                         await close_gate(conn, gate_process, tempdir)
@@ -242,8 +242,18 @@ async def _run_module(inventory, module_dirs, module_name, local_runner,
                                                                 gate_cache,
                                                                 gate_builder)))
         await asyncio.gather(*tasks)
-        for i in extract_task_results(tasks):
-            print('ok:', f'[{i}]')
+        for host, value in extract_task_results(tasks).items():
+            if isinstance(value, dict):
+                if value.get('failed'):
+                    print(f'failed:', f'[{host}]')
+                elif value.get('error'):
+                    print(f'error:', f'[{host}]')
+                elif value.get('changed'):
+                    print(f'error:', f'[{host}]')
+                else:
+                    print(f'ok:', f'[{host}]')
+            else:
+                print(value)
 
         all_tasks.extend(tasks)
 

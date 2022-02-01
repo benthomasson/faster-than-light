@@ -27,8 +27,11 @@ logger = logging.getLogger('cli')
 
 
 def parse_module_args(args):
-    key_value_pairs = args.split(' ')
-    return dict([tuple(i.split('=')) for i in key_value_pairs])
+    if args:
+        key_value_pairs = args.split(' ')
+        return dict([tuple(i.split('=')) for i in key_value_pairs])
+    else:
+        return {}
 
 
 async def main(args=None):
