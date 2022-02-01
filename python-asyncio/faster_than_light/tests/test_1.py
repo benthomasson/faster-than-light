@@ -34,9 +34,16 @@ async def test_run_module_timetest():
 @pytest.mark.asyncio
 async def test_run_module_argtest():
     os.chdir(HERE)
-    output = await run_module(load_inventory('inventory.yml'), ['modules'], 'argtest')
+    output = await run_module(load_inventory('inventory.yml'),
+                              ['modules'],
+                              'argtest',
+                              module_args=dict(somekey='somevalue'))
     pprint(output)
     assert output['localhost']
+    assert output['localhost']['args']
+    assert output['localhost']['executable']
+    assert output['localhost']['more_args'] == 'somekey=somevalue'
+    assert output['localhost']['files']
     clean_up_ftl_cache()
     clean_up_tmp()
 
@@ -44,11 +51,19 @@ async def test_run_module_argtest():
 @pytest.mark.asyncio
 async def test_run_module_argtest_remote():
     os.chdir(HERE)
-    output = await run_module(load_inventory('inventory2.yml'), ['modules'], 'argtest')
+    output = await run_module(load_inventory('inventory2.yml'),
+                              ['modules'],
+                              'argtest',
+                              module_args=dict(somekey='somevalue'))
     pprint(output)
     assert output['localhost']
+    assert output['localhost']['args']
+    assert output['localhost']['executable']
+    assert output['localhost']['more_args'] == 'somekey=somevalue'
+    assert output['localhost']['files']
     clean_up_ftl_cache()
     clean_up_tmp()
+    assert False
 
 
 @pytest.mark.asyncio

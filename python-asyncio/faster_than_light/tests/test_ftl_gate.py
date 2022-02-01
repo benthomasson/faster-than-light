@@ -82,6 +82,7 @@ async def test_run_module():
             module = base64.b64encode(f.read()).decode()
         send_message(proc.stdin, 'Module', dict(module=module, module_name='argtest'))
         message = await read_message(proc.stdout)
+        assert message[0] != "GateSystemError", message[1]
         assert message[0] == "ModuleResult"
         assert message[1] != {}
         assert message[1]['stdout']
@@ -113,6 +114,7 @@ async def test_run_ftl_module():
             module = base64.b64encode(f.read()).decode()
         send_message(proc.stdin, 'FTLModule', dict(module=module, module_name='argtest'))
         message = await read_message(proc.stdout)
+        assert message[0] != "GateSystemError", message[1]
         assert message[0] == "FTLModuleResult"
         assert message[1] != {}
         assert message[1]['result']

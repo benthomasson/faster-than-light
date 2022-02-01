@@ -22,6 +22,7 @@ import sys
 from .module import run_module
 from .module import run_ftl_module
 from .inventory import load_inventory
+from pprint import pprint
 
 logger = logging.getLogger('cli')
 
@@ -57,12 +58,12 @@ async def main(args=None):
                                   modules=[parsed_args['--module']],
                                   module_args=parse_module_args(parsed_args['--args']),
                                   dependencies=dependencies)
-        print(output)
+        pprint(output)
     elif parsed_args['--ftl-module']:
         output = await run_ftl_module(load_inventory(parsed_args['--inventory']),
                                       [parsed_args['--module-dir']],
                                       parsed_args['--ftl-module'])
-        print(output)
+        pprint(output)
     return 0
 
 

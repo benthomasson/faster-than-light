@@ -8,6 +8,10 @@ import base64
 import ftl_gate
 import importlib.resources
 import shutil
+import logging
+import traceback
+
+logger = logging.getLogger('ftl_gate')
 
 
 async def connect_stdin_stdout():
@@ -90,7 +94,8 @@ async def check_output(cmd):
     return stdout, stderr
 
 
-async def gate_run_module(writer, module_name, module=None):
+async def gate_run_module(writer, module_name, module=None, module_args=None):
+    logger.info(module_name)
     tempdir = tempfile.mkdtemp(prefix="ftl-module")
     try:
         module_file = os.path.join(tempdir, module_name)
@@ -98,6 +103,7 @@ async def gate_run_module(writer, module_name, module=None):
             with open(module_file, 'wb') as f:
                 f.write(base64.b64decode(module))
         else:
+            logger.info("loading from ftl_gate")
             modules = importlib.resources.files(ftl_gate)
             with open(module_file, 'wb') as f2:
                 f2.write(importlib.resources.read_binary(ftl_gate, module_name))
@@ -111,7 +117,7 @@ async def gate_run_module(writer, module_name, module=None):
         shutil.rmtree(tempdir)
 
 
-async def run_ftl_module(writer, module_name, module):
+async def run_ftl_module(writer, module_name, module, module_args=None):
 
     module_compiled = compile(base64.b64decode(module), module_name, 'exec')
 
@@ -125,6 +131,10 @@ async def run_ftl_module(writer, module_name, module):
 
 async def main(args):
 
+    logging.basicConfig(filename="/tmp/ftl_gate.log", level=logging.DEBUG)
+
+
+
     reader, writer = await connect_stdin_stdout()
 
     while True:
@@ -132,17 +142,23 @@ async def main(args):
         try:
             msg_type, data = await read_message(reader)
             if msg_type == 'Hello':
+                logger.info('hello')
                 send_message(writer, msg_type, data)
             elif msg_type == 'Module':
+                logger.info('Module')
                 await gate_run_module(writer, **data)
             elif msg_type == 'FTLModule':
+                logger.info('FTLModule')
                 await run_ftl_module(writer, **data)
             elif msg_type == 'Shutdown':
+                logger.info('Shutdown')
                 return
             else:
                 send_message(writer, 'Error', dict(message=f'Unknown message type {msg_type}'))
         except BaseException as e:
             send_message(writer, 'GateSystemError', dict(message=f'Exception {e}'))
+            logger.error(f'GateSystemError: {e}')
+            logger.error(traceback.format_exc())
             return 1
 
 

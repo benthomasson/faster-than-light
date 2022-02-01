@@ -42,6 +42,7 @@ async def check_version(conn, interpreter):
         else:
             raise Exception(f'Ensure that non-interactive shells emit no text: {line}')
 
+
 async def send_gate(gate_builder, conn, tempdir, interpreter):
     ftl_gate = gate_builder(interpreter=interpreter)
     async with conn.start_sftp_client() as sftp:
@@ -57,25 +58,47 @@ async def open_gate(conn, tempdir):
     return process
 
 
-async def run_module_through_gate(gate_process, module, module_name, modules_args):
+def process_module_result(message):
+    msg_type = message[0]
+    if msg_type == 'ModuleResult':
+        return json.loads(message[1]['stdout'])
+    elif msg_type == 'GateSystemError':
+        return dict(error=dict(error_type=message[0], message=message[1]))
+    else:
+        raise Exception('Not supported')
+
+
+async def run_module_through_gate(gate_process, module, module_name, module_args):
     #with open(module, 'rb') as f:
     #    module_text = base64.b64encode(f.read()).decode()
     module_text=None
-    send_message_str(gate_process.stdin, 'Module', dict(module=module_text, module_name=module_name))
-    return await read_message(gate_process.stdout)
+    send_message_str(gate_process.stdin, 'Module', dict(module=module_text,
+                                                        module_name=module_name,
+                                                        module_args=module_args))
+    return process_module_result(await read_message(gate_process.stdout))
 
 
 async def run_ftl_module_through_gate(gate_process, module, module_name, module_args):
     with open(module, 'rb') as f:
         module_text = base64.b64encode(f.read()).decode()
-    send_message_str(gate_process.stdin, 'FTLModule', dict(module=module_text, module_name=module_name))
-    return await read_message(gate_process.stdout)
+    send_message_str(gate_process.stdin, 'FTLModule', dict(module=module_text,
+                                                           module_name=module_name,
+                                                           module_args=module_args))
+    return process_module_result(await read_message(gate_process.stdout))
 
 
 def is_new_style_module(module):
     with open(module) as f:
         for line in f.readlines():
             if 'AnsibleModule(' in line:
+                return True
+
+    return False
+
+def is_want_json_module(module):
+    with open(module) as f:
+        for line in f.readlines():
+            if 'WANT_JSON' in line:
                 return True
 
     return False
@@ -87,13 +110,21 @@ async def run_module_locally(host_name, host, module, module_args):
     shutil.copy(module, tmp_module)
     # TODO: replace hashbang with ansible_python_interpreter
     # TODO: add utf-8 encoding line
-    args = os.path.join(tmp, 'args')
-    with open(args, 'w') as f:
-        f.write(json.dumps(module_args))
     interpreter = host.get('ansible_python_interpreter', '/usr/bin/python')
     if is_new_style_module(module):
         output = await check_output(f'{interpreter} {tmp_module}', stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode())
+    elif is_want_json_module(module):
+        args = os.path.join(tmp, 'args')
+        with open(args, 'w') as f:
+            f.write(json.dumps(module_args))
+        output = await check_output(f'{interpreter} {tmp_module} {args}')
     else:
+        args = os.path.join(tmp, 'args')
+        with open(args, 'w') as f:
+            if module_args is not None:
+                f.write(" ".join(["=".join([k, v]) for k, v in module_args.items()]))
+            else:
+                f.write('')
         output = await check_output(f'{interpreter} {tmp_module} {args}')
     try:
         return host_name, json.loads(output)
@@ -242,19 +273,6 @@ async def _run_module(inventory, module_dirs, module_name, local_runner,
                                                                 gate_cache,
                                                                 gate_builder)))
         await asyncio.gather(*tasks)
-        for host, value in extract_task_results(tasks).items():
-            if isinstance(value, dict):
-                if value.get('failed'):
-                    print(f'failed:', f'[{host}]')
-                elif value.get('error'):
-                    print(f'error:', f'[{host}]')
-                elif value.get('changed'):
-                    print(f'error:', f'[{host}]')
-                else:
-                    print(f'ok:', f'[{host}]')
-            else:
-                print(value)
-
         all_tasks.extend(tasks)
 
     return extract_task_results(all_tasks)
