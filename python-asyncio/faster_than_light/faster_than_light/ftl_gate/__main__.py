@@ -113,8 +113,9 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
     try:
         module_file = os.path.join(tempdir, module_name)
         if module is not None:
+            module = base64.b64decode(module)
             with open(module_file, 'wb') as f:
-                f.write(base64.b64decode(module))
+                f.write(module)
         else:
             logger.info("loading from ftl_gate")
             modules = importlib.resources.files(ftl_gate)
