@@ -10,7 +10,7 @@ from importlib_resources import files
 import faster_than_light.ftl_gate
 from subprocess import check_output
 
-from .util import ensure_directory, read_module
+from .util import ensure_directory, read_module, find_module
 
 
 def build_ftl_gate(modules=None, module_dirs=None, dependencies=None, interpreter=sys.executable):
@@ -49,7 +49,9 @@ def build_ftl_gate(modules=None, module_dirs=None, dependencies=None, interprete
     # Install modules
     if modules:
         for module in modules:
-            with open(os.path.join(module_dir, f'{module}.py'), 'wb') as f:
+            with open(os.path.join(module_dir,
+                                   os.path.basename(find_module(module_dirs,
+                                                                module))), 'wb') as f:
                 f.write(read_module(module_dirs, module))
 
     # Install dependencies for Gate

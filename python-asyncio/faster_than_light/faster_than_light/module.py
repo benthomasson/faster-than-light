@@ -85,6 +85,16 @@ async def run_ftl_module_through_gate(gate_process, module, module_name, module_
                                                            module_args=module_args))
     return process_module_result(await read_message(gate_process.stdout))
 
+def is_binary_module(module):
+    try:
+        with open(module) as f:
+            for line in f.readlines():
+                pass
+        return False
+    except UnicodeDecodeError:
+        return True
+
+
 
 def is_new_style_module(module):
     with open(module) as f:
@@ -110,7 +120,12 @@ async def run_module_locally(host_name, host, module, module_args):
     # TODO: replace hashbang with ansible_python_interpreter
     # TODO: add utf-8 encoding line
     interpreter = host.get('ansible_python_interpreter', '/usr/bin/python')
-    if is_new_style_module(module):
+    if is_binary_module(module):
+        args = os.path.join(tmp, 'args')
+        with open(args, 'w') as f:
+            f.write(json.dumps(module_args))
+        output = await check_output(f'{tmp_module} {args}')
+    elif is_new_style_module(module):
         output = await check_output(f'{interpreter} {tmp_module}', stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode())
     elif is_want_json_module(module):
         args = os.path.join(tmp, 'args')

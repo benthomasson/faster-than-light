@@ -32,6 +32,15 @@ def find_module(module_dirs, module_name):
         else:
             module = None
 
+    # Look for binary module in module_dirs
+    if module is None:
+        for d in module_dirs:
+            module = os.path.join(d, module_name)
+            if os.path.exists(module):
+                break
+            else:
+                module = None
+
     return module
 
 

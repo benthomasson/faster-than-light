@@ -10,6 +10,7 @@ import importlib.resources
 import shutil
 import logging
 import traceback
+import stat
 
 logger = logging.getLogger('ftl_gate')
 
@@ -94,6 +95,12 @@ async def check_output(cmd, stdin=None):
     stdout, stderr = await proc.communicate(stdin)
     return stdout, stderr
 
+def is_binary_module(module):
+    try:
+        module.decode()
+        return False
+    except UnicodeDecodeError:
+        return True
 
 def is_new_style_module(module):
     if b'AnsibleModule(' in module:
@@ -122,7 +129,13 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
             with open(module_file, 'wb') as f2:
                 module = importlib.resources.read_binary(ftl_gate, module_name)
                 f2.write(module)
-        if is_new_style_module(module):
+        if is_binary_module(module):
+            args = os.path.join(tempdir, 'args')
+            with open(args, 'w') as f:
+                f.write(json.dumps(module_args))
+            os.chmod(module_file, stat.S_IEXEC | stat.S_IREAD)
+            stdout, stderr = await check_output(f'{module_file} {args}')
+        elif is_new_style_module(module):
             stdout, stderr = await check_output(f'{sys.executable} {module_file}', stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode())
         elif is_want_json_module(module):
             args = os.path.join(tempdir, 'args')
