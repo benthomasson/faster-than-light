@@ -61,7 +61,7 @@ def build_ftl_gate(modules=None, module_dirs=None, dependencies=None, interprete
                                'install',
                                '-r', requirements,
                                '--target', os.path.join(tempdir, "ftl_gate")])
-        print(output)
+        # print(output)
 
     zipapp.create_archive(os.path.join(tempdir, 'ftl_gate'),
                           os.path.join(tempdir, 'ftl_gate.pyz'),
