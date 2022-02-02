@@ -49,6 +49,8 @@ def build_ftl_gate(modules=None, module_dirs=None, dependencies=None, interprete
     # Install modules
     if modules:
         for module in modules:
+            if find_module(module_dirs, module) is None:
+                raise Exception(f'Cannot find {module} in {module_dirs}')
             with open(os.path.join(module_dir,
                                    os.path.basename(find_module(module_dirs,
                                                                 module))), 'wb') as f:
@@ -63,7 +65,7 @@ def build_ftl_gate(modules=None, module_dirs=None, dependencies=None, interprete
                                'install',
                                '-r', requirements,
                                '--target', os.path.join(tempdir, "ftl_gate")])
-        # print(output)
+        print(output)
 
     zipapp.create_archive(os.path.join(tempdir, 'ftl_gate'),
                           os.path.join(tempdir, 'ftl_gate.pyz'),

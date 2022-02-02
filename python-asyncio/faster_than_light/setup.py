@@ -51,6 +51,7 @@ setup(
     entry_points={
         'console_scripts': [
             'ftl = faster_than_light.cli:entry_point',
+            'ftl-gate-builder = faster_than_light.builder:entry_point',
         ],
     }
 )

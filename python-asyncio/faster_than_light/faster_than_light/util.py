@@ -24,6 +24,8 @@ def find_module(module_dirs, module_name):
     Returns a file path.
     '''
 
+    module = None
+
     # Find the module in module_dirs
     for d in module_dirs:
         module = os.path.join(d, f'{module_name}.py')
