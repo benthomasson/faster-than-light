@@ -60,7 +60,10 @@ async def open_gate(conn, tempdir):
 def process_module_result(message):
     msg_type = message[0]
     if msg_type == 'ModuleResult':
-        return json.loads(message[1]['stdout'])
+        if message[1]['stdout']:
+            return json.loads(message[1]['stdout'])
+        else:
+            return dict(error=dict(message=message[1]['stderr']))
     elif msg_type == 'GateSystemError':
         return dict(error=dict(error_type=message[0], message=message[1]))
     else:
