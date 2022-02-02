@@ -61,6 +61,9 @@ async def read_message(reader):
                 # Enter: 0000000d
                 # Enter: ["Hello", {}]
                 # Response should be  0000000d["Hello", {}]
+                # Enter: 00000010
+                # Enter: ["Shutdown", {}]
+                # System will exit
                 if value:
                     try:
                         return json.loads(value)
@@ -85,15 +88,17 @@ def send_message(writer, msg_type, data):
     writer.write(message)
 
 
-async def check_output(cmd, stdin=None):
+async def check_output(cmd, env=None, stdin=None):
     proc = await asyncio.create_subprocess_shell(
         cmd,
         stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE)
+        stderr=asyncio.subprocess.PIPE,
+        env=env)
 
     stdout, stderr = await proc.communicate(stdin)
     return stdout, stderr
+
 
 def is_binary_module(module):
     try:
@@ -102,17 +107,24 @@ def is_binary_module(module):
     except UnicodeDecodeError:
         return True
 
+
 def is_new_style_module(module):
     if b'AnsibleModule(' in module:
         return True
     else:
         return False
 
+
 def is_want_json_module(module):
     if b'WANT_JSON' in module:
         return True
     else:
         return False
+
+
+def get_python_path():
+    return os.pathsep.join(sys.path)
+
 
 async def gate_run_module(writer, module_name, module=None, module_args=None):
     logger.info(module_name)
@@ -136,12 +148,15 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
             os.chmod(module_file, stat.S_IEXEC | stat.S_IREAD)
             stdout, stderr = await check_output(f'{module_file} {args}')
         elif is_new_style_module(module):
-            stdout, stderr = await check_output(f'{sys.executable} {module_file}', stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode())
+            stdout, stderr = await check_output(f'{sys.executable} {module_file}',
+                                                stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode(),
+                                                env=dict(PYTHONPATH=get_python_path()))
         elif is_want_json_module(module):
             args = os.path.join(tempdir, 'args')
             with open(args, 'w') as f:
                 f.write(json.dumps(module_args))
-            stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}')
+            stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}',
+                                                env=dict(PYTHONPATH=get_python_path()))
         else:
             args = os.path.join(tempdir, 'args')
             with open(args, 'w') as f:
@@ -149,7 +164,8 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
                     f.write(" ".join(["=".join([k, v]) for k, v in module_args.items()]))
                 else:
                     f.write('')
-            stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}')
+            stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}',
+                                                env=dict(PYTHONPATH=get_python_path()))
         send_message(writer, 'ModuleResult', dict(stdout=stdout.decode(),
                                                   stderr=stderr.decode()))
     finally:
@@ -172,7 +188,9 @@ async def main(args):
 
     logging.basicConfig(filename="/tmp/ftl_gate.log", level=logging.DEBUG)
 
-
+    logger.info(f'sys.executable {sys.executable}')
+    logger.info(f'sys.path {sys.path}')
+    logger.info(f'os.environ {os.environ}')
 
     reader, writer = await connect_stdin_stdout()
 
