@@ -1,6 +1,7 @@
 
 
 import faster_than_light.cli
+import faster_than_light.builder
 import pytest
 import os
 import docopt
@@ -41,3 +42,16 @@ async def test_cli_ftl_argtest():
 @pytest.mark.asyncio
 async def test_cli_argtest():
     await faster_than_light.cli.main(['-M', 'modules', '-m', 'argtest', '-i', 'inventory.yml', '-a', 'somekey=somevalue', '--requirements', 'requirements.txt'])
+
+def test_builder_cli():
+    faster_than_light.builder.main([])
+
+
+def test_builder_cli2():
+    faster_than_light.builder.main(['-M', 'modules', '-m', 'argtest', '--requirements', 'requirements.txt'])
+
+def test_builder_cli_debug():
+    faster_than_light.builder.main(['--debug'])
+
+def test_builder_cli_verbose():
+    faster_than_light.builder.main(['--verbose'])
