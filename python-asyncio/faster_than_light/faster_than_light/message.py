@@ -1,5 +1,10 @@
 
 import json
+from typing import NamedTuple, Any
+
+class GateMessage(NamedTuple):
+    message_type: str
+    message_body: Any
 
 
 def send_message(writer, msg_type, msg_data):

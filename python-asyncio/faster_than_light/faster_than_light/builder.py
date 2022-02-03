@@ -14,12 +14,15 @@ Options:
 from docopt import docopt
 import logging
 import sys
+
+from typing import Optional, List
+
 from faster_than_light.gate import build_ftl_gate
 
 logger = logging.getLogger('builder')
 
 
-def main(args=None):
+def main(args: Optional[List[str]]=None) -> int:
     if args is None:
         args = sys.argv[1:]
     parsed_args = docopt(__doc__, args)
@@ -45,5 +48,5 @@ def main(args=None):
     print(gate)
     return 0
 
-def entry_point():
+def entry_point() -> None:
     main(sys.argv[1:])

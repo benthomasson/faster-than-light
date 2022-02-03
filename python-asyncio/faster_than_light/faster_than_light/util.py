@@ -3,32 +3,34 @@ import glob
 import os
 import shutil
 
+from typing import List, Union
 
-def ensure_directory(d):
+
+def ensure_directory(d: str) -> str:
     d = os.path.abspath(os.path.expanduser(d))
     if not os.path.exists(d):
         os.makedirs(d)
     return d
 
 
-def chunk(lst, n):
+def chunk(lst: List, n: int):
     for i in range(0, len(lst), n):
-        yield lst[i:i + n]
+        yield lst[i : i + n]
 
 
-def find_module(module_dirs, module_name):
+def find_module(module_dirs: List[str], module_name: str) -> Union[str, None]:
 
-    '''
+    """
     Finds a module file path in the module_dirs with the name module_name.
 
     Returns a file path.
-    '''
+    """
 
     module = None
 
     # Find the module in module_dirs
     for d in module_dirs:
-        module = os.path.join(d, f'{module_name}.py')
+        module = os.path.join(d, f"{module_name}.py")
         if os.path.exists(module):
             break
         else:
@@ -46,19 +48,24 @@ def find_module(module_dirs, module_name):
     return module
 
 
-def read_module(module_dirs, module_name):
+def read_module(module_dirs: List[str], module_name: str) -> bytes:
 
-    with open(find_module(module_dirs, module_name), 'rb') as f:
-        return f.read()
+    module = find_module(module_dirs, module_name)
+
+    if module:
+        with open(module, "rb") as f:
+            return f.read()
+    else:
+        raise Exception(f"Cannot find {module_name} in {module_dirs}")
 
 
-def clean_up_ftl_cache():
+def clean_up_ftl_cache() -> None:
     cache = os.path.abspath(os.path.expanduser("~/.ftl"))
     if os.path.exists(cache) and os.path.isdir(cache) and ".ftl" in cache:
         shutil.rmtree(cache)
 
 
-def clean_up_tmp():
-    for d in glob.glob('/tmp/ftl-*'):
-        if os.path.exists(d) and os.path.isdir(d) and 'tmp' in d and 'ftl' in d:
+def clean_up_tmp() -> None:
+    for d in glob.glob("/tmp/ftl-*"):
+        if os.path.exists(d) and os.path.isdir(d) and "tmp" in d and "ftl" in d:
             shutil.rmtree(d)
