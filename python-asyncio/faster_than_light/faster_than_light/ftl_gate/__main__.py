@@ -41,7 +41,7 @@ async def read_message(reader):
         length_hexadecimal = await reader.read(8)
         # If the length_hexadecimal is None then the channel was closed
         if not length_hexadecimal:
-            return None
+            return None, None
 
         # Read value
         if length_hexadecimal.strip():
@@ -53,7 +53,7 @@ async def read_message(reader):
                 value = await reader.read(length)
                 # If the value is None then the channel was closed
                 if not value:
-                    return None
+                    return None, None
                 value = value.strip()
                 # Keep reading until we get a value
                 # This is useful for manual debugging
@@ -198,7 +198,11 @@ async def main(args):
 
         try:
             msg_type, data = await read_message(reader)
-            if msg_type == 'Hello':
+            if msg_type is None:
+                logger.info('End of input')
+                send_message(writer, 'Goodbye', {})
+                return
+            elif msg_type == 'Hello':
                 logger.info('hello')
                 send_message(writer, msg_type, data)
             elif msg_type == 'Module':
@@ -209,6 +213,7 @@ async def main(args):
                 await run_ftl_module(writer, **data)
             elif msg_type == 'Shutdown':
                 logger.info('Shutdown')
+                send_message(writer, 'Goodbye', {})
                 return
             else:
                 send_message(writer, 'Error', dict(message=f'Unknown message type {msg_type}'))
