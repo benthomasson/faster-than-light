@@ -15,13 +15,32 @@ import stat
 logger = logging.getLogger('ftl_gate')
 
 
+class StdinReader(object):
+
+    async def read(self, n):
+        loop = asyncio.get_running_loop()
+        return await loop.run_in_executor(None, sys.stdin.read, n)
+
+
+class StdoutWriter(object):
+
+    def write(self, data):
+        sys.stdout.write(data.decode())
+
+
 async def connect_stdin_stdout():
     loop = asyncio.get_event_loop()
-    reader = asyncio.StreamReader()
-    protocol = asyncio.StreamReaderProtocol(reader)
-    await loop.connect_read_pipe(lambda: protocol, sys.stdin)
-    w_transport, w_protocol = await loop.connect_write_pipe(asyncio.streams.FlowControlMixin, sys.stdout)
-    writer = asyncio.StreamWriter(w_transport, w_protocol, reader, loop)
+    try:
+        #Try to connect to pipes
+        reader = asyncio.StreamReader()
+        protocol = asyncio.StreamReaderProtocol(reader)
+        await loop.connect_read_pipe(lambda: protocol, sys.stdin)
+        w_transport, w_protocol = await loop.connect_write_pipe(asyncio.streams.FlowControlMixin, sys.stdout)
+        writer = asyncio.StreamWriter(w_transport, w_protocol, reader, loop)
+    except ValueError:
+        #Fall back to simple reader and writer
+        reader = StdinReader()
+        writer = StdoutWriter()
     return reader, writer
 
 
