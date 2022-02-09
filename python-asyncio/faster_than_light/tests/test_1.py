@@ -4,7 +4,7 @@ import os
 import pytest
 from pprint import pprint
 from faster_than_light.inventory import load_inventory
-from faster_than_light.module import check_output
+from faster_than_light.local import check_output
 from faster_than_light.module import run_module, run_ftl_module
 from faster_than_light.util import clean_up_ftl_cache, clean_up_tmp
 

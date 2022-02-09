@@ -1,9 +1,10 @@
-import base64
 import glob
 import os
 import shutil
+import json
 
-from typing import List, Union
+from typing import List, Union, Dict
+from .message import GateMessage
 
 
 def ensure_directory(d: str) -> str:
@@ -15,7 +16,7 @@ def ensure_directory(d: str) -> str:
 
 def chunk(lst: List, n: int):
     for i in range(0, len(lst), n):
-        yield lst[i : i + n]
+        yield lst[i: i + n]
 
 
 def find_module(module_dirs: List[str], module_name: str) -> Union[str, None]:
@@ -69,3 +70,16 @@ def clean_up_tmp() -> None:
     for d in glob.glob("/tmp/ftl-*"):
         if os.path.exists(d) and os.path.isdir(d) and "tmp" in d and "ftl" in d:
             shutil.rmtree(d)
+
+
+def process_module_result(message: GateMessage) -> Dict:
+    msg_type = message[0]
+    if msg_type == "ModuleResult":
+        if message[1]["stdout"]:
+            return json.loads(message[1]["stdout"])
+        else:
+            return dict(error=dict(message=message[1]["stderr"]))
+    elif msg_type == "GateSystemError":
+        return dict(error=dict(error_type=message[0], message=message[1]))
+    else:
+        raise Exception("Not supported")
