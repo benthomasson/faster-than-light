@@ -6,6 +6,7 @@ from .util import chunk, find_module
 from .types import Gate
 from .ssh import run_module_through_gate, run_ftl_module_through_gate, run_module_remotely
 from .local import run_module_locally, run_ftl_module_locally
+from .receptor import run_module_through_receptor
 
 from typing import Dict, Optional, Callable, List, Tuple
 from asyncio.tasks import Task
@@ -44,7 +45,7 @@ async def run_module_on_host(
     if host and host.get("ansible_connection") == "local":
         return await local_runner(host_name, host, module, module_args)
     else:
-        return await run_module_remotely(host_name, host, module, module_args, remote_runner, gate_cache, gate_builder)
+        return await run_module_through_receptor(host_name, host, module, module_args, remote_runner, gate_cache, gate_builder)
 
 
 async def _run_module(
