@@ -85,9 +85,8 @@ def process_module_result(message: GateMessage) -> Dict:
 async def run_module_through_gate(
     gate_process: SSHClientProcess, module: str, module_name: str, module_args: Dict
 ) -> Dict:
-    # with open(module, 'rb') as f:
-    #    module_text = base64.b64encode(f.read()).decode()
-    module_text = None
+    with open(module, 'rb') as f:
+       module_text = base64.b64encode(f.read()).decode()
     send_message_str(
         gate_process.stdin,
         "Module",

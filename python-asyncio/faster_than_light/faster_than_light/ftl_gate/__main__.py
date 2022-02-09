@@ -19,7 +19,10 @@ class StdinReader(object):
 
     async def read(self, n):
         loop = asyncio.get_running_loop()
-        return await loop.run_in_executor(None, sys.stdin.read, n)
+        result = await loop.run_in_executor(None, sys.stdin.read, n)
+        if isinstance(result, str):
+            result = result.encode()
+        return result
 
 
 class StdoutWriter(object):
@@ -151,32 +154,37 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
     try:
         module_file = os.path.join(tempdir, module_name)
         if module is not None:
+            logger.info("loading module from message")
             module = base64.b64decode(module)
             with open(module_file, 'wb') as f:
                 f.write(module)
         else:
-            logger.info("loading from ftl_gate")
+            logger.info("loading module from ftl_gate")
             modules = importlib.resources.files(ftl_gate)
             with open(module_file, 'wb') as f2:
                 module = importlib.resources.read_binary(ftl_gate, module_name)
                 f2.write(module)
         if is_binary_module(module):
+            logger.info("is_binary_module")
             args = os.path.join(tempdir, 'args')
             with open(args, 'w') as f:
                 f.write(json.dumps(module_args))
             os.chmod(module_file, stat.S_IEXEC | stat.S_IREAD)
             stdout, stderr = await check_output(f'{module_file} {args}')
         elif is_new_style_module(module):
+            logger.info("is_new_style_module")
             stdout, stderr = await check_output(f'{sys.executable} {module_file}',
                                                 stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode(),
                                                 env=dict(PYTHONPATH=get_python_path()))
         elif is_want_json_module(module):
+            logger.info("is_want_json_module")
             args = os.path.join(tempdir, 'args')
             with open(args, 'w') as f:
                 f.write(json.dumps(module_args))
             stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}',
                                                 env=dict(PYTHONPATH=get_python_path()))
         else:
+            logger.info("is_old_style_module")
             args = os.path.join(tempdir, 'args')
             with open(args, 'w') as f:
                 if module_args is not None:
@@ -185,9 +193,11 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
                     f.write('')
             stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}',
                                                 env=dict(PYTHONPATH=get_python_path()))
+        logger.info("Sending ModuleResult")
         send_message(writer, 'ModuleResult', dict(stdout=stdout.decode(),
                                                   stderr=stderr.decode()))
     finally:
+        logger.info(f"cleaning up {tempdir}")
         shutil.rmtree(tempdir)
 
 
@@ -199,7 +209,9 @@ async def run_ftl_module(writer, module_name, module, module_args=None):
     locals = {}
 
     exec(module_compiled, globals, locals)
+    logger.info("Calling FTL module")
     result = await locals['main']()
+    logger.info("Sending FTLModuleResult")
     send_message(writer, 'FTLModuleResult', dict(result=result))
 
 
@@ -208,8 +220,8 @@ async def main(args):
     logging.basicConfig(filename="/tmp/ftl_gate.log", level=logging.DEBUG)
 
     logger.info(f'sys.executable {sys.executable}')
-    logger.info(f'sys.path {sys.path}')
-    logger.info(f'os.environ {os.environ}')
+    logger.debug(f'sys.path {sys.path}')
+    logger.debug(f'os.environ {os.environ}')
 
     reader, writer = await connect_stdin_stdout()
 

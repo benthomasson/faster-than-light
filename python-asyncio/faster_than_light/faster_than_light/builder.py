@@ -10,6 +10,7 @@ Options:
     -m=<m>, --module=<m>        Module
     -M=<M>, --module-dir=<M>    Module directory
     -r=<r>, --requirements=<r>  Python requirements
+    -I=<I>, --interpreter=<I>   Python interpreter to use
 """
 from docopt import docopt
 import logging
@@ -44,7 +45,10 @@ def main(args: Optional[List[str]]=None) -> int:
         modules.append(parsed_args['--module'])
     if parsed_args['--module-dir']:
         module_dirs.append(parsed_args['--module-dir'])
-    gate = build_ftl_gate(modules, module_dirs, dependencies)
+    interpreter = sys.executable
+    if parsed_args['--interpreter']:
+        interpreter = parsed_args['--interpreter']
+    gate = build_ftl_gate(modules, module_dirs, dependencies, interpreter)
     print(gate)
     return 0
 

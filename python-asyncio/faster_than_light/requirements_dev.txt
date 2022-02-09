@@ -12,3 +12,4 @@ black
 pytest==6.1.0
 pytest-runner==5.1
 pytest-asyncio
+mypy
