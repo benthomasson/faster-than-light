@@ -8,9 +8,9 @@ import sys
 
 
 @pytest.mark.asyncio
-async def test_1():
+async def test_slack():
     slack, path = util.find_module('community.general.slack')
     assert slack
     result = await ftl.run_module(load_inventory('inventory.yml'), [path], 'slack', module_args=dict(token=settings.SLACK_TOKEN, msg='hi from ftl'))
     print(result)
-    result['localhost']['msg'] == 'OK'
+    assert result['localhost']['msg'] == 'OK'
