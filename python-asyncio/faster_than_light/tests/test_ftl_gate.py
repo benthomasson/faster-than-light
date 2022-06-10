@@ -1,5 +1,3 @@
-
-
 import asyncio
 import os
 import pytest
@@ -10,6 +8,7 @@ from faster_than_light.message import read_message, send_message
 from faster_than_light.gate import build_ftl_gate
 from faster_than_light.module import run_module_on_host, find_module
 from faster_than_light.util import clean_up_ftl_cache, clean_up_tmp
+from faster_than_light.exceptions import ModuleNotFound
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -22,7 +21,8 @@ async def test_read_message():
         ftl_gate,
         stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE)
+        stderr=asyncio.subprocess.PIPE,
+    )
 
     try:
         proc.stdin.write(b'0000000d["Hello", {}]')
@@ -33,11 +33,18 @@ async def test_read_message():
         print((await proc.stderr.read()).decode())
         raise
     finally:
-        send_message(proc.stdin, 'Shutdown', {})
+        send_message(proc.stdin, "Shutdown", {})
         await proc.wait()
         os.unlink(ftl_gate)
         clean_up_ftl_cache()
         clean_up_tmp()
+
+
+@pytest.mark.asyncio
+async def test_build_ftl_gate_module_not_found():
+    with pytest.raises(ModuleNotFound):
+        build_ftl_gate(modules=["SDFASDFDSF_not_found_ASDFASDFDS"])
+
 
 @pytest.mark.asyncio
 async def test_build_ftl_gate():
@@ -47,15 +54,16 @@ async def test_build_ftl_gate():
         ftl_gate,
         stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE)
+        stderr=asyncio.subprocess.PIPE,
+    )
 
     try:
-        send_message(proc.stdin, 'Hello', {})
+        send_message(proc.stdin, "Hello", {})
         message = await read_message(proc.stdout)
         assert message[0] == "Hello"
         assert message[1] == {}
     finally:
-        send_message(proc.stdin, 'Shutdown', {})
+        send_message(proc.stdin, "Shutdown", {})
         await proc.wait()
         os.unlink(ftl_gate)
         clean_up_ftl_cache()
@@ -70,24 +78,25 @@ async def test_run_module():
         ftl_gate,
         stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE)
+        stderr=asyncio.subprocess.PIPE,
+    )
 
     try:
-        send_message(proc.stdin, 'Hello', {})
+        send_message(proc.stdin, "Hello", {})
         message = await read_message(proc.stdout)
         assert message[0] == "Hello"
         assert message[1] == {}
 
-        with open(find_module(['modules'], 'argtest'), 'rb') as f:
+        with open(find_module(["modules"], "argtest"), "rb") as f:
             module = base64.b64encode(f.read()).decode()
-        send_message(proc.stdin, 'Module', dict(module=module, module_name='argtest'))
+        send_message(proc.stdin, "Module", dict(module=module, module_name="argtest"))
         message = await read_message(proc.stdout)
         assert message[0] != "GateSystemError", message[1]
         assert message[0] == "ModuleResult"
         assert message[1] != {}
-        assert message[1]['stdout']
+        assert message[1]["stdout"]
     finally:
-        send_message(proc.stdin, 'Shutdown', {})
+        send_message(proc.stdin, "Shutdown", {})
         await proc.wait()
         os.unlink(ftl_gate)
         clean_up_ftl_cache()
@@ -102,24 +111,27 @@ async def test_run_ftl_module():
         ftl_gate,
         stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
-        stderr=asyncio.subprocess.PIPE)
+        stderr=asyncio.subprocess.PIPE,
+    )
 
     try:
-        send_message(proc.stdin, 'Hello', {})
+        send_message(proc.stdin, "Hello", {})
         message = await read_message(proc.stdout)
         assert message[0] == "Hello"
         assert message[1] == {}
 
-        with open(find_module(['ftl_modules'], 'argtest'), 'rb') as f:
+        with open(find_module(["ftl_modules"], "argtest"), "rb") as f:
             module = base64.b64encode(f.read()).decode()
-        send_message(proc.stdin, 'FTLModule', dict(module=module, module_name='argtest'))
+        send_message(
+            proc.stdin, "FTLModule", dict(module=module, module_name="argtest")
+        )
         message = await read_message(proc.stdout)
         assert message[0] != "GateSystemError", message[1]
         assert message[0] == "FTLModuleResult"
         assert message[1] != {}
-        assert message[1]['result']
+        assert message[1]["result"]
     finally:
-        send_message(proc.stdin, 'Shutdown', {})
+        send_message(proc.stdin, "Shutdown", {})
         await proc.wait()
         os.unlink(ftl_gate)
         clean_up_tmp()

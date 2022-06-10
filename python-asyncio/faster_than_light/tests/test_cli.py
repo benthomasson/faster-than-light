@@ -4,6 +4,7 @@ import faster_than_light.cli
 import faster_than_light.builder
 import pytest
 import os
+import sys
 import docopt
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -48,7 +49,7 @@ def test_builder_cli():
 
 
 def test_builder_cli2():
-    faster_than_light.builder.main(['-M', 'modules', '-m', 'argtest', '--requirements', 'requirements.txt'])
+    faster_than_light.builder.main(['-M', 'modules', '-m', 'argtest', '--requirements', 'requirements.txt', '--interpreter', sys.executable])
 
 def test_builder_cli_debug():
     faster_than_light.builder.main(['--debug'])

@@ -5,6 +5,7 @@ import json
 
 from typing import List, Union, Dict
 from .message import GateMessage
+from .exceptions import ModuleNotFound
 
 
 def ensure_directory(d: str) -> str:
@@ -57,7 +58,7 @@ def read_module(module_dirs: List[str], module_name: str) -> bytes:
         with open(module, "rb") as f:
             return f.read()
     else:
-        raise Exception(f"Cannot find {module_name} in {module_dirs}")
+        raise ModuleNotFound(f"Cannot find {module_name} in {module_dirs}")
 
 
 def clean_up_ftl_cache() -> None:

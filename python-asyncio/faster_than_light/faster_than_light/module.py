@@ -6,6 +6,7 @@ from .util import chunk, find_module
 from .types import Gate
 from .ssh import run_module_through_gate, run_ftl_module_through_gate, run_module_remotely
 from .local import run_module_locally, run_ftl_module_locally
+from .exceptions import ModuleNotFound
 
 from typing import Dict, Optional, Callable, List, Tuple
 from asyncio.tasks import Task
@@ -67,7 +68,7 @@ async def _run_module(
         modules.append(module_name)
 
     if module is None:
-        raise Exception(f"Module {module_name} not found in {module_dirs}")
+        raise ModuleNotFound(f"Module {module_name} not found in {module_dirs}")
 
     hosts = unique_hosts(inventory)
 

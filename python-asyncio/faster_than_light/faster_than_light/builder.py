@@ -25,7 +25,7 @@ logger = logging.getLogger('builder')
 
 def main(args: Optional[List[str]]=None) -> int:
     if args is None:
-        args = sys.argv[1:]
+        args = sys.argv[1:]   # pragma: no cover
     parsed_args = docopt(__doc__, args)
     if parsed_args['--debug']:
         logging.basicConfig(level=logging.DEBUG)
@@ -53,4 +53,4 @@ def main(args: Optional[List[str]]=None) -> int:
     return 0
 
 def entry_point() -> None:
-    main(sys.argv[1:])
+    main(sys.argv[1:])  # pragma: no cover

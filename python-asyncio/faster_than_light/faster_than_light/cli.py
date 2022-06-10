@@ -38,7 +38,7 @@ def parse_module_args(args: str) -> Dict[str, str]:
 
 async def main(args: Optional[List[str]] = None) -> int:
     if args is None:
-        args = sys.argv[1:]
+        args = sys.argv[1:]   # pragma: no cover
     parsed_args = docopt(__doc__, args)
     if parsed_args["--debug"]:
         logging.basicConfig(level=logging.DEBUG)
@@ -73,4 +73,4 @@ async def main(args: Optional[List[str]] = None) -> int:
 
 
 def entry_point() -> None:
-    asyncio.run(main(sys.argv[1:]))
+    asyncio.run(main(sys.argv[1:]))   # pragma: no cover

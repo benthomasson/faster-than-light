@@ -10,6 +10,7 @@ import faster_than_light.ftl_gate
 from subprocess import check_output
 
 from .util import ensure_directory, read_module, find_module
+from .exceptions import ModuleNotFound
 
 from typing import Optional, List
 
@@ -57,7 +58,7 @@ def build_ftl_gate(
         for module in modules:
             module_name = find_module(module_dirs, module)
             if module_name is None:
-                raise Exception(f"Cannot find {module} in {module_dirs}")
+                raise ModuleNotFound(f"Cannot find {module} in {module_dirs}")
             module_path = os.path.join(module_dir, os.path.basename(module_name))
             with open(module_path, "wb") as f2:
                 f2.write(read_module(module_dirs, module))
