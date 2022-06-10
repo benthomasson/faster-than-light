@@ -44,8 +44,10 @@ async def run_module_on_host(
 ) -> Tuple[str, Dict]:
     if host and host.get("ansible_connection") == "local":
         return await local_runner(host_name, host, module, module_args)
+    elif host and host.get("ansible_connection") == "receptor":
+        return await run_module_through_receptor(host_name, host, module, module_args)
     else:
-        return await run_module_through_receptor(host_name, host, module, module_args, remote_runner, gate_cache, gate_builder)
+        return await run_module_remotely(host_name, host, module, module_args, remote_runner, gate_cache, gate_builder)
 
 
 async def _run_module(

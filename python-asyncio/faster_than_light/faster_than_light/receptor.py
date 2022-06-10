@@ -19,9 +19,6 @@ async def run_module_through_receptor(
     host: Dict,
     module: str,
     module_args: Dict,
-    remote_runner: Callable,
-    gate_cache: Optional[Dict[str, Gate]],
-    gate_builder: Callable,
 ) -> Tuple[str, Dict]:
     module_name = os.path.basename(module)
     buf = StringIO()
@@ -35,7 +32,7 @@ async def run_module_through_receptor(
     )
     send_message_str(buf, "Shutdown", {})
     rc = ReceptorControl('/tmp/foo.sock')
-    result = rc.submit_work('ftlgate', buf.getvalue())
+    result = rc.submit_work('ftlgate', buf.getvalue(), node=host_name)
     resultsfile = rc.get_work_results(result['unitid'])
     hello = read_message_syn(resultsfile)
     module_result = read_message_syn(resultsfile)
