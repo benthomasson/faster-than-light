@@ -76,11 +76,14 @@ def clean_up_tmp() -> None:
 def process_module_result(message: GateMessage) -> Dict:
     msg_type = message[0]
     if msg_type == "ModuleResult":
-        if message[1]["stdout"]:
+        if message[1].get("stdout", None):
             return json.loads(message[1]["stdout"])
         else:
             return dict(error=dict(message=message[1]["stderr"]))
+    if msg_type == "FTLModuleResult":
+        if message[1].get("result", None):
+            return message[1]["result"]
     elif msg_type == "GateSystemError":
         return dict(error=dict(error_type=message[0], message=message[1]))
     else:
-        raise Exception("Not supported")
+        raise Exception(f"Unsupported message type {msg_type}")

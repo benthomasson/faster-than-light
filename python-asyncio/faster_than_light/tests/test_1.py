@@ -89,6 +89,19 @@ async def test_run_ftl_module():
 
 
 @pytest.mark.asyncio
+async def test_run_ftl_module_remote():
+    os.chdir(HERE)
+    output = await run_ftl_module(load_inventory('inventory2.yml'),
+                                  ['ftl_modules'],
+                                  'argtest')
+    pprint(output)
+    assert output['localhost']
+    assert output['localhost'] == {'args': [], 'kwargs': {}}
+    clean_up_ftl_cache()
+    clean_up_tmp()
+
+
+@pytest.mark.asyncio
 async def test_run_module_want_json():
     os.chdir(HERE)
     output = await run_module(load_inventory('inventory.yml'),
@@ -153,6 +166,62 @@ async def test_run_module_argtest_remote_cached():
     os.chdir(HERE)
     cache = dict()
     output = await run_module(load_inventory('inventory2.yml'),
+                              ['modules'],
+                              'argtest',
+                              module_args=dict(somekey='somevalue'),
+                              gate_cache=cache)
+    pprint(output)
+    assert output['localhost']
+    assert output['localhost']['args']
+    assert output['localhost']['executable']
+    assert output['localhost']['more_args'] == 'somekey=somevalue'
+    assert output['localhost']['files']
+    assert cache
+    await remove_item_from_cache(cache)
+    assert not cache 
+    clean_up_ftl_cache()
+    clean_up_tmp()
+
+
+@pytest.mark.asyncio
+async def test_run_module_argtest_remote_cached2():
+    os.chdir(HERE)
+    cache = dict()
+    output = await run_module(load_inventory('inventory2.yml'),
+                              ['modules'],
+                              'argtest',
+                              module_args=dict(somekey='somevalue'),
+                              gate_cache=cache)
+    pprint(output)
+    assert output['localhost']
+    assert output['localhost']['args']
+    assert output['localhost']['executable']
+    assert output['localhost']['more_args'] == 'somekey=somevalue'
+    assert output['localhost']['files']
+    assert cache
+    output = await run_module(load_inventory('inventory2.yml'),
+                              ['modules'],
+                              'argtest',
+                              module_args=dict(somekey='somevalue'),
+                              gate_cache=cache)
+    pprint(output)
+    assert output['localhost']
+    assert output['localhost']['args']
+    assert output['localhost']['executable']
+    assert output['localhost']['more_args'] == 'somekey=somevalue'
+    assert output['localhost']['files']
+    assert cache
+    await remove_item_from_cache(cache)
+    assert not cache 
+    clean_up_ftl_cache()
+    clean_up_tmp()
+
+
+@pytest.mark.asyncio
+async def test_run_module_argtest_host():
+    os.chdir(HERE)
+    cache = dict()
+    output = await run_module(load_inventory('inventory3.yml'),
                               ['modules'],
                               'argtest',
                               module_args=dict(somekey='somevalue'),
