@@ -3,6 +3,7 @@ import json
 import os
 import shutil
 import tempfile
+import sys
 
 from typing import Dict, Tuple
 
@@ -55,7 +56,7 @@ async def run_module_locally(
     shutil.copy(module, tmp_module)
     # TODO: replace hashbang with ansible_python_interpreter
     # TODO: add utf-8 encoding line
-    interpreter = host.get("ansible_python_interpreter", "/usr/bin/python")
+    interpreter = host.get("ansible_python_interpreter", sys.executable)
     if is_binary_module(module):
         args = os.path.join(tmp, "args")
         with open(args, "w") as f:
