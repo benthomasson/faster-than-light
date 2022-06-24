@@ -4,7 +4,9 @@ import faster_than_light as ftl
 from faster_than_light.inventory import load_inventory
 from config import settings
 import sys
+import os
 from pprint import pprint
+from pathlib import Path
 
 
 async def run_module_with_inventory(module, **kwargs):
@@ -15,6 +17,78 @@ async def run_module_with_inventory(module, **kwargs):
         load_inventory("inventory.yml"), [path], module_name, module_args=kwargs
     )
 
+
+@pytest.mark.asyncio
+async def test_assemble():
+    here = os.path.abspath(os.path.dirname(__file__))
+    with open(os.path.join(here, "fragments", "a.txt"), 'w') as f:
+        f.write("A\n")
+    with open(os.path.join(here, "fragments", "b.txt"), 'w') as f:
+        f.write("B\n")
+    assemble, path = util.find_module("ansible.builtin.assemble")
+    assert assemble
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "assemble",
+        module_args=dict(src=os.path.join(here, "fragments"), dest="/tmp/assemble_output")
+    )
+    pprint(result)
+    assert result["localhost"]["msg"] == "OK"
+    with open("/tmp/assemble_output") as f:
+        assert f.read() == 'A\nB\n'
+    os.unlink("/tmp/assemble_output")
+
+@pytest.mark.asyncio
+async def test_copy():
+    here = os.path.abspath(os.path.dirname(__file__))
+    with open(os.path.join(here, "fragments", "a.txt"), 'w') as f:
+        f.write("A\n")
+    assert os.path.exists(os.path.join(here, "fragments", "a.txt"))
+    copy, path = util.find_module("ansible.builtin.copy")
+    assert copy
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "copy",
+        module_args=dict(src=os.path.join(here, "fragments", "a.txt"), dest="/tmp/copy_output")
+    )
+    assert os.path.exists(os.path.join(here, "fragments", "a.txt"))
+    pprint(result)
+    with open("/tmp/copy_output") as f:
+        assert f.read() == 'A\n'
+    os.unlink("/tmp/copy_output")
+    assert os.path.exists(os.path.join(here, "fragments", "a.txt"))
+
+@pytest.mark.asyncio
+async def test_cron():
+    here = os.path.abspath(os.path.dirname(__file__))
+    cron, path = util.find_module("ansible.builtin.cron")
+    assert cron
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "cron",
+        module_args=dict(name="not here", state="absent")
+    )
+    pprint(result)
+    assert result['localhost']['changed'] == False
+
+@pytest.mark.asyncio
+async def test_blockinfile():
+    here = os.path.abspath(os.path.dirname(__file__))
+    Path("/tmp/blockinfile").touch()
+    blockinfile, path = util.find_module("ansible.builtin.blockinfile")
+    assert blockinfile
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "blockinfile",
+        module_args=dict(path="/tmp/blockinfile", block="foobar")
+    )
+    pprint(result)
+    assert result["localhost"]["msg"] == "Block inserted"
+    os.unlink("/tmp/blockinfile")
 
 @pytest.mark.asyncio
 async def test_uri():
@@ -29,6 +103,21 @@ async def test_uri():
     pprint(result)
     assert result["localhost"]["msg"] == "OK (unknown bytes)"
     assert result["localhost"]["status"] == 200
+
+
+@pytest.mark.asyncio
+async def test_get_url():
+    get_url, path = util.find_module("ansible.builtin.get_url")
+    assert get_url
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "get_url",
+        module_args=dict(url="https://www.redhat.com", dest="/tmp/output"),
+    )
+    pprint(result)
+    assert os.path.exists("/tmp/output")
+    os.unlink("/tmp/output")
 
 
 @pytest.mark.asyncio
@@ -51,6 +140,43 @@ async def test_command_echo():
     pprint(result)
     assert result["localhost"]["msg"] == ""
     assert result["localhost"]["stdout"]
+
+
+@pytest.mark.asyncio
+async def test_ping():
+    ping, path = util.find_module("ansible.builtin.ping")
+    assert ping
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"), [path], "ping", module_args=dict()
+    )
+    assert result["localhost"]["ping"] == "pong"
+
+
+@pytest.mark.asyncio
+async def test_file():
+    file, path = util.find_module("ansible.builtin.file")
+    assert file
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "file",
+        module_args=dict(path="/tmp/deleteme.txt", state="absent"),
+    )
+    assert result["localhost"]["changed"] == False
+
+
+@pytest.mark.asyncio
+async def test_file2():
+    file, path = util.find_module("ansible.builtin.file")
+    assert file
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "file",
+        module_args=dict(path="/tmp/touch.txt", state="touch"),
+    )
+    print(result)
+    assert result["localhost"]["changed"] == True
 
 
 @pytest.mark.parametrize(
