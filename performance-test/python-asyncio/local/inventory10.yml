@@ -2,31 +2,31 @@ all:
   hosts:
     localhost0:
       ansible_connection: local
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/bin/python3
     localhost1:
       ansible_connection: local
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/bin/python3
     localhost2:
       ansible_connection: local
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/bin/python3
     localhost3:
       ansible_connection: local
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/bin/python3
     localhost4:
       ansible_connection: local
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/bin/python3
     localhost5:
       ansible_connection: local
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/bin/python3
     localhost6:
       ansible_connection: local
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/bin/python3
     localhost7:
       ansible_connection: local
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/bin/python3
     localhost8:
       ansible_connection: local
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/bin/python3
     localhost9:
       ansible_connection: local
-      ansible_python_interpreter: /usr/bin/python
+      ansible_python_interpreter: /usr/bin/python3

@@ -37,7 +37,7 @@ def build_ftl_gate(
     inputs.extend(dependencies)
     inputs.extend(interpreter)
 
-    gate_hash = hashlib.sha256("".join(inputs).encode()).hexdigest()
+    gate_hash = hashlib.sha256("".join([str(i) for i in inputs]).encode()).hexdigest()
 
     cached_gate = os.path.join(cache, f"ftl_gate_{gate_hash}.pyz")
     if os.path.exists(cached_gate):
