@@ -76,7 +76,10 @@ async def send_gate(
 async def open_gate(conn: SSHClientConnection, tempdir: str) -> SSHClientProcess:
     process = await conn.create_process(f"{tempdir}/ftl_gate.pyz")
     send_message_str(process.stdin, "Hello", {})
-    assert await read_message(process.stdout) == ["Hello", {}]
+    if await read_message(process.stdout) != ["Hello", {}]:
+        error = await process.stderr.read()
+        print(error)
+        raise Exception(error)
     return process
 
 

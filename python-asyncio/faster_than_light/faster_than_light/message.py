@@ -26,5 +26,7 @@ def send_message_str(writer, msg_type, msg_data):
 async def read_message(reader):
     while True:
         length = await reader.read(8)
+        if not length:
+            return None
         value = await reader.read(int(length, 16))
         return json.loads(value)
