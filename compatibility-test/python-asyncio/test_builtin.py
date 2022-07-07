@@ -5,6 +5,7 @@ from faster_than_light.inventory import load_inventory
 from config import settings
 import sys
 import os
+import shutil
 from pprint import pprint
 from pathlib import Path
 
@@ -178,6 +179,34 @@ async def test_file2():
     print(result)
     assert result["localhost"]["changed"] == True
 
+@pytest.mark.asyncio
+async def test_find():
+    find, path = util.find_module("ansible.builtin.find")
+    assert find
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "find",
+        module_args=dict(paths="/tmp/")
+    )
+    print(result)
+    assert result["localhost"]["changed"] == False
+    assert result["localhost"]["files"] != []
+
+@pytest.mark.asyncio
+async def test_git():
+    git, path = util.find_module("ansible.builtin.git")
+    assert git
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "git",
+        module_args=dict(repo="https://github.com/benthomasson/faster-than-light.git", dest="/tmp/ftl-repo")
+    )
+    print(result)
+    assert result["localhost"]["after"]
+    assert os.path.exists("/tmp/ftl-repo")
+    shutil.rmtree("/tmp/ftl-repo")
 
 @pytest.mark.parametrize(
     "module",
