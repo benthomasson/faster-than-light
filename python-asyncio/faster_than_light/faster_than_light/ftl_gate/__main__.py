@@ -76,6 +76,8 @@ async def read_message(reader):
                 # If the value is None then the channel was closed
                 if not value:
                     return None, None
+                while len(value) != length:
+                    value += await reader.read(length - len(value))
                 value = value.strip()
                 # Keep reading until we get a value
                 # This is useful for manual debugging
@@ -90,7 +92,7 @@ async def read_message(reader):
                     try:
                         return json.loads(value)
                     except BaseException:
-                        print(value)
+                        #print(value)
                         raise
                 else:
                     continue
@@ -249,7 +251,7 @@ async def main(args):
             else:
                 send_message(writer, 'Error', dict(message=f'Unknown message type {msg_type}'))
         except BaseException as e:
-            send_message(writer, 'GateSystemError', dict(message=f'Exception {e}'))
+            send_message(writer, 'GateSystemError', dict(message=f'Exception {e} traceback {traceback.format_exc()}'))
             logger.error(f'GateSystemError: {e}')
             logger.error(traceback.format_exc())
             return 1
