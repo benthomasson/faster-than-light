@@ -208,6 +208,45 @@ async def test_git():
     assert os.path.exists("/tmp/ftl-repo")
     shutil.rmtree("/tmp/ftl-repo")
 
+@pytest.mark.asyncio
+async def test_group():
+    group, path = util.find_module("ansible.builtin.group")
+    assert group
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "group",
+        module_args=dict(name="foobar")
+    )
+    print(result)
+    assert result["localhost"]['msg'] == "Username and password must be provided.\n"
+
+@pytest.mark.asyncio
+async def test_user():
+    user, path = util.find_module("ansible.builtin.user")
+    assert user
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "user",
+        module_args=dict(name="foobar")
+    )
+    print(result)
+    assert result["localhost"]['msg'] == 'Cannot create user "foobar".'
+
+@pytest.mark.asyncio
+async def test_hostname():
+    hostname, path = util.find_module("ansible.builtin.hostname")
+    assert hostname
+    result = await ftl.run_module(
+        load_inventory("inventory.yml"),
+        [path],
+        "hostname",
+        module_args=dict(name="foobar")
+    )
+    print(result)
+    assert False
+
 @pytest.mark.parametrize(
     "module",
     [
