@@ -9,7 +9,7 @@ Sphinx==1.8.5
 twine==1.14.0
 black
 
-pytest==6.1.0
+pytest
 pytest-runner==5.1
 pytest-asyncio
 mypy

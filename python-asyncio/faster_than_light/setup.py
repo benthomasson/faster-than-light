@@ -14,7 +14,8 @@ requirements = [ 'asyncssh',
                  'importlib_resources',
                  'pyyaml',
                  'docopt',
-                 'pip']
+                 'pip',
+                 'wheel']
 
 setup_requirements = ['pytest-runner', ]
 
