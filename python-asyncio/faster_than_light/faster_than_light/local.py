@@ -4,6 +4,7 @@ import os
 import shutil
 import tempfile
 import sys
+import runpy
 
 from typing import Dict, Tuple
 
@@ -91,12 +92,10 @@ async def run_ftl_module_locally(
     host_name: str, host: Dict, module_path: str, module_args: Dict
 ) -> Tuple[str, dict]:
 
-    with open(module_path, "rb") as f:
-        module_compiled = compile(f.read(), module_path, "exec")
+    if module_args is None:
+        module_args = {}
 
-    globals = {"__file__": module_path}
-    locals: Dict = {}
+    module = runpy.run_path(module_path)
 
-    exec(module_compiled, globals, locals)
-    result = await locals["main"](**module_args)
+    result = await module["main"](**module_args)
     return host_name, result
