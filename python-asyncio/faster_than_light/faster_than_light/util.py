@@ -32,6 +32,8 @@ def find_module(module_dirs: List[str], module_name: str) -> Union[str, None]:
 
     # Find the module in module_dirs
     for d in module_dirs:
+        if not d:
+            continue
         module = os.path.join(d, f"{module_name}.py")
         if os.path.exists(module):
             break
@@ -41,6 +43,8 @@ def find_module(module_dirs: List[str], module_name: str) -> Union[str, None]:
     # Look for binary module in module_dirs
     if module is None:
         for d in module_dirs:
+            if not d:
+                continue
             module = os.path.join(d, module_name)
             if os.path.exists(module):
                 break
