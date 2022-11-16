@@ -98,5 +98,5 @@ async def run_ftl_module_locally(
     locals: Dict = {}
 
     exec(module_compiled, globals, locals)
-    result = await locals["main"]()
+    result = await locals["main"](**module_args)
     return host_name, result
