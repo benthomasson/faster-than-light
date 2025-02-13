@@ -1,6 +1,13 @@
 [project]
-name = "faster-than-light"
+name = "faster_than_light"
 version = "0.1.0"
+dependencies = [ 'asyncssh',
+                 'importlib_resources',
+                 'pyyaml',
+                 'docopt',
+                 'pip',
+                 'wheel',
+                 'aiomultiprocess']
 
 [tool.setuptools]
 packages = ["faster_than_light"]
@@ -8,3 +15,7 @@ packages = ["faster_than_light"]
 [build-system]
 requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
+
+[project.scripts]
+ftl = "faster_than_light.cli:entry_point"
+ftl-gate-builder = "faster_than_light.builder:entry_point"
