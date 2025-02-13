@@ -1,3 +1,10 @@
+[project]
+name = "faster-than-light"
+version = "0.1.0"
+
+[tool.setuptools]
+packages = ["faster_than_light"]
+
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta:__legacy__
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
