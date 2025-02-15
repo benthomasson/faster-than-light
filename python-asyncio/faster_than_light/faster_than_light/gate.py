@@ -4,6 +4,7 @@ import sys
 import shutil
 import tempfile
 import zipapp
+import logging
 
 from importlib_resources import files
 import faster_than_light.ftl_gate
@@ -14,13 +15,18 @@ from .exceptions import ModuleNotFound
 
 from typing import Optional, List
 
+logger = logging.getLogger('faster_than_light.gate')
+
 
 def build_ftl_gate(
     modules: Optional[List[str]] = None,
     module_dirs: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
     interpreter: str = sys.executable,
+    local_interpreter: str = sys.executable,
 ) -> str:
+
+    logger.debug(f'build_ftl_gate  {modules=} {module_dirs=} {dependencies=} {interpreter=} {local_interpreter=}')
 
     cache = ensure_directory("~/.ftl")
 
@@ -68,9 +74,9 @@ def build_ftl_gate(
         requirements = os.path.join(tempdir, "requirements.txt")
         with open(requirements, "w") as f:
             f.write("\n".join(dependencies))
-        output = check_output(
-            [
-                interpreter,
+
+        command = [
+                local_interpreter,
                 "-m",
                 "pip",
                 "install",
@@ -79,7 +85,8 @@ def build_ftl_gate(
                 "--target",
                 os.path.join(tempdir, "ftl_gate"),
             ]
-        )
+        logger.debug(" ".join(command))
+        output = check_output(command)
         print(output)
 
     zipapp.create_archive(

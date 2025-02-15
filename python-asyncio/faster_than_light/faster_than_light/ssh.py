@@ -6,6 +6,8 @@ import uuid
 import base64
 import asyncssh
 import asyncssh.misc
+from getpass import getuser
+import logging
 
 from asyncssh.connection import SSHClientConnection
 from asyncssh.process import SSHClientProcess
@@ -15,16 +17,20 @@ from .types import Gate
 from .message import send_message_str, read_message
 from .util import process_module_result
 
+logger = logging.getLogger('faster_than_light.ssh')
+
 
 async def connect_gate(
     gate_builder: Callable,
     ssh_host: str,
+    ssh_user: str,
     gate_cache: Optional[Dict[str, Gate]],
     interpreter: str,
 ) -> Gate:
+    logger.debug(f'connect_gate {ssh_host=} {ssh_user=} {interpreter=}')
     while True:
         try:
-            conn = await asyncssh.connect(ssh_host)
+            conn = await asyncssh.connect(ssh_host, username=ssh_user)
             await check_version(conn, interpreter)
             tempdir = f"/tmp/ftl-{uuid.uuid4()}"
             result = await conn.run(f"mkdir {tempdir}", check=True)
@@ -143,6 +149,10 @@ async def run_module_remotely(
         ssh_host = host.get("ansible_host")
     else:
         ssh_host = host_name
+    if host and host.get("ansible_user"):
+        ssh_user = host.get("ansible_user")
+    else:
+        ssh_user = getuser()
     if host and host.get("ansible_python_interpreter"):
         interpreter = host.get("ansible_python_interpreter")
     else:
@@ -154,7 +164,7 @@ async def run_module_remotely(
                 del gate_cache[host_name]
             else:
                 conn, gate_process, tempdir = await connect_gate(
-                    gate_builder, ssh_host, gate_cache, interpreter
+                    gate_builder, ssh_host, ssh_user, gate_cache, interpreter
                 )
             try:
                 return host_name, await remote_runner(

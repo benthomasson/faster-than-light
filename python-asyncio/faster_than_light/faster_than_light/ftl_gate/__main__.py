@@ -154,7 +154,8 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
     logger.info(module_name)
     tempdir = tempfile.mkdtemp(prefix="ftl-module")
     try:
-        module_file = os.path.join(tempdir, module_name)
+        module_file = os.path.join(tempdir, f"ftl_{module_name}")
+        logger.info(module_file)
         if module is not None:
             logger.info("loading module from message")
             module = base64.b64decode(module)
