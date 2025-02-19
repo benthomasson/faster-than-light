@@ -1,4 +1,3 @@
-
 import asyncio
 import json
 import os
@@ -12,7 +11,7 @@ import logging
 import traceback
 import stat
 
-logger = logging.getLogger('ftl_gate')
+logger = logging.getLogger("ftl_gate")
 
 
 class StdinReader(object):
@@ -34,14 +33,16 @@ class StdoutWriter(object):
 async def connect_stdin_stdout():
     loop = asyncio.get_event_loop()
     try:
-        #Try to connect to pipes
+        # Try to connect to pipes
         reader = asyncio.StreamReader()
         protocol = asyncio.StreamReaderProtocol(reader)
         await loop.connect_read_pipe(lambda: protocol, sys.stdin)
-        w_transport, w_protocol = await loop.connect_write_pipe(asyncio.streams.FlowControlMixin, sys.stdout)
+        w_transport, w_protocol = await loop.connect_write_pipe(
+            asyncio.streams.FlowControlMixin, sys.stdout
+        )
         writer = asyncio.StreamWriter(w_transport, w_protocol, reader, loop)
     except ValueError:
-        #Fall back to simple reader and writer
+        # Fall back to simple reader and writer
         reader = StdinReader()
         writer = StdoutWriter()
     return reader, writer
@@ -55,8 +56,8 @@ async def read_message(reader):
         # Length is a 8 byte field in hexadecimal
         # Value is a length byte field
 
-        value = b''
-        length_hexadecimal = b'0'
+        value = b""
+        length_hexadecimal = b"0"
         length = 0
 
         # Read length
@@ -92,7 +93,7 @@ async def read_message(reader):
                     try:
                         return json.loads(value)
                     except BaseException:
-                        #print(value)
+                        # print(value)
                         raise
                 else:
                     continue
@@ -107,8 +108,10 @@ def send_message(writer, msg_type, data):
     # item is the message type and the second
     # item is the data.
     message = json.dumps([msg_type, data]).encode()
-    assert len(message) < 16**8, f'Message {msg_type} is too big.  Break up messages into less than 16**8 bytes'
-    writer.write('{:08x}'.format(len(message)).encode())
+    assert (
+        len(message) < 16**8
+    ), f"Message {msg_type} is too big.  Break up messages into less than 16**8 bytes"
+    writer.write("{:08x}".format(len(message)).encode())
     writer.write(message)
 
 
@@ -118,7 +121,8 @@ async def check_output(cmd, env=None, stdin=None):
         stdin=asyncio.subprocess.PIPE,
         stdout=asyncio.subprocess.PIPE,
         stderr=asyncio.subprocess.PIPE,
-        env=env)
+        env=env,
+    )
 
     stdout, stderr = await proc.communicate(stdin)
     return stdout, stderr
@@ -133,14 +137,14 @@ def is_binary_module(module):
 
 
 def is_new_style_module(module):
-    if b'AnsibleModule(' in module:
+    if b"AnsibleModule(" in module:
         return True
     else:
         return False
 
 
 def is_want_json_module(module):
-    if b'WANT_JSON' in module:
+    if b"WANT_JSON" in module:
         return True
     else:
         return False
@@ -156,49 +160,58 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
     try:
         module_file = os.path.join(tempdir, f"ftl_{module_name}")
         logger.info(module_file)
+        env = os.environ.copy()
+        env["PYTHONPATH"] = get_python_path()
         if module is not None:
             logger.info("loading module from message")
             module = base64.b64decode(module)
-            with open(module_file, 'wb') as f:
+            with open(module_file, "wb") as f:
                 f.write(module)
         else:
             logger.info("loading module from ftl_gate")
             modules = importlib.resources.files(ftl_gate)
-            with open(module_file, 'wb') as f2:
+            with open(module_file, "wb") as f2:
                 module = importlib.resources.read_binary(ftl_gate, module_name)
                 f2.write(module)
         if is_binary_module(module):
             logger.info("is_binary_module")
-            args = os.path.join(tempdir, 'args')
-            with open(args, 'w') as f:
+            args = os.path.join(tempdir, "args")
+            with open(args, "w") as f:
                 f.write(json.dumps(module_args))
             os.chmod(module_file, stat.S_IEXEC | stat.S_IREAD)
-            stdout, stderr = await check_output(f'{module_file} {args}')
+            stdout, stderr = await check_output(f"{module_file} {args}")
         elif is_new_style_module(module):
             logger.info("is_new_style_module")
-            stdout, stderr = await check_output(f'{sys.executable} {module_file}',
-                                                stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode(),
-                                                env=dict(PYTHONPATH=get_python_path()))
+            stdout, stderr = await check_output(
+                f"{sys.executable} {module_file}",
+                stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode(),
+                env=env,
+            )
         elif is_want_json_module(module):
             logger.info("is_want_json_module")
-            args = os.path.join(tempdir, 'args')
-            with open(args, 'w') as f:
+            args = os.path.join(tempdir, "args")
+            with open(args, "w") as f:
                 f.write(json.dumps(module_args))
-            stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}',
-                                                env=dict(PYTHONPATH=get_python_path()))
+            stdout, stderr = await check_output(
+                f"{sys.executable} {module_file} {args}", env=env
+            )
         else:
             logger.info("is_old_style_module")
-            args = os.path.join(tempdir, 'args')
-            with open(args, 'w') as f:
+            args = os.path.join(tempdir, "args")
+            with open(args, "w") as f:
                 if module_args is not None:
-                    f.write(" ".join(["=".join([k, v]) for k, v in module_args.items()]))
+                    f.write(
+                        " ".join(["=".join([k, v]) for k, v in module_args.items()])
+                    )
                 else:
-                    f.write('')
-            stdout, stderr = await check_output(f'{sys.executable} {module_file} {args}',
-                                                env=dict(PYTHONPATH=get_python_path()))
+                    f.write("")
+            stdout, stderr = await check_output(
+                f"{sys.executable} {module_file} {args}", env=env
+            )
         logger.info("Sending ModuleResult")
-        send_message(writer, 'ModuleResult', dict(stdout=stdout.decode(),
-                                                  stderr=stderr.decode()))
+        send_message(
+            writer, "ModuleResult", dict(stdout=stdout.decode(), stderr=stderr.decode())
+        )
     finally:
         logger.info(f"cleaning up {tempdir}")
         shutil.rmtree(tempdir)
@@ -206,25 +219,25 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
 
 async def run_ftl_module(writer, module_name, module, module_args=None):
 
-    module_compiled = compile(base64.b64decode(module), module_name, 'exec')
+    module_compiled = compile(base64.b64decode(module), module_name, "exec")
 
-    globals = {'__file__': module_name}
+    globals = {"__file__": module_name}
     locals = {}
 
     exec(module_compiled, globals, locals)
     logger.info("Calling FTL module")
-    result = await locals['main']()
+    result = await locals["main"]()
     logger.info("Sending FTLModuleResult")
-    send_message(writer, 'FTLModuleResult', dict(result=result))
+    send_message(writer, "FTLModuleResult", dict(result=result))
 
 
 async def main(args):
 
     logging.basicConfig(filename="/tmp/ftl_gate.log", level=logging.DEBUG)
 
-    logger.info(f'sys.executable {sys.executable}')
-    logger.debug(f'sys.path {sys.path}')
-    logger.debug(f'os.environ {os.environ}')
+    logger.info(f"sys.executable {sys.executable}")
+    logger.debug(f"sys.path {sys.path}")
+    logger.debug(f"os.environ {os.environ}")
 
     reader, writer = await connect_stdin_stdout()
 
@@ -233,27 +246,33 @@ async def main(args):
         try:
             msg_type, data = await read_message(reader)
             if msg_type is None:
-                logger.info('End of input')
-                send_message(writer, 'Goodbye', {})
+                logger.info("End of input")
+                send_message(writer, "Goodbye", {})
                 return
-            elif msg_type == 'Hello':
-                logger.info('hello')
+            elif msg_type == "Hello":
+                logger.info("hello")
                 send_message(writer, msg_type, data)
-            elif msg_type == 'Module':
-                logger.info('Module')
+            elif msg_type == "Module":
+                logger.info("Module")
                 await gate_run_module(writer, **data)
-            elif msg_type == 'FTLModule':
-                logger.info('FTLModule')
+            elif msg_type == "FTLModule":
+                logger.info("FTLModule")
                 await run_ftl_module(writer, **data)
-            elif msg_type == 'Shutdown':
-                logger.info('Shutdown')
-                send_message(writer, 'Goodbye', {})
+            elif msg_type == "Shutdown":
+                logger.info("Shutdown")
+                send_message(writer, "Goodbye", {})
                 return
             else:
-                send_message(writer, 'Error', dict(message=f'Unknown message type {msg_type}'))
+                send_message(
+                    writer, "Error", dict(message=f"Unknown message type {msg_type}")
+                )
         except BaseException as e:
-            send_message(writer, 'GateSystemError', dict(message=f'Exception {e} traceback {traceback.format_exc()}'))
-            logger.error(f'GateSystemError: {e}')
+            send_message(
+                writer,
+                "GateSystemError",
+                dict(message=f"Exception {e} traceback {traceback.format_exc()}"),
+            )
+            logger.error(f"GateSystemError: {e}")
             logger.error(traceback.format_exc())
             return 1
 
