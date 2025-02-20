@@ -5,8 +5,11 @@ import shutil
 import tempfile
 import sys
 import runpy
+import logging
 
 from typing import Dict, Tuple
+
+logger = logging.getLogger('faster_than_light.local')
 
 
 async def check_output(cmd: str, stdin=None) -> bytes:
@@ -52,12 +55,14 @@ def is_want_json_module(module: str) -> bool:
 async def run_module_locally(
     host_name: str, host: Dict, module: str, module_args: Dict
 ) -> Tuple[str, Dict]:
+    logger.debug(f'run_module_locally {host_name=} {module=} ')
     tmp = tempfile.mkdtemp()
     tmp_module = os.path.join(tmp, "module.py")
     shutil.copy(module, tmp_module)
     # TODO: replace hashbang with ansible_python_interpreter
     # TODO: add utf-8 encoding line
     interpreter = host.get("ansible_python_interpreter", sys.executable)
+    logger.debug(f"{interpreter}")
     if is_binary_module(module):
         args = os.path.join(tmp, "args")
         with open(args, "w") as f:
