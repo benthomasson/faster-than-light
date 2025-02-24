@@ -1,5 +1,6 @@
 
 
+import asyncio
 import os
 import pytest
 import subprocess
@@ -235,5 +236,27 @@ async def test_run_module_argtest_host():
     assert cache
     await remove_item_from_cache(cache)
     assert not cache 
+    clean_up_ftl_cache()
+    clean_up_tmp()
+
+
+def test_synchronous():
+    os.chdir(HERE)
+    cache = dict()
+    loop = asyncio.get_event_loop()
+    output = loop.run_until_complete(run_module(load_inventory('inventory3.yml'),
+                              ['modules'],
+                              'argtest',
+                              module_args=dict(somekey='somevalue'),
+                              gate_cache=cache))
+    pprint(output)
+    assert output['localhost']
+    assert output['localhost']['args']
+    assert output['localhost']['executable']
+    assert output['localhost']['more_args'] == 'somekey=somevalue'
+    assert output['localhost']['files']
+    assert cache
+    loop.run_until_complete(remove_item_from_cache(cache))
+    assert not cache
     clean_up_ftl_cache()
     clean_up_tmp()
