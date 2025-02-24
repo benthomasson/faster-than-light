@@ -1,6 +1,6 @@
 [project]
 name = "faster_than_light"
-version = "0.1.0"
+version = "0.1.5"
 dependencies = [ 'asyncssh',
                  'importlib_resources',
                  'pyyaml',
