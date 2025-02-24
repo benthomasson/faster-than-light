@@ -1,6 +1,6 @@
 [project]
 name = "faster_than_light"
-version = "0.1.5"
+version = "0.1.6"
 dependencies = [ 'asyncssh',
                  'importlib_resources',
                  'pyyaml',
@@ -10,7 +10,7 @@ dependencies = [ 'asyncssh',
                  'aiomultiprocess']
 
 [tool.setuptools]
-packages = ["faster_than_light"]
+packages = ["faster_than_light", "faster_than_light.ftl_gate"]
 
 [build-system]
 requires = ["setuptools"]
