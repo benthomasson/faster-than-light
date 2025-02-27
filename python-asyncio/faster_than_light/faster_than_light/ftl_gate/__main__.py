@@ -215,6 +215,8 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
     finally:
         logger.info(f"cleaning up {tempdir}")
         shutil.rmtree(tempdir)
+        logger.info("complete")
+
 
 
 async def run_ftl_module(writer, module_name, module, module_args=None):
