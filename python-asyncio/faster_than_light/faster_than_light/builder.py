@@ -12,9 +12,9 @@ Options:
     -r=<r>, --requirements=<r>  Python requirements
     -I=<I>, --interpreter=<I>   Python interpreter to use
 """
-from docopt import docopt
 import logging
 import sys
+import click
 
 from typing import Optional, List
 
@@ -22,32 +22,26 @@ from faster_than_light.gate import build_ftl_gate
 
 logger = logging.getLogger('builder')
 
+@click.command
+@click.option('--ftl-module', '-f', multiple=True)
+@click.option('--module', '-m', multiple=True)
+@click.option('--module-dir', '-M', multiple=True)
+@click.option('--requirements', '-r', multiple=True)
+@click.option('--interpreter', '-I')
+def main(ftl_module, module, module_dir, requirements, interpreter):
 
-def main(args: Optional[List[str]]=None) -> int:
-    if args is None:
-        args = sys.argv[1:]   # pragma: no cover
-    parsed_args = docopt(__doc__, args)
-    if parsed_args['--debug']:
-        logging.basicConfig(level=logging.DEBUG)
-    elif parsed_args['--verbose']:
-        logging.basicConfig(level=logging.INFO)
-    else:
-        logging.basicConfig(level=logging.WARNING)
+    modules = module
+    ftl_modules = ftl_module
+    module_dirs = module_dir
 
     dependencies = None
-    if parsed_args['--requirements']:
-        with open(parsed_args['--requirements']) as f:
+    for reqs in requirements:
+        with open(reqs) as f:
             dependencies = [x for x in f.read().splitlines() if x]
 
-    modules = []
-    module_dirs = []
-    if parsed_args['--module']:
-        modules.append(parsed_args['--module'])
-    if parsed_args['--module-dir']:
-        module_dirs.append(parsed_args['--module-dir'])
-    interpreter = sys.executable
-    if parsed_args['--interpreter']:
-        interpreter = parsed_args['--interpreter']
+    if not interpreter:
+        interpreter = "/usr/bin/python3"
+
     gate = build_ftl_gate(modules, module_dirs, dependencies, interpreter)
     print(gate)
     return 0
