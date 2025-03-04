@@ -90,6 +90,7 @@ async def read_message(reader):
                 # Enter: ["Shutdown", {}]
                 # System will exit
                 if value:
+                    # logger.info(f'{length_hexadecimal} {value}')
                     try:
                         return json.loads(value)
                     except BaseException:
@@ -171,7 +172,7 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
             logger.info("loading module from ftl_gate")
             modules = importlib.resources.files(ftl_gate)
             with open(module_file, "wb") as f2:
-                module = importlib.resources.read_binary(ftl_gate, module_name)
+                module = importlib.resources.files(ftl_gate).joinpath(module_name).read_bytes()
                 f2.write(module)
         if is_binary_module(module):
             logger.info("is_binary_module")
