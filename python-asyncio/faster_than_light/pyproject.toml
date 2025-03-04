@@ -5,6 +5,7 @@ dependencies = [ 'asyncssh',
                  'importlib_resources',
                  'pyyaml',
                  'docopt',
+                 'click',
                  'pip',
                  'wheel',
                  'aiomultiprocess']
