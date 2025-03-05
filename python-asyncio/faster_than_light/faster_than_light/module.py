@@ -139,12 +139,18 @@ def run_module_sync(
     modules: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
     module_args: Optional[Dict] = None,
+    loop: Optional[asyncio.AbstractEventLoop] = None
 ) -> Dict[str, Dict]:
     """
     Runs a module on all items in an inventory concurrently.
     """
 
-    return asyncio.run(_run_module(
+    if loop is None:
+        if gate_cache is not None:
+            print('Gate cache is not supported without loop. Start a new event loop and run it in a separate thread.')
+        gate_cache = {}
+
+    coro = _run_module(
         inventory,
         module_dirs,
         module_name,
@@ -154,7 +160,14 @@ def run_module_sync(
         modules,
         dependencies,
         module_args,
-    ))
+    )
+
+    if loop is None:
+        loop = asyncio.new_event_loop()
+        return loop.run_until_complete(coro)
+    else:
+        future = asyncio.run_coroutine_threadsafe(coro, loop)
+        return future.result()
 
 
 async def run_ftl_module(
