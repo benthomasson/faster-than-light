@@ -78,6 +78,10 @@ def clean_up_tmp() -> None:
 
 
 def process_module_result(message: GateMessage) -> Dict:
+    if message is None:
+        raise Exception(f"Null message")
+    if len(message) == 0:
+        raise Exception(f"Empty message")
     msg_type = message[0]
     if msg_type == "ModuleResult":
         if message[1].get("stdout", None):
@@ -89,5 +93,7 @@ def process_module_result(message: GateMessage) -> Dict:
             return message[1]["result"]
     elif msg_type == "GateSystemError":
         return dict(error=dict(error_type=message[0], message=message[1]))
+    elif msg_type == "ModuleNotFound":
+        raise ModuleNotFound(message[1]['message'])
     else:
         raise Exception(f"Unsupported message type {msg_type}")

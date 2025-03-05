@@ -14,6 +14,10 @@ import stat
 logger = logging.getLogger("ftl_gate")
 
 
+class ModuleNotFoundException(Exception):
+
+    pass
+
 class StdinReader(object):
 
     async def read(self, n):
@@ -172,7 +176,10 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
             logger.info("loading module from ftl_gate")
             modules = importlib.resources.files(ftl_gate)
             with open(module_file, "wb") as f2:
-                module = importlib.resources.files(ftl_gate).joinpath(module_name).read_bytes()
+                try:
+                    module = importlib.resources.files(ftl_gate).joinpath(module_name).read_bytes()
+                except FileNotFoundError:
+                    raise ModuleNotFoundException(module_name)
                 f2.write(module)
         if is_binary_module(module):
             logger.info("is_binary_module")
@@ -269,6 +276,10 @@ async def main(args):
                 send_message(
                     writer, "Error", dict(message=f"Unknown message type {msg_type}")
                 )
+        except ModuleNotFoundException as e:
+            send_message(
+                writer, "ModuleNotFound", dict(message=f"Module {e} not found in gate bundle.")
+            )
         except BaseException as e:
             send_message(
                 writer,
