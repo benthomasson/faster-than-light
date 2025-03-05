@@ -131,6 +131,32 @@ async def run_module(
     )
 
 
+def run_module_sync(
+    inventory: Dict,
+    module_dirs: List[str],
+    module_name: str,
+    gate_cache: Optional[Dict[str, Gate]] = None,
+    modules: Optional[List[str]] = None,
+    dependencies: Optional[List[str]] = None,
+    module_args: Optional[Dict] = None,
+) -> Dict[str, Dict]:
+    """
+    Runs a module on all items in an inventory concurrently.
+    """
+
+    return asyncio.run(_run_module(
+        inventory,
+        module_dirs,
+        module_name,
+        run_module_locally,
+        run_module_through_gate,
+        gate_cache,
+        modules,
+        dependencies,
+        module_args,
+    ))
+
+
 async def run_ftl_module(
     inventory: Dict,
     module_dirs: List[str],
