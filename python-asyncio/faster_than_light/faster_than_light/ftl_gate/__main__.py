@@ -15,7 +15,6 @@ logger = logging.getLogger("ftl_gate")
 
 
 class ModuleNotFoundException(Exception):
-
     pass
 
 class StdinReader(object):
@@ -179,6 +178,7 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
                 try:
                     module = importlib.resources.files(ftl_gate).joinpath(module_name).read_bytes()
                 except FileNotFoundError:
+                    logger.info(f"Module {module_name} not found in gate")
                     raise ModuleNotFoundException(module_name)
                 f2.write(module)
         if is_binary_module(module):
@@ -189,12 +189,13 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
             os.chmod(module_file, stat.S_IEXEC | stat.S_IREAD)
             stdout, stderr = await check_output(f"{module_file} {args}")
         elif is_new_style_module(module):
-            logger.info("is_new_style_module")
+            logger.info(f"is_new_style_module {module_file}")
             stdout, stderr = await check_output(
                 f"{sys.executable} {module_file}",
                 stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode(),
                 env=env,
             )
+            logger.info(f"is_new_style_module {module_file} complete")
         elif is_want_json_module(module):
             logger.info("is_want_json_module")
             args = os.path.join(tempdir, "args")
@@ -243,7 +244,7 @@ async def run_ftl_module(writer, module_name, module, module_args=None):
 
 async def main(args):
 
-    logging.basicConfig(filename="/tmp/ftl_gate.log", level=logging.DEBUG)
+    logging.basicConfig(format="%(asctime)s - %(message)s", filename="/tmp/ftl_gate.log", level=logging.DEBUG)
 
     logger.info(f"sys.executable {sys.executable}")
     logger.debug(f"sys.path {sys.path}")
