@@ -120,6 +120,7 @@ def send_message(writer, msg_type, data):
 
 
 async def check_output(cmd, env=None, stdin=None):
+    logger.debug(f'check_output {cmd} create')
     proc = await asyncio.create_subprocess_shell(
         cmd,
         stdin=asyncio.subprocess.PIPE,
@@ -128,7 +129,9 @@ async def check_output(cmd, env=None, stdin=None):
         env=env,
     )
 
+    logger.debug(f'check_output {cmd} communicate')
     stdout, stderr = await proc.communicate(stdin)
+    logger.debug(f'check_output {cmd} complete')
     return stdout, stderr
 
 
@@ -190,6 +193,7 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
             stdout, stderr = await check_output(f"{module_file} {args}")
         elif is_new_style_module(module):
             logger.info(f"is_new_style_module {module_file}")
+            logger.info(f"ANSIBLE_MODULE_ARGS {json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args))}")
             stdout, stderr = await check_output(
                 f"{sys.executable} {module_file}",
                 stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode(),

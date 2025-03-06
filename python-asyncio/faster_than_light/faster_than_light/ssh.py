@@ -16,6 +16,7 @@ from typing import Dict, Optional, Callable, cast, Tuple
 from .types import Gate
 from .message import send_message_str, read_message
 from .util import process_module_result
+from .exceptions import ModuleNotFound
 
 logger = logging.getLogger('faster_than_light.ssh')
 
@@ -28,18 +29,14 @@ async def connect_gate(
     interpreter: str,
 ) -> Gate:
     logger.debug(f'connect_gate {ssh_host=} {ssh_user=} {interpreter=}')
+    print(f'connect_gate {ssh_host=} {ssh_user=} {interpreter=}')
     while True:
         try:
             conn = await asyncssh.connect(ssh_host, username=ssh_user)
             await check_version(conn, interpreter)
-            tempdir = f"/tmp/ftl-{uuid.uuid4()}"
-            result = await conn.run(f"mkdir {tempdir}", check=True)
-            result = await conn.run(
-                f'touch {os.path.join(tempdir, "args")}', check=True
-            )
-            assert result.exit_status == 0
-            await send_gate(gate_builder, conn, tempdir, interpreter)
-            gate_process = await open_gate(conn, tempdir)
+            tempdir = "/tmp"
+            gate_file_name = await send_gate(gate_builder, conn, tempdir, interpreter)
+            gate_process = await open_gate(conn, gate_file_name)
             return Gate(conn, gate_process, tempdir)
         except ConnectionResetError:
             print("retry connection")
@@ -72,15 +69,21 @@ async def check_version(conn: SSHClientConnection, interpreter: str) -> None:
 async def send_gate(
     gate_builder: Callable, conn: SSHClientConnection, tempdir: str, interpreter: str
 ) -> None:
-    ftl_gate = gate_builder(interpreter=interpreter)
+    ftl_gate, gate_hash = gate_builder(interpreter=interpreter)
+    gate_file_name = os.path.join(tempdir, f"ftl_gate_{gate_hash}.pyz")
     async with conn.start_sftp_client() as sftp:
-        await sftp.put(ftl_gate, f"{tempdir}/ftl_gate.pyz")
-    result = await conn.run(f"chmod 700 {tempdir}/ftl_gate.pyz", check=True)
-    assert result.exit_status == 0
+        if not await sftp.exists(gate_file_name):
+            print(f'send_gate sending {gate_file_name}')
+            await sftp.put(ftl_gate, gate_file_name)
+            result = await conn.run(f"chmod 700 {gate_file_name}", check=True)
+            assert result.exit_status == 0
+        else:
+            print(f'send_gate reusing {gate_file_name}')
+    return gate_file_name
 
 
-async def open_gate(conn: SSHClientConnection, tempdir: str) -> SSHClientProcess:
-    process = await conn.create_process(f"{tempdir}/ftl_gate.pyz")
+async def open_gate(conn: SSHClientConnection, gate_file_name: str) -> SSHClientProcess:
+    process = await conn.create_process(gate_file_name)
     send_message_str(process.stdin, "Hello", {})
     if await read_message(process.stdout) != ["Hello", {}]:
         error = await process.stderr.read()
@@ -105,21 +108,27 @@ async def close_gate(conn, gate_process, tempdir: str) -> None:
             await gate_process.stderr.read()
     finally:
         conn.close()
-    # result = await conn.run(f'rm -rf {tempdir}', check=True)
-    # assert result.exit_status == 0
 
 
 async def run_module_through_gate(
     gate_process: SSHClientProcess, module: str, module_name: str, module_args: Dict
 ) -> Dict:
-    with open(module, "rb") as f:
-        module_text = base64.b64encode(f.read()).decode()
-    send_message_str(
-        gate_process.stdin,
-        "Module",
-        dict(module=module_text, module_name=module_name, module_args=module_args),
-    )
-    return process_module_result(await read_message(gate_process.stdout))
+    try:
+        send_message_str(
+            gate_process.stdin,
+            "Module",
+            dict(module_name=module_name, module_args=module_args),
+        )
+        return process_module_result(await read_message(gate_process.stdout))
+    except ModuleNotFound:
+        with open(module, "rb") as f:
+            module_text = base64.b64encode(f.read()).decode()
+        send_message_str(
+            gate_process.stdin,
+            "Module",
+            dict(module=module_text, module_name=module_name, module_args=module_args),
+        )
+        return process_module_result(await read_message(gate_process.stdout))
 
 
 async def run_ftl_module_through_gate(

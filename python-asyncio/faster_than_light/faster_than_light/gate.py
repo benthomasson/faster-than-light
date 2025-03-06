@@ -18,13 +18,17 @@ from typing import Optional, List
 logger = logging.getLogger('faster_than_light.gate')
 
 
+def use_gate(cached_gate, gate_hash, interpreter=None):
+    return cached_gate, gate_hash
+
+
 def build_ftl_gate(
     modules: Optional[List[str]] = None,
     module_dirs: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
     interpreter: str = sys.executable,
     local_interpreter: str = sys.executable,
-) -> str:
+) -> (str, str):
 
     logger.debug(f'build_ftl_gate  {modules=} {module_dirs=} {dependencies=} {interpreter=} {local_interpreter=}')
 
@@ -47,7 +51,8 @@ def build_ftl_gate(
 
     cached_gate = os.path.join(cache, f"ftl_gate_{gate_hash}.pyz")
     if os.path.exists(cached_gate):
-        return cached_gate
+        print(f'build_ftl_gate reusing cached_gate {cached_gate}')
+        return cached_gate, gate_hash
 
     tempdir = tempfile.mkdtemp()
     os.mkdir(os.path.join(tempdir, "ftl_gate"))
@@ -97,4 +102,4 @@ def build_ftl_gate(
     shutil.rmtree(os.path.join(tempdir, "ftl_gate"))
     shutil.copy(os.path.join(tempdir, "ftl_gate.pyz"), cached_gate)
 
-    return cached_gate
+    return cached_gate, gate_hash

@@ -58,6 +58,7 @@ async def _run_module(
     modules: Optional[List[str]],
     dependencies: Optional[List[str]],
     module_args: Optional[Dict],
+    use_gate: Optional[Callable] = None,
 ) -> Dict[str, Dict]:
 
     module = find_module(module_dirs, module_name)
@@ -72,12 +73,15 @@ async def _run_module(
 
     hosts = unique_hosts(inventory)
 
-    gate_builder: Callable[[str], str] = partial(
-        build_ftl_gate,
-        modules=modules,
-        module_dirs=module_dirs,
-        dependencies=dependencies,
-    )
+    if use_gate:
+        gate_builder = use_gate
+    else:
+        gate_builder: Callable[[str], (str, str)] = partial(
+            build_ftl_gate,
+            modules=modules,
+            module_dirs=module_dirs,
+            dependencies=dependencies,
+        )
 
     all_tasks = []
     # Run the tasks in chunks of 10 to reduce contention for remote connections.
@@ -113,6 +117,7 @@ async def run_module(
     modules: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
     module_args: Optional[Dict] = None,
+    use_gate: Optional[Callable] = None,
 ) -> Dict[str, Dict]:
     """
     Runs a module on all items in an inventory concurrently.
@@ -128,6 +133,7 @@ async def run_module(
         modules,
         dependencies,
         module_args,
+        use_gate,
     )
 
 
@@ -139,7 +145,8 @@ def run_module_sync(
     modules: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
     module_args: Optional[Dict] = None,
-    loop: Optional[asyncio.AbstractEventLoop] = None
+    loop: Optional[asyncio.AbstractEventLoop] = None,
+    use_gate: Optional[Callable] = None,
 ) -> Dict[str, Dict]:
     """
     Runs a module on all items in an inventory concurrently.
@@ -160,6 +167,7 @@ def run_module_sync(
         modules,
         dependencies,
         module_args,
+        use_gate,
     )
 
     if loop is None:
@@ -178,6 +186,7 @@ async def run_ftl_module(
     modules: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
     module_args: Optional[Dict] = None,
+    use_gate: Optional[Callable] = None,
 ) -> Dict[str, Dict]:
     """
     Runs a module on all items in an inventory concurrently.
@@ -193,4 +202,5 @@ async def run_ftl_module(
         modules,
         dependencies,
         module_args,
+        use_gate,
     )
