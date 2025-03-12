@@ -32,7 +32,7 @@ async def connect_gate(
     print(f'connect_gate {ssh_host=} {ssh_user=} {interpreter=}')
     while True:
         try:
-            conn = await asyncssh.connect(ssh_host, username=ssh_user)
+            conn = await asyncssh.connect(ssh_host, username=ssh_user, known_hosts=None)
             await check_version(conn, interpreter)
             tempdir = "/tmp"
             gate_file_name = await send_gate(gate_builder, conn, tempdir, interpreter)
