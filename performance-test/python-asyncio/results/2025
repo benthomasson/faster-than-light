@@ -1,0 +1,3 @@
+ftl -i inventory_remote1.yml -M modules -m argtest,ftl_remote,argtest,1,0.7253592014312744
+ftl -i inventory_remote10.yml -M modules -m argtest,ftl_remote,argtest,10,1.947402000427246
+ftl -i inventory_remote100.yml -M modules -m argtest,ftl_remote,argtest,100,17.566121339797974

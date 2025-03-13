@@ -1,0 +1,203 @@
+all:
+  hosts:
+    threadripper0:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper1:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper10:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper11:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper12:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper13:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper14:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper15:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper16:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper17:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper18:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper19:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper2:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper20:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper21:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper22:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper23:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper24:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper25:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper26:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper27:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper28:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper29:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper3:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper30:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper31:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper32:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper33:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper34:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper35:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper36:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper37:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper38:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper39:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper4:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper40:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper41:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper42:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper43:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper44:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper45:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper46:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper47:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper48:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper49:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper5:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper50:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper51:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper52:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper53:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper54:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper55:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper56:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper57:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper58:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper59:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper6:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper60:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper61:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper62:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper63:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper64:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper65:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper66:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper67:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper68:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper69:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper7:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper70:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper71:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper72:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper73:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper74:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper75:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper76:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper77:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper78:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper79:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper8:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper80:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper81:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper82:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper83:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper84:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper85:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper86:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper87:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper88:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper89:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper9:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper90:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper91:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper92:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper93:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper94:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper95:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper96:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper97:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper98:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper99:
+      ansible_python_interpreter: /usr/bin/python3
+

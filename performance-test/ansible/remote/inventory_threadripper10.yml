@@ -1,0 +1,23 @@
+all:
+  hosts:
+    threadripper0:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper1:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper2:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper3:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper4:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper5:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper6:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper7:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper8:
+      ansible_python_interpreter: /usr/bin/python3
+    threadripper9:
+      ansible_python_interpreter: /usr/bin/python3
+

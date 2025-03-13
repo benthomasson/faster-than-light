@@ -1,0 +1,15 @@
+cmd,name,type,n,time
+ansible -M modules -i inventory_remote1.yml -m argtest all,ansible_remote,argtest,1,0.591986894607544
+ansible -M modules -i inventory_remote10.yml -m argtest all,ansible_remote,argtest,10,1.1202318668365479
+ansible -M modules -i inventory_remote100.yml -m argtest all
+Traceback (most recent call last):
+  File "/Users/ben/git/faster-than-light/performance-test/ansible/remote/../../scripts/perf_test.py", line 54, in <module>
+    sys.exit(main(sys.argv[1:]))
+  File "/Users/ben/git/faster-than-light/performance-test/ansible/remote/../../scripts/perf_test.py", line 43, in main
+    subprocess.check_output(parsed_args['<cmd>'], shell=True)
+  File "/opt/homebrew/Cellar/python@3.10/3.10.16/Frameworks/Python.framework/Versions/3.10/lib/python3.10/subprocess.py", line 421, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+  File "/opt/homebrew/Cellar/python@3.10/3.10.16/Frameworks/Python.framework/Versions/3.10/lib/python3.10/subprocess.py", line 526, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command 'ansible -M modules -i inventory_remote100.yml -m argtest all' returned non-zero exit status 4.
+Exit code 1

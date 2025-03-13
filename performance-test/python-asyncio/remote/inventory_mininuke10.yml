@@ -1,0 +1,23 @@
+all:
+  hosts:
+    mininuke0:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke1:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke2:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke3:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke4:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke5:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke6:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke7:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke8:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke9:
+      ansible_python_interpreter: /usr/bin/python3
+

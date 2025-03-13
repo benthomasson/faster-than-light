@@ -1,0 +1,11 @@
+../../scripts/generate_inventory.py --python=/usr/bin/python3 10000 > inventory_remote10000.yml
+../../scripts/generate_inventory.py --python=/usr/bin/python3 1000 > inventory_remote1000.yml
+../../scripts/generate_inventory.py --python=/usr/bin/python3 100 > inventory_remote100.yml
+../../scripts/generate_inventory.py --python=/usr/bin/python3 10 > inventory_remote10.yml
+../../scripts/generate_inventory.py --python=/usr/bin/python3 1 > inventory_remote1.yml
+../../scripts/generate_inventory.py --python=/usr/bin/python3 --host mininuke 100 > inventory_mininuke100.yml
+../../scripts/generate_inventory.py --python=/usr/bin/python3 --host mininuke 10 > inventory_mininuke10.yml
+../../scripts/generate_inventory.py --python=/usr/bin/python3 --host mininuke 1 > inventory_mininuke1.yml
+../../scripts/generate_inventory.py --python=/usr/bin/python3 --host threadripper 100 > inventory_threadripper100.yml
+../../scripts/generate_inventory.py --python=/usr/bin/python3 --host threadripper 10 > inventory_threadripper10.yml
+../../scripts/generate_inventory.py --python=/usr/bin/python3 --host threadripper 1 > inventory_threadripper1.yml

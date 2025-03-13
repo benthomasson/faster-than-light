@@ -1,0 +1,203 @@
+all:
+  hosts:
+    mininuke0:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke1:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke10:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke11:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke12:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke13:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke14:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke15:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke16:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke17:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke18:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke19:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke2:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke20:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke21:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke22:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke23:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke24:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke25:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke26:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke27:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke28:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke29:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke3:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke30:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke31:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke32:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke33:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke34:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke35:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke36:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke37:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke38:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke39:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke4:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke40:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke41:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke42:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke43:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke44:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke45:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke46:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke47:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke48:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke49:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke5:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke50:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke51:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke52:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke53:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke54:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke55:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke56:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke57:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke58:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke59:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke6:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke60:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke61:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke62:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke63:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke64:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke65:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke66:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke67:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke68:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke69:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke7:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke70:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke71:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke72:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke73:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke74:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke75:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke76:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke77:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke78:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke79:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke8:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke80:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke81:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke82:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke83:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke84:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke85:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke86:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke87:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke88:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke89:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke9:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke90:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke91:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke92:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke93:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke94:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke95:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke96:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke97:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke98:
+      ansible_python_interpreter: /usr/bin/python3
+    mininuke99:
+      ansible_python_interpreter: /usr/bin/python3
+
