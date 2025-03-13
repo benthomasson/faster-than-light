@@ -28,7 +28,9 @@ logger = logging.getLogger('builder')
 @click.option('--module-dir', '-M', multiple=True)
 @click.option('--requirements', '-r', multiple=True)
 @click.option('--interpreter', '-I')
-def main(ftl_module, module, module_dir, requirements, interpreter):
+@click.option('--verbose', '-v', is_flag=True)
+@click.option('--debug', '-d', is_flag=True)
+def main(ftl_module, module, module_dir, requirements, interpreter, verbose, debug):
 
     modules = module
     ftl_modules = ftl_module

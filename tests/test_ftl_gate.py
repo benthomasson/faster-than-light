@@ -16,7 +16,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 @pytest.mark.asyncio
 async def test_read_message():
     os.chdir(HERE)
-    ftl_gate = build_ftl_gate()
+    ftl_gate, _ = build_ftl_gate()
     proc = await asyncio.create_subprocess_shell(
         ftl_gate,
         stdin=asyncio.subprocess.PIPE,
@@ -49,7 +49,7 @@ async def test_build_ftl_gate_module_not_found():
 @pytest.mark.asyncio
 async def test_build_ftl_gate():
     os.chdir(HERE)
-    ftl_gate = build_ftl_gate()
+    ftl_gate, _ = build_ftl_gate()
     proc = await asyncio.create_subprocess_shell(
         ftl_gate,
         stdin=asyncio.subprocess.PIPE,
@@ -73,7 +73,7 @@ async def test_build_ftl_gate():
 @pytest.mark.asyncio
 async def test_run_module():
     os.chdir(HERE)
-    ftl_gate = build_ftl_gate()
+    ftl_gate, _ = build_ftl_gate()
     proc = await asyncio.create_subprocess_shell(
         ftl_gate,
         stdin=asyncio.subprocess.PIPE,
@@ -106,7 +106,7 @@ async def test_run_module():
 @pytest.mark.asyncio
 async def test_run_ftl_module():
     os.chdir(HERE)
-    ftl_gate = build_ftl_gate()
+    ftl_gate, _ = build_ftl_gate()
     proc = await asyncio.create_subprocess_shell(
         ftl_gate,
         stdin=asyncio.subprocess.PIPE,

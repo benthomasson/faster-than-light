@@ -45,14 +45,14 @@ async def test_cli_argtest():
     await faster_than_light.cli.main(['-M', 'modules', '-m', 'argtest', '-i', 'inventory.yml', '-a', 'somekey=somevalue', '--requirements', 'requirements.txt'])
 
 def test_builder_cli():
-    faster_than_light.builder.main([])
+    faster_than_light.builder.main([], standalone_mode=False)
 
 
 def test_builder_cli2():
-    faster_than_light.builder.main(['-M', 'modules', '-m', 'argtest', '--requirements', 'requirements.txt', '--interpreter', sys.executable])
+    faster_than_light.builder.main(['-M', 'modules', '-m', 'argtest', '--requirements', 'requirements.txt', '--interpreter', sys.executable], standalone_mode=False)
 
 def test_builder_cli_debug():
-    faster_than_light.builder.main(['--debug'])
+    faster_than_light.builder.main(['--debug'], standalone_mode=False)
 
 def test_builder_cli_verbose():
-    faster_than_light.builder.main(['--verbose'])
+    faster_than_light.builder.main(['--verbose'], standalone_mode=False)
