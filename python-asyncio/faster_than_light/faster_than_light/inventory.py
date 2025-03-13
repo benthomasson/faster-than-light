@@ -10,15 +10,8 @@ def load_inventory(inventory_file: str) -> Any:
         inventory_data = yaml.safe_load(f.read())
     return inventory_data
 
-def load_localhost() -> Any:
+def load_localhost(interpreter="/usr/bin/python3") -> Any:
 
-    inventory_data = yaml.safe_load(
-'''
-all:
-  hosts:
-    localhost:
-      ansible_connection: local
-      ansible_python_interpreter: /Users/ben/venv/agents/bin/python3
-''')
+    inventory_data = {'all': {'hosts': {'localhost': {'ansible_connection': 'local', 'ansible_python_interpreter': interpreter}}}}
 
     return inventory_data
