@@ -58,6 +58,7 @@ async def _run_module(
     modules: Optional[List[str]],
     dependencies: Optional[List[str]],
     module_args: Optional[Dict],
+    host_args: Optional[Dict],
     use_gate: Optional[Callable] = None,
 ) -> Dict[str, Dict]:
 
@@ -89,6 +90,14 @@ async def _run_module(
     for c in chunk(list(hosts.items()), 10):
         tasks = []
         for host_name, host in c:
+            host_specific_args = None
+            if host_args:
+                host_specific_args = host_args.get(host_name, None)
+            if host_specific_args:
+                merged_args = module_args.copy()
+                merged_args.update(host_specific_args)
+            else:
+                merged_args = module_args
             tasks.append(
                 asyncio.create_task(
                     run_module_on_host(
@@ -117,6 +126,7 @@ async def run_module(
     modules: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
     module_args: Optional[Dict] = None,
+    host_args: Optional[Dict] = None,
     use_gate: Optional[Callable] = None,
 ) -> Dict[str, Dict]:
     """
@@ -133,6 +143,7 @@ async def run_module(
         modules,
         dependencies,
         module_args,
+        host_args,
         use_gate,
     )
 
@@ -145,6 +156,7 @@ def run_module_sync(
     modules: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
     module_args: Optional[Dict] = None,
+    host_args: Optional[Dict] = None,
     loop: Optional[asyncio.AbstractEventLoop] = None,
     use_gate: Optional[Callable] = None,
 ) -> Dict[str, Dict]:
@@ -167,6 +179,7 @@ def run_module_sync(
         modules,
         dependencies,
         module_args,
+        host_args,
         use_gate,
     )
 
@@ -186,6 +199,7 @@ async def run_ftl_module(
     modules: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
     module_args: Optional[Dict] = None,
+    host_args: Optional[Dict] = None,
     use_gate: Optional[Callable] = None,
 ) -> Dict[str, Dict]:
     """
@@ -202,5 +216,6 @@ async def run_ftl_module(
         modules,
         dependencies,
         module_args,
+        host_args,
         use_gate,
     )
