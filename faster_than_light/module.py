@@ -7,6 +7,7 @@ from .types import Gate
 from .ssh import run_module_through_gate, run_ftl_module_through_gate, run_module_remotely
 from .local import run_module_locally, run_ftl_module_locally
 from .exceptions import ModuleNotFound
+from .ref import Ref, deref
 
 from typing import Dict, Optional, Callable, List, Tuple
 from asyncio.tasks import Task
@@ -84,19 +85,31 @@ async def _run_module(
             dependencies=dependencies,
         )
 
+    # support refs only at the top level of arg values
+    has_refs = False
+    for arg_name, arg_value in module_args.items():
+        if isinstance(arg_value, Ref):
+            has_refs = True
+
     all_tasks = []
     # Run the tasks in chunks of 10 to reduce contention for remote connections.
     # This doubles performance at num_hosts=1000 for remote execution
     for c in chunk(list(hosts.items()), 10):
         tasks = []
         for host_name, host in c:
-            host_specific_args = None
+            host_specific_args = {}
             if host_args:
-                host_specific_args = host_args.get(host_name, None)
-            if host_specific_args:
+                host_specific_args = host_args.get(host_name, {})
+            if host_specific_args  or has_refs:
+                # make a copy of module_args since we need to modify it
                 merged_args = module_args.copy()
+                # refs have lower precedence than host specific args
+                for arg_name, arg_value in module_args.items():
+                    merged_args[arg_name] = deref(host, arg_value)
+                # host specific args have higher precedence than refs
                 merged_args.update(host_specific_args)
             else:
+                # no host specific args so just reuse module_args
                 merged_args = module_args
             tasks.append(
                 asyncio.create_task(
@@ -104,7 +117,7 @@ async def _run_module(
                         host_name,
                         host,
                         module,
-                        module_args,
+                        merged_args,
                         local_runner,
                         remote_runner,
                         gate_cache,
