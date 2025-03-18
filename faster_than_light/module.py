@@ -28,8 +28,11 @@ def extract_task_results(tasks: List[Task]) -> Dict[str, Dict]:
 
     results = {}
     for task in tasks:
-        host_name, result = task.result()
-        results[host_name] = result
+        try:
+            host_name, result = task.result()
+            results[host_name] = result
+        except BaseException as e:
+            results[host_name] = {"error": True, 'msg': str(e)}
     return results
 
 
@@ -125,7 +128,7 @@ async def _run_module(
                     )
                 )
             )
-        await asyncio.gather(*tasks)
+        await asyncio.gather(*tasks, return_exceptions=True)
         all_tasks.extend(tasks)
 
     return extract_task_results(all_tasks)

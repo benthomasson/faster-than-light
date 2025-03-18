@@ -2,7 +2,6 @@
 
 import os
 import sys
-import uuid
 import base64
 import asyncssh
 import asyncssh.misc
@@ -78,7 +77,14 @@ async def send_gate(
             result = await conn.run(f"chmod 700 {gate_file_name}", check=True)
             assert result.exit_status == 0
         else:
-            print(f'send_gate reusing {gate_file_name}')
+            stats = await sftp.lstat(gate_file_name)
+            if stats.size == 0:
+                print(f'send_gate resending {gate_file_name}')
+                await sftp.put(ftl_gate, gate_file_name)
+                result = await conn.run(f"chmod 700 {gate_file_name}", check=True)
+                assert result.exit_status == 0
+            else:
+                print(f'send_gate reusing {gate_file_name}')
     return gate_file_name
 
 
