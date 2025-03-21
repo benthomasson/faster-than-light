@@ -67,6 +67,7 @@ async def main(args: Optional[List[str]] = None) -> int:
             load_inventory(parsed_args["--inventory"]),
             [parsed_args["--module-dir"]],
             parsed_args["--ftl-module"],
+            module_args=parse_module_args(parsed_args["--args"]),
         )
         pprint(output)
     return 0

@@ -97,3 +97,14 @@ def process_module_result(message: GateMessage) -> Dict:
         raise ModuleNotFound(message[1]['message'])
     else:
         raise Exception(f"Unsupported message type {msg_type}")
+
+
+def unique_hosts(inventory: Dict) -> Dict:
+
+    hosts = {}
+
+    for group_name, group in inventory.items():
+        for host_name, host in group.get("hosts").items():
+            hosts[host_name] = host
+
+    return hosts

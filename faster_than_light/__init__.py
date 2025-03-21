@@ -5,7 +5,7 @@ __email__ = 'benthomasson@gmail.com'
 __version__ = '0.1.4'
 
 from .module import run_module, run_ftl_module, run_module_sync
-from .ssh import close_gate
+from .ssh import close_gate, copy, copy_sync
 from .inventory import load_inventory, load_localhost
 
 localhost = load_localhost()

@@ -8,20 +8,10 @@ from .ssh import run_module_through_gate, run_ftl_module_through_gate, run_modul
 from .local import run_module_locally, run_ftl_module_locally
 from .exceptions import ModuleNotFound
 from .ref import Ref, deref
+from .util import unique_hosts
 
 from typing import Dict, Optional, Callable, List, Tuple
 from asyncio.tasks import Task
-
-
-def unique_hosts(inventory: Dict) -> Dict:
-
-    hosts = {}
-
-    for group_name, group in inventory.items():
-        for host_name, host in group.get("hosts").items():
-            hosts[host_name] = host
-
-    return hosts
 
 
 def extract_task_results(tasks: List[Task]) -> Dict[str, Dict]:

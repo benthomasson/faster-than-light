@@ -1,10 +1,9 @@
-
-
 import os
 import sys
 import base64
 import asyncssh
 import asyncssh.misc
+import asyncio
 from getpass import getuser
 import logging
 
@@ -14,24 +13,27 @@ from asyncssh.process import SSHClientProcess
 from typing import Dict, Optional, Callable, cast, Tuple
 from .types import Gate
 from .message import send_message_str, read_message
-from .util import process_module_result
+from .util import process_module_result, unique_hosts
 from .exceptions import ModuleNotFound
 
-logger = logging.getLogger('faster_than_light.ssh')
+logger = logging.getLogger("faster_than_light.ssh")
 
 
 async def connect_gate(
     gate_builder: Callable,
     ssh_host: str,
+    ssh_port: str,
     ssh_user: str,
     gate_cache: Optional[Dict[str, Gate]],
     interpreter: str,
 ) -> Gate:
-    logger.debug(f'connect_gate {ssh_host=} {ssh_user=} {interpreter=}')
-    print(f'connect_gate {ssh_host=} {ssh_user=} {interpreter=}')
+    logger.debug(f"connect_gate {ssh_host=} {ssh_port=} {ssh_user=} {interpreter=}")
+    print(f"connect_gate {ssh_host=} {ssh_port=} {ssh_user=} {interpreter=}")
     while True:
         try:
-            conn = await asyncssh.connect(ssh_host, username=ssh_user, known_hosts=None)
+            conn = await asyncssh.connect(
+                ssh_host, port=ssh_port, username=ssh_user, known_hosts=None
+            )
             await check_version(conn, interpreter)
             tempdir = "/tmp"
             gate_file_name = await send_gate(gate_builder, conn, tempdir, interpreter)
@@ -65,6 +67,30 @@ async def check_version(conn: SSHClientConnection, interpreter: str) -> None:
                 )
 
 
+async def copy(inventory, gate_cache, src: str, dest: str) -> None:
+
+    hosts = unique_hosts(inventory)
+
+    for host in hosts:
+
+        gate = gate_cache.get(host)
+        conn = gate.conn
+        async with conn.start_sftp_client() as sftp:
+            await sftp.put(src, dest)
+
+
+def copy_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
+
+    coro = copy(inventory, gate_cache, src, dest)
+
+    if loop is None:
+        loop = asyncio.new_event_loop()
+        return loop.run_until_complete(coro)
+    else:
+        future = asyncio.run_coroutine_threadsafe(coro, loop)
+        return future.result()
+
+
 async def send_gate(
     gate_builder: Callable, conn: SSHClientConnection, tempdir: str, interpreter: str
 ) -> None:
@@ -72,19 +98,19 @@ async def send_gate(
     gate_file_name = os.path.join(tempdir, f"ftl_gate_{gate_hash}.pyz")
     async with conn.start_sftp_client() as sftp:
         if not await sftp.exists(gate_file_name):
-            print(f'send_gate sending {gate_file_name}')
+            print(f"send_gate sending {gate_file_name}")
             await sftp.put(ftl_gate, gate_file_name)
             result = await conn.run(f"chmod 700 {gate_file_name}", check=True)
             assert result.exit_status == 0
         else:
             stats = await sftp.lstat(gate_file_name)
             if stats.size == 0:
-                print(f'send_gate resending {gate_file_name}')
+                print(f"send_gate resending {gate_file_name}")
                 await sftp.put(ftl_gate, gate_file_name)
                 result = await conn.run(f"chmod 700 {gate_file_name}", check=True)
                 assert result.exit_status == 0
             else:
-                print(f'send_gate reusing {gate_file_name}')
+                print(f"send_gate reusing {gate_file_name}")
     return gate_file_name
 
 
@@ -164,6 +190,10 @@ async def run_module_remotely(
         ssh_host = host.get("ansible_host")
     else:
         ssh_host = host_name
+    if host and host.get("ansible_port"):
+        ssh_port = host.get("ansible_port")
+    else:
+        ssh_port = 22
     if host and host.get("ansible_user"):
         ssh_user = host.get("ansible_user")
     else:
@@ -179,7 +209,7 @@ async def run_module_remotely(
                 del gate_cache[host_name]
             else:
                 conn, gate_process, tempdir = await connect_gate(
-                    gate_builder, ssh_host, ssh_user, gate_cache, interpreter
+                    gate_builder, ssh_host, ssh_port, ssh_user, gate_cache, interpreter
                 )
             try:
                 return host_name, await remote_runner(
