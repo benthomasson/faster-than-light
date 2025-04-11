@@ -32,7 +32,7 @@ async def connect_gate(
     while True:
         try:
             conn = await asyncssh.connect(
-                ssh_host, port=ssh_port, username=ssh_user, known_hosts=None
+                ssh_host, port=ssh_port, username=ssh_user, known_hosts=None, connect_timeout="1h",
             )
             await check_version(conn, interpreter)
             tempdir = "/tmp"
@@ -40,13 +40,20 @@ async def connect_gate(
             gate_process = await open_gate(conn, gate_file_name)
             return Gate(conn, gate_process, tempdir)
         except ConnectionResetError:
-            print("retry connection")
+            print("retry connection, ConnectionResetError")
             await remove_item_from_cache(gate_cache)
             continue
         except asyncssh.misc.ConnectionLost:
-            print("retry connection")
+            print("retry connection, ConnectionLost")
             await remove_item_from_cache(gate_cache)
             continue
+        except TimeoutError as e:
+            print("retry connection, TimeoutError")
+            await remove_item_from_cache(gate_cache)
+            continue
+        except BaseException as e:
+            print(type(e), e)
+            raise
 
 
 async def check_version(conn: SSHClientConnection, interpreter: str) -> None:

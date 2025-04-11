@@ -14,10 +14,10 @@ from typing import Dict, Optional, Callable, List, Tuple
 from asyncio.tasks import Task
 
 
-def extract_task_results(tasks: List[Task]) -> Dict[str, Dict]:
+def extract_task_results(tasks: List[Tuple[str, Task]]) -> Dict[str, Dict]:
 
     results = {}
-    for task in tasks:
+    for host_name, task in tasks:
         try:
             host_name, result = task.result()
             results[host_name] = result
@@ -105,6 +105,7 @@ async def _run_module(
                 # no host specific args so just reuse module_args
                 merged_args = module_args
             tasks.append(
+                (host_name,
                 asyncio.create_task(
                     run_module_on_host(
                         host_name,
@@ -116,9 +117,9 @@ async def _run_module(
                         gate_cache,
                         gate_builder,
                     )
-                )
+                ))
             )
-        await asyncio.gather(*tasks, return_exceptions=True)
+        await asyncio.gather(*[task[1] for task in tasks], return_exceptions=True)
         all_tasks.extend(tasks)
 
     return extract_task_results(all_tasks)
