@@ -39,6 +39,10 @@ async def connect_gate(
             gate_file_name = await send_gate(gate_builder, conn, tempdir, interpreter)
             gate_process = await open_gate(conn, gate_file_name)
             return Gate(conn, gate_process, tempdir)
+        except ConnectionRefusedError:
+            print("retry connection, ConnectionRefusedError")
+            await remove_item_from_cache(gate_cache)
+            continue
         except ConnectionResetError:
             print("retry connection, ConnectionResetError")
             await remove_item_from_cache(gate_cache)
