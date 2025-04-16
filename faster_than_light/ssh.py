@@ -87,7 +87,7 @@ async def copy(inventory, gate_cache, src: str, dest: str) -> None:
         gate = gate_cache.get(host)
         conn = gate.conn
         async with conn.start_sftp_client() as sftp:
-            await sftp.put(src, dest)
+            await sftp.put(src, dest, recurse=True)
 
 
 def copy_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
@@ -197,6 +197,7 @@ async def run_module_remotely(
     gate_builder: Callable,
 ) -> Tuple[str, Dict]:
     module_name = os.path.basename(module)
+
     if host and host.get("ansible_host"):
         ssh_host = host.get("ansible_host")
     else:
