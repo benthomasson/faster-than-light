@@ -80,9 +80,10 @@ async def _run_module(
 
     # support refs only at the top level of arg values
     has_refs = False
-    for arg_name, arg_value in module_args.items():
-        if isinstance(arg_value, Ref):
-            has_refs = True
+    if module_args:
+        for arg_name, arg_value in module_args.items():
+            if isinstance(arg_value, Ref):
+                has_refs = True
 
     all_tasks = []
     # Run the tasks in chunks of 10 to reduce contention for remote connections.
@@ -97,8 +98,9 @@ async def _run_module(
                 # make a copy of module_args since we need to modify it
                 merged_args = module_args.copy()
                 # refs have lower precedence than host specific args
-                for arg_name, arg_value in module_args.items():
-                    merged_args[arg_name] = deref(host, arg_value)
+                if module_args:
+                    for arg_name, arg_value in module_args.items():
+                        merged_args[arg_name] = deref(host, arg_value)
                 # host specific args have higher precedence than refs
                 merged_args.update(host_specific_args)
             else:
