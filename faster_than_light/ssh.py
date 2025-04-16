@@ -102,6 +102,30 @@ def copy_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
         return future.result()
 
 
+async def copy_from(inventory, gate_cache, src: str, dest: str) -> None:
+
+    hosts = unique_hosts(inventory)
+
+    for host in hosts:
+
+        gate = gate_cache.get(host)
+        conn = gate.conn
+        async with conn.start_sftp_client() as sftp:
+            await sftp.get(src, dest, recurse=True)
+
+
+def copy_from_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
+
+    coro = copy_from(inventory, gate_cache, src, dest)
+
+    if loop is None:
+        loop = asyncio.new_event_loop()
+        return loop.run_until_complete(coro)
+    else:
+        future = asyncio.run_coroutine_threadsafe(coro, loop)
+        return future.result()
+
+
 async def send_gate(
     gate_builder: Callable, conn: SSHClientConnection, tempdir: str, interpreter: str
 ) -> None:
