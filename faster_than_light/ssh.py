@@ -77,6 +77,30 @@ async def check_version(conn: SSHClientConnection, interpreter: str) -> None:
                 )
 
 
+async def mkdir(inventory, gate_cache, name: str) -> None:
+
+    hosts = unique_hosts(inventory)
+
+    for host in hosts:
+
+        gate = gate_cache.get(host)
+        conn = gate.conn
+        async with conn.start_sftp_client() as sftp:
+            await sftp.makedirs(name, exist_ok=True)
+
+
+def mkdir_sync(inventory, gate_cache, name: str, loop=None) -> None:
+
+    coro = mkdir(inventory, gate_cache, name)
+
+    if loop is None:
+        loop = asyncio.new_event_loop()
+        return loop.run_until_complete(coro)
+    else:
+        future = asyncio.run_coroutine_threadsafe(coro, loop)
+        return future.result()
+
+
 async def copy(inventory, gate_cache, src: str, dest: str) -> None:
 
     hosts = unique_hosts(inventory)
