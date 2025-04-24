@@ -27,8 +27,7 @@ async def connect_gate(
     gate_cache: Optional[Dict[str, Gate]],
     interpreter: str,
 ) -> Gate:
-    logger.debug(f"connect_gate {ssh_host=} {ssh_port=} {ssh_user=} {interpreter=}")
-    print(f"connect_gate {ssh_host=} {ssh_port=} {ssh_user=} {interpreter=}")
+    logger.info(f"connect_gate {ssh_host=} {ssh_port=} {ssh_user=} {interpreter=}")
     while True:
         try:
             conn = await asyncssh.connect(
@@ -40,23 +39,23 @@ async def connect_gate(
             gate_process = await open_gate(conn, gate_file_name)
             return Gate(conn, gate_process, tempdir)
         except ConnectionRefusedError:
-            print("retry connection, ConnectionRefusedError")
+            logger.info("retry connection, ConnectionRefusedError")
             await remove_item_from_cache(gate_cache)
             continue
         except ConnectionResetError:
-            print("retry connection, ConnectionResetError")
+            logger.info("retry connection, ConnectionResetError")
             await remove_item_from_cache(gate_cache)
             continue
         except asyncssh.misc.ConnectionLost:
-            print("retry connection, ConnectionLost")
+            logger.info("retry connection, ConnectionLost")
             await remove_item_from_cache(gate_cache)
             continue
         except TimeoutError as e:
-            print("retry connection, TimeoutError")
+            logger.info("retry connection, TimeoutError")
             await remove_item_from_cache(gate_cache)
             continue
         except BaseException as e:
-            print(type(e), e)
+            logger.error(f"{type(e)}, {e}")
             raise
 
 
@@ -111,6 +110,7 @@ async def copy_from(inventory, gate_cache, src: str, dest: str) -> None:
         gate = gate_cache.get(host)
         conn = gate.conn
         async with conn.start_sftp_client() as sftp:
+            print(f'Copy from {src} to {dest}')
             await sftp.get(src, dest, recurse=True)
 
 
@@ -133,19 +133,19 @@ async def send_gate(
     gate_file_name = os.path.join(tempdir, f"ftl_gate_{gate_hash}.pyz")
     async with conn.start_sftp_client() as sftp:
         if not await sftp.exists(gate_file_name):
-            print(f"send_gate sending {gate_file_name}")
+            logger.info(f"send_gate sending {gate_file_name}")
             await sftp.put(ftl_gate, gate_file_name)
             result = await conn.run(f"chmod 700 {gate_file_name}", check=True)
             assert result.exit_status == 0
         else:
             stats = await sftp.lstat(gate_file_name)
             if stats.size == 0:
-                print(f"send_gate resending {gate_file_name}")
+                logger.info(f"send_gate resending {gate_file_name}")
                 await sftp.put(ftl_gate, gate_file_name)
                 result = await conn.run(f"chmod 700 {gate_file_name}", check=True)
                 assert result.exit_status == 0
             else:
-                print(f"send_gate reusing {gate_file_name}")
+                logger.info(f"send_gate reusing {gate_file_name}")
     return gate_file_name
 
 
@@ -154,7 +154,7 @@ async def open_gate(conn: SSHClientConnection, gate_file_name: str) -> SSHClient
     send_message_str(process.stdin, "Hello", {})
     if await read_message(process.stdout) != ["Hello", {}]:
         error = await process.stderr.read()
-        print(error)
+        logger.error(error)
         raise Exception(error)
     return process
 
@@ -163,7 +163,7 @@ async def remove_item_from_cache(gate_cache: Optional[Dict[str, Gate]]) -> None:
     if gate_cache is not None and gate_cache:
         item, (conn, gate_process, tempdir) = gate_cache.popitem()
         await close_gate(conn, gate_process, tempdir)
-        print("closed gate", item)
+        logger.info("closed gate", item)
 
 
 async def close_gate(conn, gate_process, tempdir: str) -> None:
@@ -258,7 +258,7 @@ async def run_module_remotely(
                     gate_cache[host_name] = Gate(conn, gate_process, tempdir)
             break
         except ConnectionResetError:
-            print("retry connection")
+            logger.info("retry connection")
             # Randomly close a connection in the cache
             await remove_item_from_cache(gate_cache)
             continue

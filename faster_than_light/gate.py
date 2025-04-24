@@ -51,7 +51,7 @@ def build_ftl_gate(
 
     cached_gate = os.path.join(cache, f"ftl_gate_{gate_hash}.pyz")
     if os.path.exists(cached_gate):
-        print(f'build_ftl_gate reusing cached_gate {cached_gate}')
+        logger.info(f'build_ftl_gate reusing cached_gate {cached_gate}')
         return cached_gate, gate_hash
 
     tempdir = tempfile.mkdtemp()
