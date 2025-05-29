@@ -28,3 +28,11 @@ def load_localhost(interpreter=None) -> Any:
     }
 
     return inventory_data
+
+def write_localhost(inventory_file: str = "inventory.yml") -> None:
+    with open(inventory_file, "w") as f:
+        yaml.dump(load_localhost(), stream=f)
+
+
+def entry_point() -> None:
+    write_localhost()

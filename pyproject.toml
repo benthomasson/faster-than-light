@@ -20,3 +20,4 @@ build-backend = "setuptools.build_meta"
 [project.scripts]
 ftl = "faster_than_light.cli:entry_point"
 ftl-gate-builder = "faster_than_light.builder:entry_point"
+ftl-localhost = "faster_than_light.inventory:entry_point"
