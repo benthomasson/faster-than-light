@@ -50,7 +50,7 @@ async def connect_gate(
             logger.info("retry connection, ConnectionLost")
             await remove_item_from_cache(gate_cache)
             continue
-        except TimeoutError as e:
+        except TimeoutError:
             logger.info("retry connection, TimeoutError")
             await remove_item_from_cache(gate_cache)
             continue
@@ -77,14 +77,38 @@ async def check_version(conn: SSHClientConnection, interpreter: str) -> None:
                 )
 
 
+async def connect_ssh(host):
+
+    ssh_host = host.get("ansible_host")
+    if host and host.get("ansible_port"):
+        ssh_port = host.get("ansible_port")
+    else:
+        ssh_port = 22
+
+    if host and host.get("ansible_user"):
+        ssh_user = host.get("ansible_user")
+    else:
+        ssh_user = getuser()
+
+    conn = await asyncssh.connect(
+        ssh_host, port=ssh_port, username=ssh_user, known_hosts=None, connect_timeout="1h",
+    )
+
+    return conn
+
+
 async def mkdir(inventory, gate_cache, name: str) -> None:
 
     hosts = unique_hosts(inventory)
 
     for host in hosts:
 
-        gate = gate_cache.get(host)
-        conn = gate.conn
+        if gate_cache and host in gate_cache:
+            gate = gate_cache.get(host)
+            conn = gate.conn
+        else:
+            conn = await connect_ssh(hosts[host])
+
         async with conn.start_sftp_client() as sftp:
             await sftp.makedirs(name, exist_ok=True)
 
@@ -107,8 +131,11 @@ async def copy(inventory, gate_cache, src: str, dest: str) -> None:
 
     for host in hosts:
 
-        gate = gate_cache.get(host)
-        conn = gate.conn
+        if gate_cache and host in gate_cache:
+            gate = gate_cache.get(host)
+            conn = gate.conn
+        else:
+            conn = await connect_ssh(hosts[host])
         async with conn.start_sftp_client() as sftp:
             await sftp.put(src, dest, recurse=True)
 
@@ -131,8 +158,11 @@ async def copy_from(inventory, gate_cache, src: str, dest: str) -> None:
 
     for host in hosts:
 
-        gate = gate_cache.get(host)
-        conn = gate.conn
+        if gate_cache and host in gate_cache:
+            gate = gate_cache.get(host)
+            conn = gate.conn
+        else:
+            conn = await connect_ssh(hosts[host])
         async with conn.start_sftp_client() as sftp:
             print(f'Copy from {src} to {dest}')
             await sftp.get(src, dest, recurse=True)
@@ -262,6 +292,7 @@ async def run_module_remotely(
         interpreter = host.get("ansible_python_interpreter")
     else:
         interpreter = sys.executable
+
     while True:
         try:
             if gate_cache is not None and gate_cache.get(host_name):
