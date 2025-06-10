@@ -8,7 +8,7 @@ def load_inventory(inventory_file: str) -> Any:
 
     with open(inventory_file) as f:
         inventory_data = yaml.safe_load(f.read())
-    return inventory_data
+    return inventory_data or {}
 
 
 def load_localhost(interpreter=None) -> Any:
