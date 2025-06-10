@@ -6,6 +6,7 @@ import tempfile
 import sys
 import runpy
 import logging
+import traceback
 
 from typing import Dict, Tuple
 
@@ -55,42 +56,52 @@ def is_want_json_module(module: str) -> bool:
 async def run_module_locally(
     host_name: str, host: Dict, module: str, module_args: Dict
 ) -> Tuple[str, Dict]:
-    logger.debug(f'run_module_locally {host_name=} {module=} ')
-    tmp = tempfile.mkdtemp()
-    tmp_module = os.path.join(tmp, "module.py")
-    shutil.copy(module, tmp_module)
-    # TODO: replace hashbang with ansible_python_interpreter
-    # TODO: add utf-8 encoding line
-    interpreter = host.get("ansible_python_interpreter", sys.executable)
-    logger.debug(f"{interpreter}")
-    if is_binary_module(module):
-        args = os.path.join(tmp, "args")
-        with open(args, "w") as f:
-            f.write(json.dumps(module_args))
-        output = await check_output(f"{tmp_module} {args}")
-    elif is_new_style_module(module):
-        output = await check_output(
-            f"{interpreter} {tmp_module}",
-            stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode(),
-        )
-    elif is_want_json_module(module):
-        args = os.path.join(tmp, "args")
-        with open(args, "w") as f:
-            f.write(json.dumps(module_args))
-        output = await check_output(f"{interpreter} {tmp_module} {args}")
-    else:
-        args = os.path.join(tmp, "args")
-        with open(args, "w") as f:
-            if module_args is not None:
-                f.write(" ".join(["=".join([k, v]) for k, v in module_args.items()]))
-            else:
-                f.write("")
-        output = await check_output(f"{interpreter} {tmp_module} {args}")
     try:
-        return host_name, json.loads(output)
-    except Exception:
-        print(output)
-        return host_name, dict(error=output)
+        logger.debug(f'run_module_locally {host_name=} {module=} ')
+        tmp = tempfile.mkdtemp()
+        tmp_module = os.path.join(tmp, "module.py")
+        shutil.copy(module, tmp_module)
+        # TODO: replace hashbang with ansible_python_interpreter
+        # TODO: add utf-8 encoding line
+        interpreter = host.get("ansible_python_interpreter", sys.executable)
+        logger.debug(f"{interpreter}")
+        if is_binary_module(module):
+            logger.debug("is_binary_module")
+            args = os.path.join(tmp, "args")
+            with open(args, "w") as f:
+                f.write(json.dumps(module_args))
+            output = await check_output(f"{tmp_module} {args}")
+        elif is_new_style_module(module):
+            logger.debug("is_new_style_module")
+            print(f"{interpreter} {tmp_module}")
+            print(json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)))
+            output = await check_output(
+                f"{interpreter} {tmp_module}",
+                stdin=json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args)).encode(),
+            )
+        elif is_want_json_module(module):
+            logger.debug("is_want_json_module")
+            args = os.path.join(tmp, "args")
+            with open(args, "w") as f:
+                f.write(json.dumps(module_args))
+            output = await check_output(f"{interpreter} {tmp_module} {args}")
+        else:
+            logger.debug("else")
+            args = os.path.join(tmp, "args")
+            with open(args, "w") as f:
+                if module_args is not None:
+                    f.write(" ".join(["=".join([k, v]) for k, v in module_args.items()]))
+                else:
+                    f.write("")
+            output = await check_output(f"{interpreter} {tmp_module} {args}")
+        try:
+            return host_name, json.loads(output)
+        except Exception:
+            print(output)
+            return host_name, dict(error=output)
+    except BaseException:
+        traceback.print_exc()
+        raise
 
 
 async def run_ftl_module_locally(
