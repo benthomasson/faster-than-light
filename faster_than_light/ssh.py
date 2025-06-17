@@ -129,6 +129,8 @@ async def copy(inventory, gate_cache, src: str, dest: str) -> None:
 
     hosts = unique_hosts(inventory)
 
+    results =  {}
+
     for host in hosts:
 
         if gate_cache and host in gate_cache:
@@ -138,6 +140,11 @@ async def copy(inventory, gate_cache, src: str, dest: str) -> None:
             conn = await connect_ssh(hosts[host])
         async with conn.start_sftp_client() as sftp:
             await sftp.put(src, dest, recurse=True)
+
+        results[host] = {'changed': True}
+
+    return results
+
 
 
 def copy_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
