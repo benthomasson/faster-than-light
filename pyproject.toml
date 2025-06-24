@@ -8,7 +8,9 @@ dependencies = [ 'asyncssh',
                  'click',
                  'pip',
                  'wheel',
-                 'aiomultiprocess']
+                 'aiomultiprocess',
+                 'jinja2',
+]
 
 [tool.setuptools]
 packages = ["faster_than_light", "faster_than_light.ftl_gate"]

@@ -6,6 +6,8 @@ import asyncssh.misc
 import asyncio
 from getpass import getuser
 import logging
+import jinja2
+import tempfile
 
 from asyncssh.connection import SSHClientConnection
 from asyncssh.process import SSHClientProcess
@@ -31,7 +33,11 @@ async def connect_gate(
     while True:
         try:
             conn = await asyncssh.connect(
-                ssh_host, port=ssh_port, username=ssh_user, known_hosts=None, connect_timeout="1h",
+                ssh_host,
+                port=ssh_port,
+                username=ssh_user,
+                known_hosts=None,
+                connect_timeout="1h",
             )
             await check_version(conn, interpreter)
             tempdir = "/tmp"
@@ -91,7 +97,11 @@ async def connect_ssh(host):
         ssh_user = getuser()
 
     conn = await asyncssh.connect(
-        ssh_host, port=ssh_port, username=ssh_user, known_hosts=None, connect_timeout="1h",
+        ssh_host,
+        port=ssh_port,
+        username=ssh_user,
+        known_hosts=None,
+        connect_timeout="1h",
     )
 
     return conn
@@ -129,7 +139,7 @@ async def copy(inventory, gate_cache, src: str, dest: str) -> None:
 
     hosts = unique_hosts(inventory)
 
-    results =  {}
+    results = {}
 
     for host in hosts:
 
@@ -141,15 +151,60 @@ async def copy(inventory, gate_cache, src: str, dest: str) -> None:
         async with conn.start_sftp_client() as sftp:
             await sftp.put(src, dest, recurse=True)
 
-        results[host] = {'changed': True}
+        results[host] = {"changed": True}
 
     return results
-
 
 
 def copy_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
 
     coro = copy(inventory, gate_cache, src, dest)
+
+    if loop is None:
+        loop = asyncio.new_event_loop()
+        return loop.run_until_complete(coro)
+    else:
+        future = asyncio.run_coroutine_threadsafe(coro, loop)
+        return future.result()
+
+
+async def template(inventory, gate_cache, src: str, dest: str) -> None:
+
+    hosts = unique_hosts(inventory)
+
+    results = {}
+
+    environment = jinja2.Environment()
+
+    for host_name, host in hosts.items():
+
+        if gate_cache and host_name in gate_cache:
+            gate = gate_cache.get(host_name)
+            conn = gate.conn
+        else:
+            conn = await connect_ssh(host)
+
+        tf, tf_path = tempfile.mkstemp()
+        try:
+            with open(src) as f:
+                template = environment.from_string(f.read())
+                os.write(tf, template.render(**host).encode())
+                os.close(tf)
+
+                async with conn.start_sftp_client() as sftp:
+                    await sftp.put(src, dest, recurse=True)
+        finally:
+            #os.unlink(tf_path)
+            print(tf_path)
+
+        results[host_name] = {"changed": True}
+
+    return results
+
+
+def template_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
+
+    coro = template(inventory, gate_cache, src, dest)
 
     if loop is None:
         loop = asyncio.new_event_loop()
@@ -171,7 +226,7 @@ async def copy_from(inventory, gate_cache, src: str, dest: str) -> None:
         else:
             conn = await connect_ssh(hosts[host])
         async with conn.start_sftp_client() as sftp:
-            print(f'Copy from {src} to {dest}')
+            print(f"Copy from {src} to {dest}")
             await sftp.get(src, dest, recurse=True)
 
 
