@@ -192,10 +192,9 @@ async def template(inventory, gate_cache, src: str, dest: str) -> None:
                 os.close(tf)
 
                 async with conn.start_sftp_client() as sftp:
-                    await sftp.put(src, dest, recurse=True)
+                    await sftp.put(tf_path, dest, recurse=True)
         finally:
-            #os.unlink(tf_path)
-            print(tf_path)
+            os.unlink(tf_path)
 
         results[host_name] = {"changed": True}
 
