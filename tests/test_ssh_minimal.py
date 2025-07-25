@@ -11,9 +11,15 @@ from unittest.mock import AsyncMock, MagicMock, patch
 from faster_than_light.ssh import (
     check_version,
     mkdir,
+    mkdir_sync,
     copy,
+    copy_sync,
     template,
+    template_sync,
     copy_from,
+    copy_from_sync,
+    send_gate,
+    open_gate,
     remove_item_from_cache,
     close_gate,
     run_module_through_gate,
@@ -76,8 +82,7 @@ class TestMkdir:
         
         # Create mock connection with SFTP
         mock_conn = MagicMock()
-        mock_sftp = MagicMock()
-        mock_sftp.makedirs = AsyncMock()
+        mock_sftp = AsyncMock()
         mock_conn.start_sftp_client.return_value.__aenter__.return_value = mock_sftp
         mock_connect_ssh.return_value = mock_conn
         
@@ -98,8 +103,7 @@ class TestMkdir:
         
         # Create mock gate with connection
         mock_conn = MagicMock()
-        mock_sftp = MagicMock()
-        mock_sftp.makedirs = AsyncMock()
+        mock_sftp = AsyncMock()
         mock_conn.start_sftp_client.return_value.__aenter__.return_value = mock_sftp
         
         mock_gate = MagicMock()
@@ -126,8 +130,7 @@ class TestCopy:
         }
         
         mock_conn = MagicMock()
-        mock_sftp = MagicMock()
-        mock_sftp.put = AsyncMock()
+        mock_sftp = AsyncMock()
         mock_conn.start_sftp_client.return_value.__aenter__.return_value = mock_sftp
         mock_connect_ssh.return_value = mock_conn
         
@@ -161,8 +164,7 @@ class TestTemplate:
         }
         
         mock_conn = MagicMock()
-        mock_sftp = MagicMock()
-        mock_sftp.put = AsyncMock()
+        mock_sftp = AsyncMock()
         mock_conn.start_sftp_client.return_value.__aenter__.return_value = mock_sftp
         mock_connect_ssh.return_value = mock_conn
         
@@ -193,8 +195,7 @@ class TestCopyFrom:
         }
         
         mock_conn = MagicMock()
-        mock_sftp = MagicMock()
-        mock_sftp.get = AsyncMock()
+        mock_sftp = AsyncMock()
         mock_conn.start_sftp_client.return_value.__aenter__.return_value = mock_sftp
         mock_connect_ssh.return_value = mock_conn
         
@@ -249,9 +250,9 @@ class TestCloseGate:
     async def test_close_gate_success(self, mock_send_message):
         """Test successful gate closure."""
         mock_conn = MagicMock()
-        mock_process = MagicMock()
+        mock_process = AsyncMock()
         mock_process.exit_status = None
-        mock_process.stderr.read = AsyncMock(return_value="")
+        mock_process.stderr.read.return_value = ""
         
         await close_gate(mock_conn, mock_process, "/tmp")
         
@@ -278,7 +279,7 @@ class TestRunModuleThroughGate:
     async def test_run_module_through_gate_cached_module(self, mock_process_result,
                                                         mock_read_message, mock_send_message):
         """Test running cached module through gate."""
-        mock_process = MagicMock()
+        mock_process = AsyncMock()
         mock_read_message.return_value = ["ModuleResult", {"stdout": "success"}]
         mock_process_result.return_value = {"result": "success"}
         
@@ -303,7 +304,7 @@ class TestRunModuleThroughGate:
                                                            mock_open, mock_process_result,
                                                            mock_read_message, mock_send_message):
         """Test running module when not cached (ModuleNotFound)."""
-        mock_process = MagicMock()
+        mock_process = AsyncMock()
         
         # First call raises ModuleNotFound, second call succeeds
         mock_process_result.side_effect = [
@@ -338,7 +339,7 @@ class TestRunFtlModuleThroughGate:
                                                       mock_process_result, mock_read_message,
                                                       mock_send_message):
         """Test running FTL module through gate."""
-        mock_process = MagicMock()
+        mock_process = AsyncMock()
         mock_read_message.return_value = ["FTLModuleResult", {"result": {"key": "value"}}]
         mock_process_result.return_value = {"result": {"key": "value"}}
         mock_b64encode.return_value = b"encoded_ftl_content"
@@ -363,6 +364,220 @@ class TestRunFtlModuleThroughGate:
         )
 
 
+class TestSendGate:
+    """Tests for send_gate function."""
+    
+    @pytest.mark.asyncio
+    async def test_send_gate_new_file(self):
+        """Test sending gate when file doesn't exist."""
+        mock_conn = MagicMock()
+        mock_sftp = AsyncMock()
+        mock_sftp.exists.return_value = False
+        
+        mock_conn.start_sftp_client.return_value.__aenter__.return_value = mock_sftp
+        
+        mock_gate_builder = MagicMock()
+        mock_gate_builder.return_value = ("/path/to/gate.pyz", "hash123")
+        
+        mock_result = MagicMock()
+        mock_result.exit_status = 0
+        mock_conn.run = AsyncMock(return_value=mock_result)
+        
+        result = await send_gate(mock_gate_builder, mock_conn, "/tmp", "/usr/bin/python3")
+        
+        assert result == "/tmp/ftl_gate_hash123.pyz"
+        mock_sftp.put.assert_called_once_with("/path/to/gate.pyz", "/tmp/ftl_gate_hash123.pyz")
+        mock_conn.run.assert_called_once_with("chmod 700 /tmp/ftl_gate_hash123.pyz", check=True)
+    
+    @pytest.mark.asyncio
+    async def test_send_gate_exists_nonzero_size(self):
+        """Test reusing existing gate file with non-zero size."""
+        mock_conn = MagicMock()
+        mock_sftp = AsyncMock()
+        mock_sftp.exists.return_value = True
+        
+        mock_stats = MagicMock()
+        mock_stats.size = 1024
+        mock_sftp.lstat.return_value = mock_stats
+        
+        mock_conn.start_sftp_client.return_value.__aenter__.return_value = mock_sftp
+        
+        mock_gate_builder = MagicMock()
+        mock_gate_builder.return_value = ("/path/to/gate.pyz", "hash123")
+        
+        result = await send_gate(mock_gate_builder, mock_conn, "/tmp", "/usr/bin/python3")
+        
+        assert result == "/tmp/ftl_gate_hash123.pyz"
+        mock_sftp.put.assert_not_called()  # Should reuse existing file
+
+
+class TestOpenGate:
+    """Tests for open_gate function."""
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.send_message_str')
+    @patch('faster_than_light.ssh.read_message')
+    async def test_open_gate_success(self, mock_read_message, mock_send_message):
+        """Test successful gate opening."""
+        mock_conn = MagicMock()
+        mock_process = AsyncMock()
+        mock_conn.create_process = AsyncMock(return_value=mock_process)
+        mock_read_message.return_value = ["Hello", {}]
+        
+        result = await open_gate(mock_conn, "/tmp/gate.pyz")
+        
+        assert result is mock_process
+        mock_conn.create_process.assert_called_once_with("/tmp/gate.pyz")
+        mock_send_message.assert_called_once_with(mock_process.stdin, "Hello", {})
+        mock_read_message.assert_called_once_with(mock_process.stdout)
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.send_message_str')
+    @patch('faster_than_light.ssh.read_message')
+    async def test_open_gate_failure(self, mock_read_message, mock_send_message):
+        """Test gate opening failure."""
+        mock_conn = MagicMock()
+        mock_process = AsyncMock()
+        mock_conn.create_process = AsyncMock(return_value=mock_process)
+        mock_read_message.return_value = ["Error", {"message": "Failed"}]
+        mock_process.stderr.read.return_value = "Detailed error"
+        
+        with pytest.raises(Exception, match="Detailed error"):
+            await open_gate(mock_conn, "/tmp/gate.pyz")
+
+
+class TestSyncFunctions:
+    """Tests for synchronous wrapper functions."""
+    
+    @patch('faster_than_light.ssh.mkdir')
+    @patch('asyncio.new_event_loop')
+    def test_mkdir_sync_new_loop(self, mock_new_loop, mock_mkdir):
+        """Test mkdir_sync with new event loop."""
+        mock_loop = MagicMock()
+        mock_new_loop.return_value = mock_loop
+        mock_loop.run_until_complete.return_value = None
+        
+        mkdir_sync({}, {}, "/tmp/test")
+        
+        mock_new_loop.assert_called_once()
+        mock_loop.run_until_complete.assert_called_once()
+    
+    @patch('faster_than_light.ssh.mkdir')
+    @patch('asyncio.run_coroutine_threadsafe')
+    def test_mkdir_sync_existing_loop(self, mock_run_coroutine, mock_mkdir):
+        """Test mkdir_sync with existing event loop."""
+        mock_future = MagicMock()
+        mock_future.result.return_value = None
+        mock_run_coroutine.return_value = mock_future
+        
+        mock_loop = MagicMock()
+        
+        mkdir_sync({}, {}, "/tmp/test", loop=mock_loop)
+        
+        mock_future.result.assert_called_once()
+    
+    @patch('faster_than_light.ssh.copy')
+    def test_copy_sync_new_loop(self, mock_copy):
+        """Test copy_sync with new event loop."""
+        with patch('asyncio.new_event_loop') as mock_new_loop:
+            mock_loop = MagicMock()
+            mock_new_loop.return_value = mock_loop
+            mock_loop.run_until_complete.return_value = {"host1": {"changed": True}}
+            
+            copy_sync({}, {}, "/src", "/dest")
+            
+            mock_new_loop.assert_called_once()
+    
+    @patch('faster_than_light.ssh.template')
+    def test_template_sync_new_loop(self, mock_template):
+        """Test template_sync with new event loop."""
+        with patch('asyncio.new_event_loop') as mock_new_loop:
+            mock_loop = MagicMock()
+            mock_new_loop.return_value = mock_loop
+            mock_loop.run_until_complete.return_value = {"host1": {"changed": True}}
+            
+            template_sync({}, {}, "/src.j2", "/dest")
+            
+            mock_new_loop.assert_called_once()
+    
+    @patch('faster_than_light.ssh.copy_from')
+    def test_copy_from_sync_new_loop(self, mock_copy_from):
+        """Test copy_from_sync with new event loop."""
+        with patch('asyncio.new_event_loop') as mock_new_loop:
+            mock_loop = MagicMock()
+            mock_new_loop.return_value = mock_loop
+            mock_loop.run_until_complete.return_value = None
+            
+            copy_from_sync({}, {}, "/remote", "/local")
+            
+            mock_new_loop.assert_called_once()
+
+
+class TestEdgeCases:
+    """Tests for edge cases and error conditions."""
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.unique_hosts')
+    async def test_mkdir_empty_inventory(self, mock_unique_hosts):
+        """Test mkdir with empty inventory."""
+        mock_unique_hosts.return_value = {}
+        
+        # Should not raise exception
+        await mkdir({}, {}, "/tmp/test")
+        
+        mock_unique_hosts.assert_called_once()
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.unique_hosts')
+    async def test_copy_empty_inventory(self, mock_unique_hosts):
+        """Test copy with empty inventory."""
+        mock_unique_hosts.return_value = {}
+        
+        result = await copy({}, {}, "/src", "/dest")
+        
+        assert result == {}
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.unique_hosts')
+    async def test_template_empty_inventory(self, mock_unique_hosts):
+        """Test template with empty inventory."""
+        mock_unique_hosts.return_value = {}
+        
+        result = await template({}, {}, "/src.j2", "/dest")
+        
+        assert result == {}
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.unique_hosts')
+    async def test_copy_from_empty_inventory(self, mock_unique_hosts):
+        """Test copy_from with empty inventory."""
+        mock_unique_hosts.return_value = {}
+        
+        # Should not raise exception
+        await copy_from({}, {}, "/remote", "/local")
+        
+        mock_unique_hosts.assert_called_once()
+
+
+class TestCloseGateExtended:
+    """Extended tests for close_gate function."""
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.send_message_str')
+    async def test_close_gate_with_exit_status(self, mock_send_message):
+        """Test gate closure when process has exit status."""
+        mock_conn = MagicMock()
+        mock_process = AsyncMock()
+        mock_process.exit_status = 0
+        mock_process.stderr.read.return_value = ""
+        
+        await close_gate(mock_conn, mock_process, "/tmp")
+        
+        mock_send_message.assert_called_once_with(mock_process.stdin, "Shutdown", {})
+        mock_process.stderr.read.assert_called_once()
+        mock_conn.close.assert_called_once()
+
+
 # Integration test
 class TestSshIntegration:
     """Integration tests for SSH functionality."""
@@ -374,7 +589,7 @@ class TestSshIntegration:
     async def test_module_execution_workflow(self, mock_process_result, mock_read_message,
                                            mock_send_message):
         """Test module execution through gate workflow."""
-        mock_process = MagicMock()
+        mock_process = AsyncMock()
         mock_read_message.return_value = ["ModuleResult", {"stdout": "integration_success"}]
         mock_process_result.return_value = {"result": "integration_success"}
         
