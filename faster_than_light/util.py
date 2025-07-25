@@ -216,8 +216,9 @@ def process_module_result(message: GateMessage) -> Dict:
         return dict(error=dict(error_type=message[0], message=message[1]))
     elif msg_type == "ModuleNotFound":
         raise ModuleNotFound(message[1]['message'])
-    else:
-        raise Exception(f"Unsupported message type {msg_type}")
+
+    raise Exception(f"Unsupported message type {msg_type}")
+
 
 
 def unique_hosts(inventory: Dict) -> Dict:
