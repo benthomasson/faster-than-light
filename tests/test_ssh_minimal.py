@@ -6,10 +6,12 @@ Tests core SSH functionality with proper async mocking.
 
 import asyncio
 import pytest
+import sys
 from unittest.mock import AsyncMock, MagicMock, patch
 
 from faster_than_light.ssh import (
     check_version,
+    connect_ssh,
     mkdir,
     mkdir_sync,
     copy,
@@ -24,6 +26,7 @@ from faster_than_light.ssh import (
     close_gate,
     run_module_through_gate,
     run_ftl_module_through_gate,
+    run_module_remotely,
 )
 from faster_than_light.types import Gate
 from faster_than_light.exceptions import ModuleNotFound
@@ -576,6 +579,292 @@ class TestCloseGateExtended:
         mock_send_message.assert_called_once_with(mock_process.stdin, "Shutdown", {})
         mock_process.stderr.read.assert_called_once()
         mock_conn.close.assert_called_once()
+
+
+class TestConnectSshAdvanced:
+    """Advanced tests for connect_ssh function using proper AsyncMock."""
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.asyncssh.connect', new_callable=AsyncMock)
+    @patch('faster_than_light.ssh.getuser')
+    async def test_connect_ssh_with_full_configuration(self, mock_getuser, mock_connect):
+        """Test connect_ssh with complete host configuration."""
+        mock_getuser.return_value = "defaultuser"
+        mock_conn = AsyncMock()
+        mock_connect.return_value = mock_conn
+        
+        host = {
+            "ansible_host": "192.168.100.50",
+            "ansible_port": 2222,
+            "ansible_user": "deploy"
+        }
+        
+        result = await connect_ssh(host)
+        
+        assert result is mock_conn
+        mock_connect.assert_called_once_with(
+            "192.168.100.50",
+            port=2222,
+            username="deploy",
+            known_hosts=None,
+            connect_timeout="1h"
+        )
+        # getuser should not be called when ansible_user is provided
+        mock_getuser.assert_not_called()
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.asyncssh.connect', new_callable=AsyncMock)
+    @patch('faster_than_light.ssh.getuser')
+    async def test_connect_ssh_with_defaults(self, mock_getuser, mock_connect):
+        """Test connect_ssh using default values."""
+        mock_getuser.return_value = "currentuser"
+        mock_conn = AsyncMock()
+        mock_connect.return_value = mock_conn
+        
+        host = {"ansible_host": "server.example.com"}
+        
+        result = await connect_ssh(host)
+        
+        mock_connect.assert_called_once_with(
+            "server.example.com",
+            port=22,  # Default port
+            username="currentuser",  # From getuser()
+            known_hosts=None,
+            connect_timeout="1h"
+        )
+        mock_getuser.assert_called_once()
+
+
+class TestRunModuleRemotelyAdvanced:
+    """Advanced tests for run_module_remotely with proper async mocking."""
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.connect_gate')
+    @patch('faster_than_light.ssh.close_gate')
+    @patch('os.path.basename')
+    @patch('sys.executable', '/usr/bin/python3')
+    @patch('faster_than_light.ssh.getuser')
+    async def test_run_module_remotely_no_cache_success(self, mock_getuser, mock_basename,
+                                                       mock_close_gate, mock_connect_gate):
+        """Test successful remote module execution without cache."""
+        mock_getuser.return_value = "testuser"
+        mock_basename.return_value = "test_module.py"
+        
+        # Setup gate connection
+        mock_conn = AsyncMock()
+        mock_process = AsyncMock()
+        mock_connect_gate.return_value = Gate(mock_conn, mock_process, "/tmp")
+        
+        # Setup remote runner
+        mock_remote_runner = AsyncMock()
+        mock_remote_runner.return_value = {"result": "success", "changed": True}
+        mock_gate_builder = MagicMock()
+        
+        host = {
+            "ansible_host": "192.168.1.100",
+            "ansible_port": 2222,
+            "ansible_user": "deploy",
+            "ansible_python_interpreter": "/usr/bin/python3.9"
+        }
+        
+        result = await run_module_remotely(
+            "test_host", host, "/path/to/module.py", {"arg": "value"},
+            mock_remote_runner, None, mock_gate_builder
+        )
+        
+        # Verify result format
+        assert result == ("test_host", {"result": "success", "changed": True})
+        
+        # Verify gate connection was established correctly
+        mock_connect_gate.assert_called_once_with(
+            mock_gate_builder, "192.168.1.100", 2222, "deploy", None, "/usr/bin/python3.9"
+        )
+        
+        # Verify module was executed
+        mock_remote_runner.assert_called_once_with(
+            mock_process, "/path/to/module.py", "test_module.py", {"arg": "value"}
+        )
+        
+        # Verify cleanup (no cache, so gate should be closed)
+        mock_close_gate.assert_called_once_with(mock_conn, mock_process, "/tmp")
+    
+    @pytest.mark.asyncio
+    @patch('os.path.basename')
+    @patch('sys.executable', '/usr/bin/python3')
+    @patch('faster_than_light.ssh.getuser')
+    async def test_run_module_remotely_with_cached_gate(self, mock_getuser, mock_basename):
+        """Test remote module execution using cached gate."""
+        mock_getuser.return_value = "testuser"
+        mock_basename.return_value = "test_module.py"
+        
+        # Setup existing gate in cache
+        mock_conn = AsyncMock()
+        mock_process = AsyncMock()
+        mock_gate = Gate(mock_conn, mock_process, "/tmp")
+        gate_cache = {"test_host": mock_gate}
+        
+        # Setup remote runner
+        mock_remote_runner = AsyncMock()
+        mock_remote_runner.return_value = {"result": "cached_success"}
+        mock_gate_builder = MagicMock()
+        
+        host = {"ansible_host": "192.168.1.100"}
+        
+        result = await run_module_remotely(
+            "test_host", host, "/path/to/module.py", {"arg": "value"},
+            mock_remote_runner, gate_cache, mock_gate_builder
+        )
+        
+        # Verify result
+        assert result == ("test_host", {"result": "cached_success"})
+        
+        # Verify gate was retrieved from cache and put back
+        assert "test_host" in gate_cache
+        assert gate_cache["test_host"].conn is mock_conn
+    
+    @pytest.mark.asyncio
+    @patch('os.path.basename')
+    @patch('sys.executable', '/usr/bin/python3')
+    @patch('faster_than_light.ssh.getuser')
+    async def test_run_module_remotely_host_defaults(self, mock_getuser, mock_basename):
+        """Test running module with host using default values."""
+        mock_getuser.return_value = "currentuser"
+        mock_basename.return_value = "module.py"
+        
+        mock_remote_runner = AsyncMock()
+        mock_remote_runner.return_value = {"result": "defaults_test"}
+        
+        # Host with minimal configuration
+        host = {}
+        
+        with patch('faster_than_light.ssh.connect_gate') as mock_connect_gate, \
+             patch('faster_than_light.ssh.close_gate'):
+            mock_connect_gate.return_value = Gate(AsyncMock(), AsyncMock(), "/tmp")
+            
+            result = await run_module_remotely(
+                "test_host", host, "/path/to/module.py", {},
+                mock_remote_runner, None, MagicMock()
+            )
+            
+            # Verify defaults were used in connect_gate call
+            mock_connect_gate.assert_called_once()
+            args = mock_connect_gate.call_args[0]
+            assert args[1] == "test_host"      # ssh_host defaults to host_name
+            assert args[2] == 22              # ssh_port defaults to 22
+            assert args[3] == "currentuser"   # ssh_user defaults to getuser()
+            assert args[5] == sys.executable  # interpreter defaults to sys.executable
+
+
+class TestAdvancedErrorHandling:
+    """Advanced error handling and edge case tests."""
+    
+    @pytest.mark.asyncio
+    async def test_close_gate_with_various_process_states(self):
+        """Test close_gate handles different process states correctly."""
+        mock_conn = AsyncMock()
+        
+        # Test with None process
+        await close_gate(mock_conn, None, "/tmp")
+        mock_conn.close.assert_called_once()
+        
+        # Test with process that has exit_status
+        mock_conn.reset_mock()
+        mock_process = AsyncMock()
+        mock_process.exit_status = 0
+        mock_process.stderr.read.return_value = "Process completed normally"
+        
+        with patch('faster_than_light.ssh.send_message_str') as mock_send:
+            await close_gate(mock_conn, mock_process, "/tmp")
+            mock_send.assert_called_once_with(mock_process.stdin, "Shutdown", {})
+            mock_process.stderr.read.assert_called_once()
+            mock_conn.close.assert_called_once()
+    
+    @pytest.mark.asyncio
+    async def test_remove_item_from_cache_with_gate_objects(self):
+        """Test cache removal with Gate objects."""
+        mock_conn = AsyncMock()
+        mock_process = AsyncMock()
+        gate = Gate(mock_conn, mock_process, "/tmp")
+        cache_with_gate = {"host1": gate}
+        
+        with patch('faster_than_light.ssh.close_gate') as mock_close:
+            await remove_item_from_cache(cache_with_gate)
+            mock_close.assert_called_once_with(mock_conn, mock_process, "/tmp")
+        
+        assert cache_with_gate == {}
+    
+    @pytest.mark.asyncio
+    @patch('faster_than_light.ssh.send_message_str')
+    @patch('faster_than_light.ssh.read_message')
+    @patch('faster_than_light.ssh.process_module_result')
+    @patch('builtins.open')
+    @patch('base64.b64encode')
+    async def test_run_module_through_gate_with_module_upload(self, mock_b64encode, mock_open,
+                                                             mock_process_result, mock_read_message,
+                                                             mock_send_message):
+        """Test module execution with module upload on ModuleNotFound."""
+        mock_process = AsyncMock()
+        
+        # First call raises ModuleNotFound, second call succeeds
+        mock_process_result.side_effect = [
+            ModuleNotFound("Module not found"),
+            {"result": "success_after_upload"}
+        ]
+        mock_read_message.return_value = ["ModuleResult", {"stdout": "success"}]
+        mock_b64encode.return_value = b"encoded_module_content"
+        
+        # Mock file reading
+        mock_file = MagicMock()
+        mock_file.read.return_value = b"module source code"
+        mock_open.return_value.__enter__.return_value = mock_file
+        
+        result = await run_module_through_gate(
+            mock_process, "/path/to/module.py", "test_module", {"arg": "value"}
+        )
+        
+        # Verify result
+        assert result == {"result": "success_after_upload"}
+        
+        # Verify both attempts were made
+        assert mock_send_message.call_count == 2
+        
+        # First call should be without module content
+        first_call = mock_send_message.call_args_list[0]
+        assert first_call[0][1] == "Module"
+        assert "module" not in first_call[0][2]  # No module content in first call
+        
+        # Second call should include module content
+        second_call = mock_send_message.call_args_list[1]
+        assert second_call[0][1] == "Module"
+        assert "module" in second_call[0][2]  # Module content included in second call
+
+
+class TestAdvancedSyncFunctions:
+    """Advanced tests for sync wrapper functions."""
+    
+    @patch('faster_than_light.ssh.mkdir')
+    @patch('asyncio.new_event_loop')
+    def test_mkdir_sync_exception_handling(self, mock_new_loop, mock_mkdir):
+        """Test that sync functions properly handle exceptions."""
+        mock_loop = MagicMock()
+        mock_new_loop.return_value = mock_loop
+        mock_loop.run_until_complete.side_effect = Exception("Async function failed")
+        
+        with pytest.raises(Exception, match="Async function failed"):
+            mkdir_sync({}, {}, "/tmp/test")
+    
+    @patch('faster_than_light.ssh.copy')
+    @patch('asyncio.run_coroutine_threadsafe')
+    def test_copy_sync_with_existing_loop_timeout(self, mock_run_coroutine, mock_copy):
+        """Test sync functions with existing loop timeout scenarios."""
+        mock_future = MagicMock()
+        mock_future.result.side_effect = TimeoutError("Operation timed out")
+        mock_run_coroutine.return_value = mock_future
+        
+        mock_loop = MagicMock()
+        
+        with pytest.raises(TimeoutError, match="Operation timed out"):
+            copy_sync({}, {}, "/src", "/dest", loop=mock_loop)
 
 
 # Integration test
