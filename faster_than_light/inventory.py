@@ -27,7 +27,7 @@ like localhost-only automation and testing scenarios.
 """
 
 import sys
-from typing import Any
+from typing import Any, Optional
 
 import yaml
 
@@ -122,7 +122,7 @@ def load_inventory(inventory_file: str) -> Any:
     return inventory_data or {}
 
 
-def load_localhost(interpreter=None) -> Any:
+def load_localhost(interpreter:Optional[str]=None) -> Any:
     """Generate a localhost-only inventory configuration for local execution.
     
     Creates a minimal Ansible-compatible inventory containing only localhost

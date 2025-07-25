@@ -18,8 +18,10 @@ that are resolved only when needed, enabling flexible template and configuration
 processing in automation workflows.
 """
 
+from typing import Any, Dict, List, Optional, Union
 
-def deref(host, ref_or_value):
+
+def deref(host: Dict[str, Any], ref_or_value: Union["Ref", Any]) -> Any:
     """Dereference a Ref object or return a regular value unchanged.
     
     This is the main entry point for resolving variable references. If the
@@ -66,7 +68,7 @@ def deref(host, ref_or_value):
         return ref_or_value
 
 
-def get_host_path(ref):
+def get_host_path(ref: "Ref") -> List[str]:
     """Extract the complete variable path from a Ref object.
     
     Traverses up the reference chain from a Ref object to build the complete
@@ -106,7 +108,7 @@ def get_host_path(ref):
     return path[::-1]
 
 
-def get_host_value(host, path):
+def get_host_value(host: Dict[str, Any], path: List[str]) -> Any:
     """Retrieve a value from nested host data using a variable path.
     
     Navigates through nested dictionaries using a sequence of keys to
@@ -215,7 +217,7 @@ class Ref(object):
         safety and prevents accidental modification of shared references.
     """
 
-    def __init__(self, parent, name):
+    def __init__(self, parent: Optional["Ref"], name: str) -> None:
         """Initialize a new variable reference.
         
         Creates a new reference node in the variable path chain. Each Ref
@@ -243,7 +245,7 @@ class Ref(object):
         self._parent = parent
         self._name = name
 
-    def __getattr__(self, name):
+    def __getattr__(self, name: str) -> "Ref":
         """Create and cache a child reference for attribute access.
         
         This method is called when accessing an attribute that doesn't already

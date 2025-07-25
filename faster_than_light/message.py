@@ -26,10 +26,29 @@ the main FTL process and remote gate processes running on target hosts.
 
 import json
 import logging
-from typing import NamedTuple, Any
+from typing import NamedTuple, Any, Optional, Union, Protocol
 from .exceptions import ProtocolError
 
 logger = logging.getLogger(__name__)
+
+
+class BinaryWriter(Protocol):
+    """Protocol for binary writers that can write bytes."""
+    def write(self, data: bytes) -> None: ...
+
+
+class TextWriter(Protocol):
+    """Protocol for text writers that can write strings."""
+    def write(self, data: str) -> None: ...
+
+
+class AsyncReader(Protocol):
+    """Protocol for async readers that can read bytes."""
+    async def read(self, size: int = -1) -> bytes: ...
+
+
+# Type alias for JSON-serializable data
+JsonSerializable = Union[dict, list, str, int, float, bool, None]
 
 
 class GateMessage(NamedTuple):
@@ -79,7 +98,7 @@ class GateMessage(NamedTuple):
     message_body: Any
 
 
-def send_message(writer, msg_type, msg_data):
+def send_message(writer: BinaryWriter, msg_type: str, msg_data: JsonSerializable) -> None:
     """Send a message using FTL's length-prefixed binary protocol.
     
     Serializes a message into JSON format, encodes it as bytes, and transmits
@@ -132,7 +151,7 @@ def send_message(writer, msg_type, msg_data):
     writer.write(message)
 
 
-def send_message_str(writer, msg_type, msg_data):
+def send_message_str(writer: TextWriter, msg_type: str, msg_data: JsonSerializable) -> None:
     """Send a message using FTL's length-prefixed string protocol.
     
     Serializes a message into JSON format and transmits it over a string writer
@@ -198,7 +217,7 @@ def send_message_str(writer, msg_type, msg_data):
         logger.error('BrokenPipeError')
 
 
-async def read_message(reader):
+async def read_message(reader: AsyncReader) -> Optional[Any]:
     """Read and parse a message from FTL's length-prefixed async protocol.
     
     Asynchronously reads a single message from a stream reader using FTL's

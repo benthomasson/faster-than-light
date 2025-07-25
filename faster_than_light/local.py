@@ -36,12 +36,12 @@ import runpy
 import logging
 import traceback
 
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Optional
 
 logger = logging.getLogger('faster_than_light.local')
 
 
-async def check_output(cmd: str, stdin=None) -> bytes:
+async def check_output(cmd: str, stdin:Optional[bytes]=None) -> bytes:
     """Execute a shell command asynchronously and return its output.
     
     Creates an asynchronous subprocess to execute the specified shell command,
