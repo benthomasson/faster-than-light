@@ -29,7 +29,7 @@ class TestBuilderMain:
         
         assert result.exit_code == 0
         mock_build_ftl_gate.assert_called_once_with(
-            (), (), None, "/usr/bin/python3"  # modules, module_dirs, dependencies, interpreter
+            [], [], None, "/usr/bin/python3"  # modules, module_dirs, dependencies, interpreter
         )
         assert "/path/to/gate.pyz" in result.output
     
@@ -46,7 +46,7 @@ class TestBuilderMain:
         
         assert result.exit_code == 0
         mock_build_ftl_gate.assert_called_once_with(
-            ('test_module',), ('/modules',), None, "/usr/bin/python3.9"
+            ['test_module'], ['/modules'], None, "/usr/bin/python3.9"
         )
         assert "/custom/gate.pyz" in result.output
     
@@ -66,7 +66,7 @@ class TestBuilderMain:
         
         assert result.exit_code == 0
         mock_build_ftl_gate.assert_called_once_with(
-            ('mod1', 'mod2'), ('/dir1', '/dir2'), None, "/usr/bin/python3"
+            ['mod1', 'mod2'], ['/dir1', '/dir2'], None, "/usr/bin/python3"
         )
     
     @patch('faster_than_light.builder.build_ftl_gate')
@@ -83,7 +83,7 @@ class TestBuilderMain:
         
         assert result.exit_code == 0
         mock_build_ftl_gate.assert_called_once_with(
-            ('module1',), ('/short/modules',), None, "/usr/bin/python3.8"
+            ['module1'], ['/short/modules'], None, "/usr/bin/python3.8"
         )
     
     @patch('faster_than_light.builder.build_ftl_gate')
@@ -136,7 +136,7 @@ class TestBuilderRequirements:
         assert result.exit_code == 0
         mock_file.assert_called_once_with('requirements.txt')
         mock_build_ftl_gate.assert_called_once_with(
-            (), (), ["requests>=2.25.0", "pytest>=6.0", "numpy"], "/usr/bin/python3"
+            [], [], ["requests>=2.25.0", "pytest>=6.0", "numpy"], "/usr/bin/python3"
         )
     
     @patch('faster_than_light.builder.build_ftl_gate')
@@ -162,7 +162,7 @@ class TestBuilderRequirements:
         
         # The current implementation overwrites dependencies for each file
         mock_build_ftl_gate.assert_called_once_with(
-            (), (), ["pytest", "numpy"], "/usr/bin/python3"
+            [], [], ["pytest", "numpy"], "/usr/bin/python3"
         )
     
     @patch('faster_than_light.builder.build_ftl_gate')
@@ -176,7 +176,7 @@ class TestBuilderRequirements:
         
         assert result.exit_code == 0
         mock_build_ftl_gate.assert_called_once_with(
-            (), (), [], "/usr/bin/python3"
+            [], [], [], "/usr/bin/python3"
         )
     
     @patch('faster_than_light.builder.build_ftl_gate')
@@ -212,7 +212,7 @@ numpy; sys_platform != "win32"
             "# Empty line above should be ignored"
         ]
         mock_build_ftl_gate.assert_called_once_with(
-            (), (), expected_deps, "/usr/bin/python3"
+            [], [], expected_deps, "/usr/bin/python3"
         )
     
     @patch('faster_than_light.builder.build_ftl_gate')
@@ -255,7 +255,7 @@ class TestBuilderInterpreterHandling:
         
         assert result.exit_code == 0
         mock_build_ftl_gate.assert_called_once_with(
-            ('test',), (), None, "/usr/bin/python3"
+            ['test'], [], None, "/usr/bin/python3"
         )
     
     @patch('faster_than_light.builder.build_ftl_gate')
@@ -267,7 +267,7 @@ class TestBuilderInterpreterHandling:
         
         assert result.exit_code == 0
         mock_build_ftl_gate.assert_called_once_with(
-            (), (), None, "/opt/python/bin/python3.9"
+            [], [], None, "/opt/python/bin/python3.9"
         )
     
     @patch('faster_than_light.builder.build_ftl_gate')
@@ -279,7 +279,7 @@ class TestBuilderInterpreterHandling:
         
         assert result.exit_code == 0
         mock_build_ftl_gate.assert_called_once_with(
-            (), (), None, "/usr/local/bin/python3"
+            [], [], None, "/usr/local/bin/python3"
         )
     
     @patch('faster_than_light.builder.build_ftl_gate')
@@ -292,7 +292,7 @@ class TestBuilderInterpreterHandling:
         assert result.exit_code == 0
         # Empty string is falsy, so default should be used
         mock_build_ftl_gate.assert_called_once_with(
-            (), (), None, "/usr/bin/python3"
+            [], [], None, "/usr/bin/python3"
         )
 
 
@@ -325,8 +325,8 @@ class TestBuilderIntegration:
         assert result.exit_code == 0
         mock_file.assert_called_once_with('requirements.txt')
         mock_build_ftl_gate.assert_called_once_with(
-            ('service', 'utils'),
-            ('/opt/modules', '/custom/modules'),
+            ['service', 'utils'],
+            ['/opt/modules', '/custom/modules'],
             ["requests>=2.25.0", "flask>=1.0.0"],
             "/usr/bin/python3.10"
         )
@@ -348,8 +348,8 @@ class TestBuilderIntegration:
         
         assert result.exit_code == 0
         mock_build_ftl_gate.assert_called_once_with(
-            ('copy', 'template', 'service'),
-            ('/usr/share/ansible/plugins/modules', '/opt/custom/modules'),
+            ['copy', 'template', 'service'],
+            ['/usr/share/ansible/plugins/modules', '/opt/custom/modules'],
             None,
             "/usr/bin/python3.8"
         )
@@ -456,8 +456,8 @@ class TestBuilderEdgeCases:
         assert result.exit_code == 0
         # Click should preserve duplicates as tuples
         mock_build_ftl_gate.assert_called_once_with(
-            ('test_module', 'test_module'),
-            (),
+            ['test_module', 'test_module'],
+            [],
             None,
             "/usr/bin/python3"
         )
@@ -476,8 +476,8 @@ class TestBuilderEdgeCases:
         assert result.exit_code == 0
         # Note: ftl-module parameter is currently ignored in the implementation
         mock_build_ftl_gate.assert_called_once_with(
-            ('',),  # Only module parameter is used, not ftl-module
-            ('',),
+            [''],  # Only module parameter is used, not ftl-module
+            [''],
             None,
             "/usr/bin/python3"
         )
@@ -497,8 +497,8 @@ class TestBuilderEdgeCases:
         
         assert result.exit_code == 0
         mock_build_ftl_gate.assert_called_once_with(
-            ('module-with-dashes', 'module_with_underscores'),
-            ('/path with spaces/modules', '/path/with/unicode/🚀'),
+            ['module-with-dashes', 'module_with_underscores'],
+            ['/path with spaces/modules', '/path/with/unicode/🚀'],
             None,
             "/opt/python-3.9/bin/python3"
         )
@@ -560,7 +560,7 @@ class TestBuilderClick:
         call_args = mock_build_ftl_gate.call_args[0]
         modules, module_dirs, dependencies, interpreter = call_args
         
-        assert modules == ('mod1', 'mod2', 'mod3')
-        assert module_dirs == ('dir1', 'dir2', 'dir3')
+        assert modules == ['mod1', 'mod2', 'mod3']
+        assert module_dirs == ['dir1', 'dir2', 'dir3']
         assert dependencies is None
         assert interpreter == "/usr/bin/python3" 

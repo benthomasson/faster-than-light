@@ -56,7 +56,7 @@ import logging
 import sys
 import click
 
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 from faster_than_light.gate import build_ftl_gate
 
@@ -70,7 +70,15 @@ logger = logging.getLogger('builder')
 @click.option('--interpreter', '-I')
 @click.option('--verbose', '-v', is_flag=True)
 @click.option('--debug', '-d', is_flag=True)
-def main(ftl_module, module, module_dir, requirements, interpreter, verbose, debug):
+def main(
+    ftl_module: Tuple[str, ...],
+    module: Tuple[str, ...],
+    module_dir: Tuple[str, ...],
+    requirements: Tuple[str, ...],
+    interpreter: Optional[str],
+    verbose: bool,
+    debug: bool
+) -> int:
     """Main CLI function for building FTL gates with comprehensive configuration options.
     
     Orchestrates the complete FTL gate building process with support for multiple
@@ -210,11 +218,17 @@ def main(ftl_module, module, module_dir, requirements, interpreter, verbose, deb
         and development workflows.
     """
 
-    modules = module
-    ftl_modules = ftl_module
-    module_dirs = module_dir
+    # Configure logging based on flags
+    if debug:
+        logging.basicConfig(level=logging.DEBUG)
+    elif verbose:
+        logging.basicConfig(level=logging.INFO)
+    
+    modules: List[str] = list(module)
+    ftl_modules: Tuple[str, ...] = ftl_module
+    module_dirs: List[str] = list(module_dir)
 
-    dependencies = None
+    dependencies: Optional[List[str]] = None
     for reqs in requirements:
         with open(reqs) as f:
             dependencies = [x for x in f.read().splitlines() if x]
@@ -222,7 +236,7 @@ def main(ftl_module, module, module_dir, requirements, interpreter, verbose, deb
     if not interpreter:
         interpreter = "/usr/bin/python3"
 
-    gate = build_ftl_gate(modules, module_dirs, dependencies, interpreter)
+    gate: Tuple[str, str] = build_ftl_gate(modules, module_dirs, dependencies, interpreter)
     print(gate)
     return 0
 
