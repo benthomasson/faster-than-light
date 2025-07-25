@@ -28,9 +28,9 @@ import tempfile
 from asyncssh.connection import SSHClientConnection
 from asyncssh.process import SSHClientProcess
 
-from typing import Dict, Optional, Callable, cast, Tuple
+from typing import Dict, Optional, Callable, cast, Tuple, Any
 from .types import Gate
-from .message import send_message_str, read_message
+from .message import send_message_str, read_message, GateMessage
 from .util import process_module_result, unique_hosts
 from .exceptions import ModuleNotFound
 
@@ -40,7 +40,7 @@ logger = logging.getLogger("faster_than_light.ssh")
 async def connect_gate(
     gate_builder: Callable,
     ssh_host: str,
-    ssh_port: str,
+    ssh_port: int,
     ssh_user: str,
     gate_cache: Optional[Dict[str, Gate]],
     interpreter: str,
@@ -146,7 +146,7 @@ async def check_version(conn: SSHClientConnection, interpreter: str) -> None:
                 )
 
 
-async def connect_ssh(host):
+async def connect_ssh(host: Dict[str, str]) -> SSHClientConnection:
     """Create a basic SSH connection to a host using Ansible-style configuration.
     
     Establishes an SSH connection using host configuration parameters following
@@ -178,7 +178,8 @@ async def connect_ssh(host):
     """
     ssh_host = host.get("ansible_host")
     if host and host.get("ansible_port"):
-        ssh_port = host.get("ansible_port")
+        port_value = host.get("ansible_port")
+        ssh_port = int(port_value) if port_value is not None else 22
     else:
         ssh_port = 22
 
@@ -198,7 +199,7 @@ async def connect_ssh(host):
     return conn
 
 
-async def mkdir(inventory, gate_cache, name: str) -> None:
+async def mkdir(inventory: Dict[str, dict], gate_cache: Optional[Dict[str, Gate]], name: str) -> None:
     """Create directories on all hosts in an inventory.
     
     Creates the specified directory on all hosts defined in the inventory,
@@ -227,15 +228,16 @@ async def mkdir(inventory, gate_cache, name: str) -> None:
 
         if gate_cache and host in gate_cache:
             gate = gate_cache.get(host)
-            conn = gate.conn
+            conn = gate.conn if gate else None
         else:
             conn = await connect_ssh(hosts[host])
 
-        async with conn.start_sftp_client() as sftp:
-            await sftp.makedirs(name, exist_ok=True)
+        if conn:
+            async with conn.start_sftp_client() as sftp:
+                await sftp.makedirs(name, exist_ok=True)
 
 
-def mkdir_sync(inventory, gate_cache, name: str, loop=None) -> None:
+def mkdir_sync(inventory: Dict[str, dict], gate_cache: Optional[Dict[str, Gate]], name: str, loop: Optional[asyncio.AbstractEventLoop] = None) -> None:
     """Synchronous wrapper for mkdir operation.
     
     Provides a synchronous interface to the async mkdir function for use
@@ -260,13 +262,13 @@ def mkdir_sync(inventory, gate_cache, name: str, loop=None) -> None:
 
     if loop is None:
         loop = asyncio.new_event_loop()
-        return loop.run_until_complete(coro)
+        loop.run_until_complete(coro)
     else:
         future = asyncio.run_coroutine_threadsafe(coro, loop)
-        return future.result()
+        future.result()
 
 
-async def copy(inventory, gate_cache, src: str, dest: str) -> None:
+async def copy(inventory: Dict[str, dict], gate_cache: Optional[Dict[str, Gate]], src: str, dest: str) -> Dict[str, dict]:
     """Copy files or directories to all hosts in an inventory.
     
     Copies the specified source file or directory to the destination path
@@ -300,18 +302,19 @@ async def copy(inventory, gate_cache, src: str, dest: str) -> None:
 
         if gate_cache and host in gate_cache:
             gate = gate_cache.get(host)
-            conn = gate.conn
+            conn = gate.conn if gate else None
         else:
             conn = await connect_ssh(hosts[host])
-        async with conn.start_sftp_client() as sftp:
-            await sftp.put(src, dest, recurse=True)
-
-        results[host] = {"changed": True}
+        
+        if conn:
+            async with conn.start_sftp_client() as sftp:
+                await sftp.put(src, dest, recurse=True)
+            results[host] = {"changed": True}
 
     return results
 
 
-def copy_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
+def copy_sync(inventory: Dict[str, dict], gate_cache: Optional[Dict[str, Gate]], src: str, dest: str, loop: Optional[asyncio.AbstractEventLoop] = None) -> Dict[str, dict]:
     """Synchronous wrapper for copy operation.
     
     Provides a synchronous interface to the async copy function for use
@@ -347,7 +350,7 @@ def copy_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
         return future.result()
 
 
-async def template(inventory, gate_cache, src: str, dest: str) -> None:
+async def template(inventory: Dict[str, dict], gate_cache: Optional[Dict[str, Gate]], src: str, dest: str) -> Dict[str, dict]:
     """Process Jinja2 templates and deploy to all hosts in an inventory.
     
     Renders Jinja2 templates using host-specific variables and deploys the
@@ -390,28 +393,29 @@ async def template(inventory, gate_cache, src: str, dest: str) -> None:
 
         if gate_cache and host_name in gate_cache:
             gate = gate_cache.get(host_name)
-            conn = gate.conn
+            conn = gate.conn if gate else None
         else:
             conn = await connect_ssh(host)
 
-        tf, tf_path = tempfile.mkstemp()
-        try:
-            with open(src) as f:
-                template = environment.from_string(f.read())
-                os.write(tf, template.render(**host).encode())
-                os.close(tf)
+        if conn:
+            tf, tf_path = tempfile.mkstemp()
+            try:
+                with open(src) as f:
+                    template = environment.from_string(f.read())
+                    os.write(tf, template.render(**host).encode())
+                    os.close(tf)
 
-                async with conn.start_sftp_client() as sftp:
-                    await sftp.put(tf_path, dest, recurse=True)
-        finally:
-            os.unlink(tf_path)
+                    async with conn.start_sftp_client() as sftp:
+                        await sftp.put(tf_path, dest, recurse=True)
+            finally:
+                os.unlink(tf_path)
 
         results[host_name] = {"changed": True}
 
     return results
 
 
-def template_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
+def template_sync(inventory: Dict[str, dict], gate_cache: Optional[Dict[str, Gate]], src: str, dest: str, loop: Optional[asyncio.AbstractEventLoop] = None) -> Dict[str, dict]:
     """Synchronous wrapper for template operation.
     
     Provides a synchronous interface to the async template function for use
@@ -447,7 +451,7 @@ def template_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None
         return future.result()
 
 
-async def copy_from(inventory, gate_cache, src: str, dest: str) -> None:
+async def copy_from(inventory: Dict[str, dict], gate_cache: Optional[Dict[str, Gate]], src: str, dest: str) -> None:
     """Copy files or directories from remote hosts to the local system.
     
     Downloads the specified source file or directory from all hosts in the
@@ -475,15 +479,17 @@ async def copy_from(inventory, gate_cache, src: str, dest: str) -> None:
 
         if gate_cache and host in gate_cache:
             gate = gate_cache.get(host)
-            conn = gate.conn
+            conn = gate.conn if gate else None
         else:
             conn = await connect_ssh(hosts[host])
-        async with conn.start_sftp_client() as sftp:
-            print(f"Copy from {src} to {dest}")
-            await sftp.get(src, dest, recurse=True)
+        
+        if conn:
+            async with conn.start_sftp_client() as sftp:
+                print(f"Copy from {src} to {dest}")
+                await sftp.get(src, dest, recurse=True)
 
 
-def copy_from_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> None:
+def copy_from_sync(inventory: Dict[str, dict], gate_cache: Optional[Dict[str, Gate]], src: str, dest: str, loop: Optional[asyncio.AbstractEventLoop] = None) -> None:
     """Synchronous wrapper for copy_from operation.
     
     Provides a synchronous interface to the async copy_from function for use
@@ -509,15 +515,15 @@ def copy_from_sync(inventory, gate_cache, src: str, dest: str, loop=None) -> Non
 
     if loop is None:
         loop = asyncio.new_event_loop()
-        return loop.run_until_complete(coro)
+        loop.run_until_complete(coro)
     else:
         future = asyncio.run_coroutine_threadsafe(coro, loop)
-        return future.result()
+        future.result()
 
 
 async def send_gate(
     gate_builder: Callable, conn: SSHClientConnection, tempdir: str, interpreter: str
-) -> None:
+) -> str:
     """Deploy the FTL gate executable to a remote host.
     
     Builds and transfers the FTL gate executable to the remote host, handling
@@ -623,7 +629,7 @@ async def remove_item_from_cache(gate_cache: Optional[Dict[str, Gate]]) -> None:
         logger.info("closed gate", item)
 
 
-async def close_gate(conn, gate_process, tempdir: str) -> None:
+async def close_gate(conn: SSHClientConnection, gate_process: Optional[SSHClientProcess], tempdir: str) -> None:
     """Properly close a gate connection and clean up resources.
     
     Sends shutdown signal to the gate process, reads any remaining stderr
@@ -654,7 +660,7 @@ async def close_gate(conn, gate_process, tempdir: str) -> None:
 
 async def run_module_through_gate(
     gate_process: SSHClientProcess, module: str, module_name: str, module_args: Dict
-) -> Dict:
+) -> Any:
     """Execute a standard Ansible-compatible module through an FTL gate.
     
     Runs a module on the remote host via the gate process, handling both
@@ -691,7 +697,11 @@ async def run_module_through_gate(
             "Module",
             dict(module_name=module_name, module_args=module_args),
         )
-        return process_module_result(await read_message(gate_process.stdout))
+        result = await read_message(gate_process.stdout)
+        if result:
+            return process_module_result(GateMessage(*result))
+        else:
+            return {"error": True, "msg": "No response from gate"}
     except ModuleNotFound:
         with open(module, "rb") as f:
             module_text = base64.b64encode(f.read()).decode()
@@ -700,12 +710,16 @@ async def run_module_through_gate(
             "Module",
             dict(module=module_text, module_name=module_name, module_args=module_args),
         )
-        return process_module_result(await read_message(gate_process.stdout))
+        result = await read_message(gate_process.stdout)
+        if result:
+            return process_module_result(GateMessage(*result))
+        else:
+            return {"error": True, "msg": "No response from gate"}
 
 
 async def run_ftl_module_through_gate(
     gate_process: SSHClientProcess, module: str, module_name: str, module_args: Dict
-) -> Dict:
+) -> Any:
     """Execute an FTL-native module through an FTL gate.
     
     Runs an FTL-specific module on the remote host via the gate process.
@@ -740,7 +754,11 @@ async def run_ftl_module_through_gate(
         "FTLModule",
         dict(module=module_text, module_name=module_name, module_args=module_args),
     )
-    return process_module_result(await read_message(gate_process.stdout))
+    result = await read_message(gate_process.stdout)
+    if result:
+        return process_module_result(GateMessage(*result))
+    else:
+        return {"error": True, "msg": "No response from gate"}
 
 
 async def run_module_remotely(
@@ -787,22 +805,10 @@ async def run_module_remotely(
     """
     module_name = os.path.basename(module)
 
-    if host and host.get("ansible_host"):
-        ssh_host = host.get("ansible_host")
-    else:
-        ssh_host = host_name
-    if host and host.get("ansible_port"):
-        ssh_port = host.get("ansible_port")
-    else:
-        ssh_port = 22
-    if host and host.get("ansible_user"):
-        ssh_user = host.get("ansible_user")
-    else:
-        ssh_user = getuser()
-    if host and host.get("ansible_python_interpreter"):
-        interpreter = host.get("ansible_python_interpreter")
-    else:
-        interpreter = sys.executable
+    ssh_host = str(host.get("ansible_host")) if host and host.get("ansible_host") else host_name
+    ssh_port = int(host.get("ansible_port", 22)) if host and host.get("ansible_port") else 22
+    ssh_user = str(host.get("ansible_user")) if host and host.get("ansible_user") else getuser()
+    interpreter = str(host.get("ansible_python_interpreter")) if host and host.get("ansible_python_interpreter") else sys.executable
 
     while True:
         try:

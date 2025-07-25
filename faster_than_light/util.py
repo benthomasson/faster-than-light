@@ -3,7 +3,7 @@ import os
 import shutil
 import json
 
-from typing import List, Union, Dict, Generator, TypeVar
+from typing import List, Union, Dict, Generator, TypeVar, Any, Optional
 from .message import GateMessage
 from .exceptions import ModuleNotFound
 
@@ -54,7 +54,7 @@ def chunk(lst: List[T], n: int) -> Generator[List[T], None, None]:
         yield lst[i: i + n]
 
 
-def find_module(module_dirs: List[str], module_name: str) -> Union[str, None]:
+def find_module(module_dirs: List[str], module_name: str) -> Optional[str]:
     """Find a module file by searching through multiple directories.
     
     Searches for a module in the provided directories, looking first for
@@ -169,7 +169,7 @@ def clean_up_tmp() -> None:
             shutil.rmtree(d)
 
 
-def process_module_result(message: GateMessage) -> Dict:
+def process_module_result(message: GateMessage) -> Any:
     """Process a gate message and extract module execution results.
     
     Parses different types of gate messages and converts them into a
@@ -223,7 +223,7 @@ def process_module_result(message: GateMessage) -> Dict:
 
 
 
-def unique_hosts(inventory: Dict) -> Dict:
+def unique_hosts(inventory: Dict[str, Any]) -> Dict[str, Any]:
     """Extract unique hosts from an Ansible-style inventory.
     
     Flattens an inventory structure by collecting all hosts from all groups
