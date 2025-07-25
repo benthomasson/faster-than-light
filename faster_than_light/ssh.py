@@ -44,20 +44,8 @@ async def connect_gate(
             gate_file_name = await send_gate(gate_builder, conn, tempdir, interpreter)
             gate_process = await open_gate(conn, gate_file_name)
             return Gate(conn, gate_process, tempdir)
-        except ConnectionRefusedError:
-            logger.info("retry connection, ConnectionRefusedError")
-            await remove_item_from_cache(gate_cache)
-            continue
-        except ConnectionResetError:
-            logger.info("retry connection, ConnectionResetError")
-            await remove_item_from_cache(gate_cache)
-            continue
-        except asyncssh.misc.ConnectionLost:
-            logger.info("retry connection, ConnectionLost")
-            await remove_item_from_cache(gate_cache)
-            continue
-        except TimeoutError:
-            logger.info("retry connection, TimeoutError")
+        except (ConnectionRefusedError, ConnectionResetError, asyncssh.misc.ConnectionLost, TimeoutError) as e:
+            logger.info(f"retry connection, {type(e).__name__}")
             await remove_item_from_cache(gate_cache)
             continue
         except BaseException as e:
