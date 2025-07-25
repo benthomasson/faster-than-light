@@ -35,11 +35,11 @@ from .exceptions import ModuleNotFound
 from .ref import Ref, deref
 from .util import unique_hosts
 
-from typing import Dict, Optional, Callable, List, Tuple
+from typing import Dict, Optional, Callable, List, Tuple, Any, Awaitable
 from asyncio.tasks import Task
 
 
-def extract_task_results(tasks: List[Tuple[str, Task]]) -> Dict[str, Dict]:
+def extract_task_results(tasks: List[Tuple[str, Task]]) -> Dict[str, Dict[str, Any]]:
     """Extract and aggregate results from completed asyncio tasks.
     
     Processes a list of completed asyncio tasks that represent module executions
@@ -91,14 +91,14 @@ def extract_task_results(tasks: List[Tuple[str, Task]]) -> Dict[str, Dict]:
 
 async def run_module_on_host(
     host_name: str,
-    host: Dict,
+    host: Dict[str, Any],
     module: str,
-    module_args: Dict,
-    local_runner: Callable,
+    module_args: Dict[str, Any],
+    local_runner: Callable[[str, Dict[str, Any], str, Dict[str, Any]], Awaitable[Tuple[str, Dict[str, Any]]]],
     remote_runner: Callable,
     gate_cache: Optional[Dict[str, Gate]],
-    gate_builder: Callable,
-) -> Tuple[str, Dict]:
+    gate_builder: Callable[..., Tuple[str, str]],
+) -> Tuple[str, Dict[str, Any]]:
     """Execute a module on a single host, choosing local or remote execution.
     
     Determines the appropriate execution method (local or remote) based on host
@@ -153,18 +153,18 @@ async def run_module_on_host(
 
 
 async def _run_module(
-    inventory: Dict,
+    inventory: Dict[str, Any],
     module_dirs: List[str],
     module_name: str,
-    local_runner: Callable,
+    local_runner: Callable[[str, Dict[str, Any], str, Dict[str, Any]], Awaitable[Tuple[str, Dict[str, Any]]]],
     remote_runner: Callable,
     gate_cache: Optional[Dict[str, Gate]],
     modules: Optional[List[str]],
     dependencies: Optional[List[str]],
-    module_args: Optional[Dict],
-    host_args: Optional[Dict],
-    use_gate: Optional[Callable] = None,
-) -> Dict[str, Dict]:
+    module_args: Optional[Dict[str, Any]],
+    host_args: Optional[Dict[str, Dict[str, Any]]],
+    use_gate: Optional[Callable[..., Tuple[str, str]]] = None,
+) -> Dict[str, Dict[str, Any]]:
     """Core implementation for running modules across an inventory of hosts.
     
     This is the central orchestration function that coordinates module execution
@@ -263,7 +263,7 @@ async def _run_module(
     if use_gate:
         gate_builder = use_gate
     else:
-        gate_builder: Callable[[str], (str, str)] = partial(
+        gate_builder = partial(
             build_ftl_gate,
             modules=modules,
             module_dirs=module_dirs,
@@ -288,7 +288,7 @@ async def _run_module(
                 host_specific_args = host_args.get(host_name, {})
             if host_specific_args  or has_refs:
                 # make a copy of module_args since we need to modify it
-                merged_args = module_args.copy()
+                merged_args = module_args.copy() if module_args else {}
                 # refs have lower precedence than host specific args
                 if module_args:
                     for arg_name, arg_value in module_args.items():
@@ -297,7 +297,7 @@ async def _run_module(
                 merged_args.update(host_specific_args)
             else:
                 # no host specific args so just reuse module_args
-                merged_args = module_args
+                merged_args = module_args or {}
             tasks.append(
                 (host_name,
                 asyncio.create_task(
@@ -320,16 +320,16 @@ async def _run_module(
 
 
 async def run_module(
-    inventory: Dict,
+    inventory: Dict[str, Any],
     module_dirs: List[str],
     module_name: str,
     gate_cache: Optional[Dict[str, Gate]] = None,
     modules: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
-    module_args: Optional[Dict] = None,
-    host_args: Optional[Dict] = None,
-    use_gate: Optional[Callable] = None,
-) -> Dict[str, Dict]:
+    module_args: Optional[Dict[str, Any]] = None,
+    host_args: Optional[Dict[str, Dict[str, Any]]] = None,
+    use_gate: Optional[Callable[..., Tuple[str, str]]] = None,
+) -> Dict[str, Dict[str, Any]]:
     """Execute an Ansible-compatible module across all hosts in an inventory.
     
     This is the primary async interface for running standard automation modules
@@ -419,17 +419,17 @@ async def run_module(
 
 
 def run_module_sync(
-    inventory: Dict,
+    inventory: Dict[str, Any],
     module_dirs: List[str],
     module_name: str,
     gate_cache: Optional[Dict[str, Gate]] = None,
     modules: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
-    module_args: Optional[Dict] = None,
-    host_args: Optional[Dict] = None,
+    module_args: Optional[Dict[str, Any]] = None,
+    host_args: Optional[Dict[str, Dict[str, Any]]] = None,
     loop: Optional[asyncio.AbstractEventLoop] = None,
-    use_gate: Optional[Callable] = None,
-) -> Dict[str, Dict]:
+    use_gate: Optional[Callable[..., Tuple[str, str]]] = None,
+) -> Dict[str, Dict[str, Any]]:
     """Execute an Ansible-compatible module synchronously across an inventory.
     
     Synchronous wrapper for run_module() that provides a blocking interface
@@ -537,16 +537,16 @@ def run_module_sync(
 
 
 async def run_ftl_module(
-    inventory: Dict,
+    inventory: Dict[str, Any],
     module_dirs: List[str],
     module_name: str,
     gate_cache: Optional[Dict[str, Gate]] = None,
     modules: Optional[List[str]] = None,
     dependencies: Optional[List[str]] = None,
-    module_args: Optional[Dict] = None,
-    host_args: Optional[Dict] = None,
-    use_gate: Optional[Callable] = None,
-) -> Dict[str, Dict]:
+    module_args: Optional[Dict[str, Any]] = None,
+    host_args: Optional[Dict[str, Dict[str, Any]]] = None,
+    use_gate: Optional[Callable[..., Tuple[str, str]]] = None,
+) -> Dict[str, Dict[str, Any]]:
     """Execute an FTL-native module across all hosts in an inventory.
     
     This is the primary async interface for running FTL-native modules across

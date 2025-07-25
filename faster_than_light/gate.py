@@ -48,12 +48,12 @@ from subprocess import check_output
 from .util import ensure_directory, read_module, find_module
 from .exceptions import ModuleNotFound
 
-from typing import Optional, List
+from typing import Optional, List, Tuple
 
 logger = logging.getLogger('faster_than_light.gate')
 
 
-def use_gate(cached_gate, gate_hash, interpreter=None):
+def use_gate(cached_gate: str, gate_hash: str, interpreter: Optional[str] = None) -> Tuple[str, str]:
     """Utilize an existing cached gate for remote execution operations.
     
     This function provides a lightweight interface for working with pre-built
@@ -129,7 +129,7 @@ def build_ftl_gate(
     dependencies: Optional[List[str]] = None,
     interpreter: str = sys.executable,
     local_interpreter: str = sys.executable,
-) -> (str, str):
+) -> Tuple[str, str]:
     """Build a self-contained FTL gate executable for remote automation execution.
     
     Creates a portable Python executable archive (.pyz) containing FTL runtime,

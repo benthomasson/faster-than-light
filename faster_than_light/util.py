@@ -3,9 +3,11 @@ import os
 import shutil
 import json
 
-from typing import List, Union, Dict
+from typing import List, Union, Dict, Generator, TypeVar
 from .message import GateMessage
 from .exceptions import ModuleNotFound
+
+T = TypeVar('T')
 
 
 def ensure_directory(d: str) -> str:
@@ -30,7 +32,7 @@ def ensure_directory(d: str) -> str:
     return d
 
 
-def chunk(lst: List, n: int):
+def chunk(lst: List[T], n: int) -> Generator[List[T], None, None]:
     """Split a list into chunks of maximum size n.
     
     Yields successive chunks from the input list, where each chunk contains
