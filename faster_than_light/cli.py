@@ -27,24 +27,11 @@ Usage Patterns:
 
 The CLI integrates seamlessly with FTL's core automation capabilities while
 providing a familiar interface for users transitioning from Ansible or other
-automation frameworks.
-
-Usage:
-    ftl [options]
-
-Options:
-    -h, --help                  Show this page
-    -f=<f>, --ftl-module=<f>    FTL module
-    -m=<m>, --module=<m>        Module
-    -M=<M>, --module-dir=<M>    Module directory
-    -i=<i>, --inventory=<i>     Inventory
-    -r=<r>, --requirements      Python requirements
-    -a=<a>, --args=<a>          Module arguments
-    --debug                     Show debug logging
-    --verbose                   Show verbose logging
+automation frameworks. The CLI is now built using Click for modern, robust
+argument parsing and validation.
 """
 import asyncio
-from docopt import docopt
+import click
 import logging
 import sys
 from .module import run_module
@@ -52,7 +39,7 @@ from .module import run_ftl_module
 from .inventory import load_inventory
 from pprint import pprint
 
-from typing import Optional, List, Dict
+from typing import Optional, Dict
 
 logger = logging.getLogger("cli")
 
@@ -139,7 +126,25 @@ def parse_module_args(args: str) -> Dict[str, str]:
         return {}
 
 
-async def main(args: Optional[List[str]] = None) -> int:
+@click.command()
+@click.option('--ftl-module', '-f', help='FTL module to execute')
+@click.option('--module', '-m', help='Ansible-compatible module to execute')
+@click.option('--module-dir', '-M', help='Module directory to search for modules')
+@click.option('--inventory', '-i', required=True, help='Inventory file (YAML format)')
+@click.option('--requirements', '-r', help='Python requirements file')
+@click.option('--args', '-a', help='Module arguments in key=value format')
+@click.option('--debug', is_flag=True, help='Show debug logging')
+@click.option('--verbose', '-v', is_flag=True, help='Show verbose logging')
+def main(
+    ftl_module: Optional[str],
+    module: Optional[str], 
+    module_dir: Optional[str],
+    inventory: str,
+    requirements: Optional[str],
+    args: Optional[str],
+    debug: bool,
+    verbose: bool
+) -> None:
     """Main CLI entry point for FTL automation framework execution.
     
     Orchestrates the complete FTL command-line workflow including argument
@@ -147,49 +152,43 @@ async def main(args: Optional[List[str]] = None) -> int:
     Supports both Ansible-compatible modules and FTL-native modules with
     comprehensive error handling and output formatting.
     
-    Args:
-        args: Command-line arguments to parse. If None, uses sys.argv[1:].
-            Should be a list of strings in the format expected by docopt.
-            Example: ["-m", "setup", "-i", "inventory.yml"]
+    The CLI now uses Click for modern argument parsing and validation, providing
+    better error messages, help text generation, and option handling compared
+    to the previous docopt implementation.
     
-    Returns:
-        Integer exit code following Unix conventions:
-        - 0: Successful execution
-        - Non-zero: Error occurred (currently always returns 0)
+    Args:
+        ftl_module: FTL module file to execute (mutually exclusive with module)
+        module: Ansible-compatible module name to execute (mutually exclusive with ftl_module)
+        module_dir: Directory to search for modules
+        inventory: YAML inventory file (required)
+        requirements: Python requirements file for dependencies
+        args: Module arguments in key=value format
+        debug: Enable debug logging
+        verbose: Enable verbose logging
     
     Raises:
-        SystemExit: Via docopt when --help is specified or invalid arguments
-            are provided. This is the standard docopt behavior.
-        FileNotFoundError: If specified inventory or requirements files don't exist.
-        ModuleNotFound: If specified modules cannot be found in module directories.
-        Various exceptions: From module execution, inventory loading, or file operations.
+        click.ClickException: For argument validation errors
+        FileNotFoundError: If specified inventory or requirements files don't exist
+        ModuleNotFound: If specified modules cannot be found in module directories
+        Various exceptions: From module execution, inventory loading, or file operations
     
     Example:
-        >>> # Direct function call for testing
-        >>> exit_code = await main(["-m", "ping", "-i", "hosts.yml"])
-        >>> print(f"Execution completed with code: {exit_code}")
+        >>> # Module execution
+        >>> ftl --module ping --inventory hosts.yml
+        
+        >>> # FTL module execution  
+        >>> ftl --ftl-module custom.py --inventory localhost.yml --debug
         
         >>> # With module arguments
-        >>> exit_code = await main([
-        ...     "-m", "file",
-        ...     "-i", "inventory.yml", 
-        ...     "-a", "path=/tmp/test state=touch"
-        ... ])
-        
-        >>> # FTL module execution
-        >>> exit_code = await main([
-        ...     "-f", "custom_module.py",
-        ...     "-i", "localhost.yml",
-        ...     "--debug"
-        ... ])
+        >>> ftl -m file -i inventory.yml -a "path=/tmp/test state=touch"
     
     Command-Line Processing:
         The function handles the complete CLI workflow:
         
         1. Argument Parsing:
-           - Uses docopt to parse arguments against usage specification
-           - Validates required arguments and option combinations
-           - Provides automatic help text generation
+           - Uses Click to parse and validate arguments
+           - Automatic help text generation and error handling
+           - Type validation and conversion
            
         2. Logging Configuration:
            - --debug: Sets logging to DEBUG level with detailed output
@@ -235,14 +234,14 @@ async def main(args: Optional[List[str]] = None) -> int:
         
     Error Handling:
         The function implements comprehensive error handling:
-        - Docopt handles argument validation and help display
+        - Click handles argument validation and help display
         - File operations catch FileNotFoundError for missing files
         - Module execution errors are propagated to caller
         - All errors result in proper exit codes and error messages
         
     Integration Points:
         The main function integrates with:
-        - docopt for argument parsing and help generation
+        - Click for argument parsing and help generation
         - FTL module execution system for automation workflows
         - Inventory management for host and variable loading
         - Logging system for debugging and operational visibility
@@ -263,65 +262,75 @@ async def main(args: Optional[List[str]] = None) -> int:
         
     Note:
         This function serves as the primary integration point between the
-        command-line interface and FTL's automation capabilities. It maintains
-        compatibility with standard Unix CLI conventions while providing
-        access to FTL's advanced features.
+        command-line interface and FTL's automation capabilities. Click
+        provides better argument validation and help generation compared
+        to the previous docopt implementation.
     """
-    if args is None:
-        args = sys.argv[1:]   # pragma: no cover
-    parsed_args = docopt(__doc__, args)
-    if parsed_args["--debug"]:
+    
+    # Validate mutually exclusive options
+    if ftl_module and module:
+        raise click.ClickException("Cannot specify both --ftl-module and --module")
+    if not ftl_module and not module:
+        raise click.ClickException("Must specify either --ftl-module or --module")
+    
+    # Configure logging
+    if debug:
         logging.basicConfig(level=logging.DEBUG)
-    elif parsed_args["--verbose"]:
+    elif verbose:
         logging.basicConfig(level=logging.INFO)
     else:
         logging.basicConfig(level=logging.WARNING)
 
+    # Load dependencies if requirements file specified
     dependencies = None
-    if parsed_args["--requirements"]:
-        with open(parsed_args["--requirements"]) as f:
+    if requirements:
+        with open(requirements) as f:
             dependencies = [x for x in f.read().splitlines() if x]
 
-    if parsed_args["--module"]:
-        output = await run_module(
-            load_inventory(parsed_args["--inventory"]),
-            [parsed_args["--module-dir"]],
-            parsed_args["--module"],
-            modules=[parsed_args["--module"]],
-            module_args=parse_module_args(parsed_args["--args"]),
-            dependencies=dependencies,
-        )
-        pprint(output)
-    elif parsed_args["--ftl-module"]:
-        output = await run_ftl_module(
-            load_inventory(parsed_args["--inventory"]),
-            [parsed_args["--module-dir"]],
-            parsed_args["--ftl-module"],
-            module_args=parse_module_args(parsed_args["--args"]),
-        )
-        pprint(output)
-    return 0
+    async def run_async() -> None:
+        """Inner async function to handle async operations."""
+        if module:
+            output = await run_module(
+                load_inventory(inventory),
+                [module_dir] if module_dir else [],
+                module,
+                modules=[module],
+                module_args=parse_module_args(args or ""),
+                dependencies=dependencies,
+            )
+            pprint(output)
+        elif ftl_module:
+            output = await run_ftl_module(
+                load_inventory(inventory),
+                [module_dir] if module_dir else [],
+                ftl_module,
+                module_args=parse_module_args(args or ""),
+            )
+            pprint(output)
+
+    # Run the async operations
+    asyncio.run(run_async())
 
 
 def entry_point() -> None:
     """Package entry point for the FTL command-line interface.
     
     Provides the primary entry point for the FTL CLI when installed as a
-    package. This function bridges the gap between package installation
-    and the async main function, handling the transition from synchronous
-    package entry points to FTL's asynchronous execution model.
+    package. This function serves as the bridge between package installation
+    and the Click-based main function, enabling the tool to be used as a
+    standard command-line utility.
     
     Returns:
-        None. The function handles all execution and exits via system calls.
+        None. The function handles all execution and exits via Click's
+        exception handling and system calls.
     
     Raises:
-        SystemExit: Implicitly raised by asyncio.run() or the main function
-            when execution completes or errors occur. Exit codes follow
-            Unix conventions.
+        SystemExit: Implicitly raised by Click when execution completes,
+            help is requested, or errors occur. Exit codes follow Unix conventions.
     
     Example:
         >>> # Called automatically when FTL is installed and used
-        >>> # Via command line: ftl -m setup -i inventory.yml
+        >>> # Via command line: ftl --module setup --inventory inventory.yml
         >>> # Or programmatically:
         >>> entry_point()  # Executes with sys.argv
     
@@ -338,25 +347,24 @@ def entry_point() -> None:
         ```
         
     Execution Flow:
-        1. Extracts command-line arguments from sys.argv[1:]
-        2. Creates new asyncio event loop for execution
-        3. Runs the main() coroutine to completion
-        4. Handles any exceptions and converts to exit codes
-        5. Exits with appropriate status code
+        1. Click processes command-line arguments from sys.argv
+        2. Validates arguments and options according to decorators
+        3. Calls main() function with parsed and validated arguments
+        4. Handles any exceptions and converts to appropriate exit codes
+        5. Exits with proper status codes
         
-    Async Integration:
-        The function handles the transition from synchronous entry points
-        to FTL's async execution model:
-        - Creates event loop for async operations
-        - Manages async context and cleanup
-        - Ensures proper exception handling and exit codes
-        - Provides clean shutdown for async resources
+    Click Integration:
+        The function integrates with Click's command processing:
+        - Click handles argument parsing and validation automatically
+        - Automatic help text generation from decorators and docstrings
+        - Built-in error handling and user feedback
+        - Standard CLI conventions and behaviors
         
     Error Handling:
-        - SystemExit: Propagated from main() or asyncio.run()
-        - Exceptions: Converted to non-zero exit codes
-        - Async errors: Properly handled by asyncio.run()
-        - Signal handling: Managed by asyncio event loop
+        - SystemExit: Raised by Click for help, errors, or completion
+        - ClickException: Converted to user-friendly error messages
+        - General exceptions: Handled by Click's exception handling
+        - Async errors: Handled by asyncio.run() within main()
         
     Use Cases:
         - Primary CLI execution after package installation
@@ -367,8 +375,8 @@ def entry_point() -> None:
         
     Performance:
         - Minimal overhead for entry point processing
-        - Efficient async loop creation and teardown
-        - Direct argument passing without modification
+        - Efficient Click argument parsing and validation
+        - Direct delegation to main() function
         - Optimized for frequent CLI invocations
         
     Integration Points:
@@ -378,9 +386,17 @@ def entry_point() -> None:
         - CI/CD pipeline tool integration
         - Shell completion and wrapper scripts
         
+    Benefits of Click Integration:
+        - Better error messages and validation
+        - Automatic help text generation
+        - Type conversion and validation
+        - Option grouping and organization
+        - Extensible command structure
+        
     Note:
         This function is intentionally minimal to provide a clean bridge
-        between package installation and FTL's async execution model.
-        All complex logic is handled in the main() function.
+        between package installation and Click's command processing system.
+        All complex logic is handled in the main() function with Click
+        providing robust argument handling and validation.
     """
-    asyncio.run(main(sys.argv[1:]))   # pragma: no cover
+    main()   # pragma: no cover

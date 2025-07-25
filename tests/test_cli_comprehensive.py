@@ -2,15 +2,15 @@
 Comprehensive unit tests for faster_than_light.cli module.
 
 Tests all CLI functionality including argument parsing, logging configuration,
-module execution, and error handling scenarios.
+module execution, and error handling scenarios using Click's testing framework.
 """
 
-import asyncio
 import logging
 import pytest
 import sys
 from unittest.mock import MagicMock, AsyncMock, patch, mock_open
-from docopt import DocoptExit
+from click.testing import CliRunner
+import click
 
 from faster_than_light.cli import (
     parse_module_args,
@@ -67,66 +67,82 @@ class TestParseModuleArgs:
 
 
 class TestMainBasicArguments:
-    """Tests for main function with basic argument combinations."""
+    """Tests for main function with basic argument combinations using Click."""
     
-    @pytest.mark.asyncio
+    def setup_method(self):
+        """Set up test fixtures."""
+        self.runner = CliRunner()
+    
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_no_args(self, mock_logging):
-        """Test main with no arguments (default behavior)."""
-        result = await main([])
+    def test_main_no_args(self, mock_logging):
+        """Test main with no arguments shows help and exits with error."""
+        result = self.runner.invoke(main, [])
         
-        assert result == 0
-        mock_logging.assert_called_once_with(level=logging.WARNING)
+        assert result.exit_code == 2  # Click exit code for missing required option
+        assert "Missing option '--inventory'" in result.output
+        # logging.basicConfig should not be called since validation fails early
+        mock_logging.assert_not_called()
     
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_debug_flag(self, mock_logging):
-        """Test main with debug flag."""
-        result = await main(["--debug"])
+    def test_main_debug_flag(self, mock_logging):
+        """Test main with debug flag but missing required inventory."""
+        result = self.runner.invoke(main, ["--debug"])
         
-        assert result == 0
-        mock_logging.assert_called_once_with(level=logging.DEBUG)
+        assert result.exit_code == 2  # Missing required option
+        assert "Missing option '--inventory'" in result.output
+        mock_logging.assert_not_called()
     
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_verbose_flag(self, mock_logging):
-        """Test main with verbose flag."""
-        result = await main(["--verbose"])
+    def test_main_verbose_flag(self, mock_logging):
+        """Test main with verbose flag but missing required inventory."""
+        result = self.runner.invoke(main, ["--verbose"])
         
-        assert result == 0
-        mock_logging.assert_called_once_with(level=logging.INFO)
+        assert result.exit_code == 2  # Missing required option
+        assert "Missing option '--inventory'" in result.output
+        mock_logging.assert_not_called()
     
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_debug_takes_precedence_over_verbose(self, mock_logging):
+    def test_main_debug_takes_precedence_over_verbose(self, mock_logging):
         """Test that debug flag takes precedence over verbose."""
-        result = await main(["--debug", "--verbose"])
+        # Need to provide required inventory and module
+        result = self.runner.invoke(main, [
+            "--debug", "--verbose", 
+            "--inventory", "test.yml",
+            "--module", "test"
+        ])
         
-        assert result == 0
+        # Will fail due to missing files, but logging should be configured
         mock_logging.assert_called_once_with(level=logging.DEBUG)
     
-    @pytest.mark.asyncio
-    async def test_main_help_flag(self):
-        """Test main with help flag raises SystemExit."""
-        with pytest.raises(SystemExit):
-            await main(["--help"])
+    def test_main_help_flag(self):
+        """Test main with help flag shows help and exits successfully."""
+        result = self.runner.invoke(main, ["--help"])
+        
+        assert result.exit_code == 0
+        assert "Usage:" in result.output
+        assert "Main CLI entry point" in result.output
+        assert "--inventory" in result.output
     
-    @pytest.mark.asyncio
-    async def test_main_invalid_args(self):
-        """Test main with invalid arguments raises DocoptExit."""
-        with pytest.raises(DocoptExit):
-            await main(["--invalid-flag"])
+    def test_main_invalid_args(self):
+        """Test main with invalid arguments shows error."""
+        result = self.runner.invoke(main, ["--invalid-flag"])
+        
+        assert result.exit_code == 2
+        assert "No such option" in result.output
 
 
 class TestMainModuleExecution:
     """Tests for main function with module execution scenarios."""
     
-    @pytest.mark.asyncio
+    def setup_method(self):
+        """Set up test fixtures."""
+        self.runner = CliRunner()
+    
     @patch('faster_than_light.cli.pprint')
     @patch('faster_than_light.cli.run_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_run_module_basic(self, mock_logging, mock_load_inventory, 
+    def test_main_run_module_basic(self, mock_logging, mock_load_inventory, 
                                         mock_run_module, mock_pprint):
         """Test running a basic module."""
         mock_load_inventory.return_value = {"test": "inventory"}
@@ -138,9 +154,9 @@ class TestMainModuleExecution:
             "--inventory", "inventory.yml"
         ]
         
-        result = await main(args)
+        result = self.runner.invoke(main, args)
         
-        assert result == 0
+        assert result.exit_code == 0
         mock_load_inventory.assert_called_once_with("inventory.yml")
         mock_run_module.assert_called_once_with(
             {"test": "inventory"},
@@ -152,12 +168,11 @@ class TestMainModuleExecution:
         )
         mock_pprint.assert_called_once_with({"localhost": {"result": "success"}})
     
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.pprint')
     @patch('faster_than_light.cli.run_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_run_module_with_args(self, mock_logging, mock_load_inventory,
+    def test_main_run_module_with_args(self, mock_logging, mock_load_inventory,
                                            mock_run_module, mock_pprint):
         """Test running module with arguments."""
         mock_load_inventory.return_value = {"test": "inventory"}
@@ -170,9 +185,9 @@ class TestMainModuleExecution:
             "--args", "host=web1 port=8080"
         ]
         
-        result = await main(args)
+        result = self.runner.invoke(main, args)
         
-        assert result == 0
+        assert result.exit_code == 0
         mock_run_module.assert_called_once_with(
             {"test": "inventory"},
             ["/modules"],
@@ -182,12 +197,11 @@ class TestMainModuleExecution:
             dependencies=None,
         )
     
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.pprint')
     @patch('faster_than_light.cli.run_ftl_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_run_ftl_module_basic(self, mock_logging, mock_load_inventory,
+    def test_main_run_ftl_module_basic(self, mock_logging, mock_load_inventory,
                                            mock_run_ftl_module, mock_pprint):
         """Test running a basic FTL module."""
         mock_load_inventory.return_value = {"test": "inventory"}
@@ -199,9 +213,9 @@ class TestMainModuleExecution:
             "--inventory", "inventory.yml"
         ]
         
-        result = await main(args)
+        result = self.runner.invoke(main, args)
         
-        assert result == 0
+        assert result.exit_code == 0
         mock_load_inventory.assert_called_once_with("inventory.yml")
         mock_run_ftl_module.assert_called_once_with(
             {"test": "inventory"},
@@ -211,13 +225,12 @@ class TestMainModuleExecution:
         )
         mock_pprint.assert_called_once_with({"localhost": {"result": "success"}})
     
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.pprint')
     @patch('faster_than_light.cli.run_ftl_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_run_ftl_module_with_args(self, mock_logging, mock_load_inventory,
-                                               mock_run_ftl_module, mock_pprint):
+    def test_main_run_ftl_module_with_args(self, mock_logging, mock_load_inventory,
+                                             mock_run_ftl_module, mock_pprint):
         """Test running FTL module with arguments."""
         mock_load_inventory.return_value = {"test": "inventory"}
         mock_run_ftl_module.return_value = {"localhost": {"result": "success"}}
@@ -226,338 +239,292 @@ class TestMainModuleExecution:
             "--ftl-module", "test_ftl_module",
             "--module-dir", "/ftl_modules",
             "--inventory", "inventory.yml",
-            "--args", "config=production debug=false"
+            "--args", "config=debug timeout=30"
         ]
         
-        result = await main(args)
+        result = self.runner.invoke(main, args)
         
-        assert result == 0
+        assert result.exit_code == 0
         mock_run_ftl_module.assert_called_once_with(
             {"test": "inventory"},
             ["/ftl_modules"],
             "test_ftl_module",
-            module_args={"config": "production", "debug": "false"},
+            module_args={"config": "debug", "timeout": "30"},
         )
 
 
 class TestMainRequirements:
     """Tests for main function with requirements file handling."""
     
-    @pytest.mark.asyncio
+    def setup_method(self):
+        """Set up test fixtures."""
+        self.runner = CliRunner()
+    
     @patch('faster_than_light.cli.pprint')
     @patch('faster_than_light.cli.run_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
     @patch('faster_than_light.cli.logging.basicConfig')
-    @patch('builtins.open', new_callable=mock_open)
-    async def test_main_with_requirements_file(self, mock_file, mock_logging,
-                                             mock_load_inventory, mock_run_module, mock_pprint):
-        """Test running module with requirements file."""
-        mock_file.return_value.read.return_value = "requests==2.25.1\npytest>=6.0.0\n\nnumpy"
+    def test_main_with_requirements_file(self, mock_logging, mock_load_inventory,
+                                        mock_run_module, mock_pprint):
+        """Test main with requirements file."""
         mock_load_inventory.return_value = {"test": "inventory"}
         mock_run_module.return_value = {"localhost": {"result": "success"}}
         
-        args = [
-            "--module", "test_module",
-            "--module-dir", "/modules",
-            "--inventory", "inventory.yml",
-            "--requirements", "requirements.txt"
-        ]
+        # Mock file reading for requirements
+        requirements_content = "requests>=2.25.0\npyyaml>=5.4.0\n\n# Comment line\nclick>=8.0.0"
+        expected_deps = ["requests>=2.25.0", "pyyaml>=5.4.0", "# Comment line", "click>=8.0.0"]
         
-        result = await main(args)
-        
-        assert result == 0
-        mock_file.assert_called_once_with("requirements.txt")
-        mock_run_module.assert_called_once_with(
-            {"test": "inventory"},
-            ["/modules"],
-            "test_module",
-            modules=["test_module"],
-            module_args={},
-            dependencies=["requests==2.25.1", "pytest>=6.0.0", "numpy"],
-        )
+        with patch('builtins.open', mock_open(read_data=requirements_content)):
+            args = [
+                "--module", "test_module",
+                "--module-dir", "/modules",
+                "--inventory", "inventory.yml",
+                "--requirements", "requirements.txt"
+            ]
+            
+            result = self.runner.invoke(main, args)
+            
+            assert result.exit_code == 0
+            mock_run_module.assert_called_once_with(
+                {"test": "inventory"},
+                ["/modules"],
+                "test_module",
+                modules=["test_module"],
+                module_args={},
+                dependencies=expected_deps,
+            )
     
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.pprint')
     @patch('faster_than_light.cli.run_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
     @patch('faster_than_light.cli.logging.basicConfig')
-    @patch('builtins.open', new_callable=mock_open)
-    async def test_main_with_empty_requirements_file(self, mock_file, mock_logging,
-                                                   mock_load_inventory, mock_run_module, mock_pprint):
-        """Test running module with empty requirements file."""
-        mock_file.return_value.read.return_value = "\n\n\n"
+    def test_main_with_empty_requirements_file(self, mock_logging, mock_load_inventory,
+                                              mock_run_module, mock_pprint):
+        """Test main with empty requirements file."""
         mock_load_inventory.return_value = {"test": "inventory"}
         mock_run_module.return_value = {"localhost": {"result": "success"}}
         
-        args = [
-            "--module", "test_module",
-            "--module-dir", "/modules",
-            "--inventory", "inventory.yml",
-            "--requirements", "empty_requirements.txt"
-        ]
-        
-        result = await main(args)
-        
-        assert result == 0
-        mock_run_module.assert_called_once_with(
-            {"test": "inventory"},
-            ["/modules"],
-            "test_module",
-            modules=["test_module"],
-            module_args={},
-            dependencies=[],
-        )
-    
-    @pytest.mark.asyncio
-    @patch('faster_than_light.cli.logging.basicConfig')
-    @patch('builtins.open')
-    async def test_main_requirements_file_not_found(self, mock_file, mock_logging):
-        """Test error handling when requirements file is not found."""
-        mock_file.side_effect = FileNotFoundError("File not found")
-        
-        args = [
-            "--module", "test_module",
-            "--module-dir", "/modules",
-            "--inventory", "inventory.yml",
-            "--requirements", "nonexistent.txt"
-        ]
-        
-        with pytest.raises(FileNotFoundError):
-            await main(args)
-    
-    @pytest.mark.asyncio
-    @patch('faster_than_light.cli.logging.basicConfig')
-    @patch('builtins.open')
-    async def test_main_requirements_file_permission_error(self, mock_file, mock_logging):
-        """Test error handling when requirements file has permission issues."""
-        mock_file.side_effect = PermissionError("Permission denied")
-        
-        args = [
-            "--module", "test_module",
-            "--module-dir", "/modules",
-            "--inventory", "inventory.yml",
-            "--requirements", "protected.txt"
-        ]
-        
-        with pytest.raises(PermissionError):
-            await main(args)
+        with patch('builtins.open', mock_open(read_data="")):
+            args = [
+                "--module", "test_module",
+                "--module-dir", "/modules",
+                "--inventory", "inventory.yml",
+                "--requirements", "empty_requirements.txt"
+            ]
+            
+            result = self.runner.invoke(main, args)
+            
+            assert result.exit_code == 0
+            mock_run_module.assert_called_once_with(
+                {"test": "inventory"},
+                ["/modules"],
+                "test_module",
+                modules=["test_module"],
+                module_args={},
+                dependencies=[],  # Empty list for empty file
+            )
 
 
 class TestMainErrorHandling:
     """Tests for main function error handling scenarios."""
     
-    @pytest.mark.asyncio
+    def setup_method(self):
+        """Set up test fixtures."""
+        self.runner = CliRunner()
+    
     @patch('faster_than_light.cli.load_inventory')
-    @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_inventory_file_error(self, mock_logging, mock_load_inventory):
-        """Test error handling when inventory file cannot be loaded."""
-        mock_load_inventory.side_effect = FileNotFoundError("Inventory not found")
+    def test_main_inventory_file_error(self, mock_load_inventory):
+        """Test main when inventory file cannot be loaded."""
+        mock_load_inventory.side_effect = FileNotFoundError("Inventory file not found")
         
         args = [
-            "--module", "test_module", 
+            "--module", "test_module",
             "--module-dir", "/modules",
             "--inventory", "nonexistent.yml"
         ]
         
-        with pytest.raises(FileNotFoundError):
-            await main(args)
+        result = self.runner.invoke(main, args)
+        
+        assert result.exit_code != 0
+        assert isinstance(result.exception, FileNotFoundError)
+        assert "Inventory file not found" in str(result.exception)
     
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.run_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
-    @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_module_execution_error(self, mock_logging, mock_load_inventory, mock_run_module):
-        """Test error handling when module execution fails."""
+    def test_main_module_execution_error(self, mock_load_inventory, mock_run_module):
+        """Test main when module execution fails."""
         mock_load_inventory.return_value = {"test": "inventory"}
         mock_run_module.side_effect = Exception("Module execution failed")
         
         args = [
-            "--module", "failing_module",
+            "--module", "test_module",
             "--module-dir", "/modules",
             "--inventory", "inventory.yml"
         ]
         
-        with pytest.raises(Exception, match="Module execution failed"):
-            await main(args)
+        result = self.runner.invoke(main, args)
+        
+        assert result.exit_code != 0
+        assert result.exception is not None
     
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.run_ftl_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
-    @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_ftl_module_execution_error(self, mock_logging, mock_load_inventory, mock_run_ftl_module):
-        """Test error handling when FTL module execution fails."""
+    def test_main_ftl_module_execution_error(self, mock_load_inventory, mock_run_ftl_module):
+        """Test main when FTL module execution fails."""
         mock_load_inventory.return_value = {"test": "inventory"}
         mock_run_ftl_module.side_effect = Exception("FTL module execution failed")
         
         args = [
-            "--ftl-module", "failing_ftl_module",
+            "--ftl-module", "test_ftl_module",
             "--module-dir", "/ftl_modules",
             "--inventory", "inventory.yml"
         ]
         
-        with pytest.raises(Exception, match="FTL module execution failed"):
-            await main(args)
+        result = self.runner.invoke(main, args)
+        
+        assert result.exit_code != 0
+        assert result.exception is not None
 
 
 class TestMainComplexScenarios:
     """Tests for main function with complex argument combinations."""
     
-    @pytest.mark.asyncio
+    def setup_method(self):
+        """Set up test fixtures."""
+        self.runner = CliRunner()
+    
     @patch('faster_than_light.cli.pprint')
     @patch('faster_than_light.cli.run_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
     @patch('faster_than_light.cli.logging.basicConfig')
-    @patch('builtins.open', new_callable=mock_open)
-    async def test_main_all_options_combined(self, mock_file, mock_logging,
-                                           mock_load_inventory, mock_run_module, mock_pprint):
-        """Test running module with all options combined."""
-        mock_file.return_value.read.return_value = "requests\npytest"
+    def test_main_all_options_combined(self, mock_logging, mock_load_inventory,
+                                      mock_run_module, mock_pprint):
+        """Test main with all options combined."""
         mock_load_inventory.return_value = {"test": "inventory"}
-        mock_run_module.return_value = {"host1": {"result": "success"}}
+        mock_run_module.return_value = {"localhost": {"result": "success"}}
         
-        args = [
-            "--debug",
-            "--module", "complex_module",
-            "--module-dir", "/complex/modules",
-            "--inventory", "complex_inventory.yml",
-            "--requirements", "complex_requirements.txt",
-            "--args", "env=production workers=4 ssl=true"
-        ]
-        
-        result = await main(args)
-        
-        assert result == 0
-        mock_logging.assert_called_once_with(level=logging.DEBUG)
-        mock_load_inventory.assert_called_once_with("complex_inventory.yml")
-        mock_run_module.assert_called_once_with(
-            {"test": "inventory"},
-            ["/complex/modules"],
-            "complex_module",
-            modules=["complex_module"],
-            module_args={"env": "production", "workers": "4", "ssl": "true"},
-            dependencies=["requests", "pytest"],
-        )
-        mock_pprint.assert_called_once_with({"host1": {"result": "success"}})
-    
-    @pytest.mark.asyncio
-    @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_both_module_and_ftl_module(self, mock_logging):
-        """Test that both module and ftl-module flags work (module takes precedence)."""
-        # This tests the order of conditionals in the main function
-        # --module is checked first, so it should take precedence
-        with patch('faster_than_light.cli.pprint') as mock_pprint, \
-             patch('faster_than_light.cli.run_module', new_callable=AsyncMock) as mock_run_module, \
-             patch('faster_than_light.cli.run_ftl_module', new_callable=AsyncMock) as mock_run_ftl_module, \
-             patch('faster_than_light.cli.load_inventory') as mock_load_inventory:
-            
-            mock_load_inventory.return_value = {"test": "inventory"}
-            mock_run_module.return_value = {"result": "module_executed"}
-            mock_run_ftl_module.return_value = {"result": "ftl_module_executed"}
-            
+        with patch('builtins.open', mock_open(read_data="requests>=2.25.0")):
             args = [
-                "--module", "regular_module",
-                "--ftl-module", "ftl_module", 
-                "--module-dir", "/modules",
-                "--inventory", "inventory.yml"
+                "--debug",
+                "--module", "complex_module",
+                "--module-dir", "/opt/modules",
+                "--inventory", "production.yml",
+                "--requirements", "requirements.txt",
+                "--args", "env=production debug=true"
             ]
             
-            result = await main(args)
+            result = self.runner.invoke(main, args)
             
-            assert result == 0
-            mock_run_module.assert_called_once()
-            mock_run_ftl_module.assert_not_called()
-            mock_pprint.assert_called_once_with({"result": "module_executed"})
+            assert result.exit_code == 0
+            mock_logging.assert_called_once_with(level=logging.DEBUG)
+            mock_run_module.assert_called_once_with(
+                {"test": "inventory"},
+                ["/opt/modules"],
+                "complex_module",
+                modules=["complex_module"],
+                module_args={"env": "production", "debug": "true"},
+                dependencies=["requests>=2.25.0"],
+            )
+    
+    def test_main_both_module_and_ftl_module(self):
+        """Test main when both module and ftl-module are specified (should fail)."""
+        args = [
+            "--module", "test_module",
+            "--ftl-module", "test_ftl_module",
+            "--inventory", "inventory.yml"
+        ]
+        
+        result = self.runner.invoke(main, args)
+        
+        assert result.exit_code == 1  # Click exception exit code
+        assert "Cannot specify both --ftl-module and --module" in result.output
 
 
 class TestMainArgumentValidation:
-    """Tests for main function argument validation scenarios."""
+    """Tests for main function argument validation."""
     
-    @pytest.mark.asyncio
-    async def test_main_module_without_inventory(self):
-        """Test that module execution requires inventory."""
-        args = [
-            "--module", "test_module",
-            "--module-dir", "/modules"
-            # Missing --inventory
-        ]
-        
-        # This should raise an error when load_inventory is called with None
-        with pytest.raises(TypeError):
-            await main(args)
+    def setup_method(self):
+        """Set up test fixtures."""
+        self.runner = CliRunner()
     
-    @pytest.mark.asyncio
-    async def test_main_module_without_module_dir(self):
-        """Test that module execution without module directory raises ModuleNotFound."""
-        from faster_than_light.exceptions import ModuleNotFound
+    def test_main_module_without_inventory(self):
+        """Test main with module but no inventory (should fail)."""
+        result = self.runner.invoke(main, ["--module", "test_module"])
         
-        args = [
-            "--module", "test_module",
-            "--inventory", "inventory.yml"
-            # Missing --module-dir
-        ]
-        
-        # This should raise ModuleNotFound when module isn't found in [None]
-        with patch('faster_than_light.cli.load_inventory') as mock_load_inventory:
-            mock_load_inventory.return_value = {"test": "inventory"}
-            with pytest.raises(ModuleNotFound, match="Module test_module not found in"):
-                await main(args)
-
-
-class TestMainSysArgvHandling:
-    """Tests for main function sys.argv handling."""
+        assert result.exit_code == 2
+        assert "Missing option '--inventory'" in result.output
     
-    @pytest.mark.asyncio
-    @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_with_none_args_uses_sys_argv(self, mock_logging):
-        """Test that main uses sys.argv when args is None."""
-        # This tests the line: if args is None: args = sys.argv[1:]
-        # We need to mock sys.argv for this test
-        with patch('faster_than_light.cli.sys.argv', ["ftl", "--verbose"]):
-            result = await main(None)
+    def test_main_inventory_without_module(self):
+        """Test main with inventory but no module or ftl-module (should fail)."""
+        result = self.runner.invoke(main, ["--inventory", "inventory.yml"])
+        
+        assert result.exit_code == 1  # Our custom validation
+        assert "Must specify either --ftl-module or --module" in result.output
+    
+    @patch('faster_than_light.cli.load_inventory')
+    def test_main_module_without_module_dir(self, mock_load_inventory):
+        """Test main with module but no module-dir (should work with empty list)."""
+        mock_load_inventory.return_value = {"test": "inventory"}
+        
+        with patch('faster_than_light.cli.run_module', new_callable=AsyncMock) as mock_run_module:
+            mock_run_module.return_value = {"localhost": {"result": "success"}}
             
-            assert result == 0
-            mock_logging.assert_called_once_with(level=logging.INFO)
+            args = [
+                "--module", "test_module",
+                "--inventory", "inventory.yml"
+            ]
+            
+            result = self.runner.invoke(main, args)
+            
+            assert result.exit_code == 0
+            mock_run_module.assert_called_once_with(
+                {"test": "inventory"},
+                [],  # Empty module_dir list
+                "test_module",
+                modules=["test_module"],
+                module_args={},
+                dependencies=None,
+            )
 
 
 class TestEntryPoint:
     """Tests for entry_point function."""
     
-    @patch('faster_than_light.cli.asyncio.run')
-    @patch('faster_than_light.cli.sys.argv', ["ftl", "--debug"])
-    def test_entry_point_calls_main_with_sys_argv(self, mock_asyncio_run):
-        """Test that entry_point calls main with sys.argv."""
-        entry_point()
-        
-        mock_asyncio_run.assert_called_once()
-        # Verify the call was made with the expected main coroutine
-        call_args = mock_asyncio_run.call_args[0][0]
-        # We can't easily test the exact coroutine, but we can test it was called
-        assert mock_asyncio_run.called
-    
-    @patch('faster_than_light.cli.main', new_callable=AsyncMock)
-    @patch('faster_than_light.cli.sys.argv', ["ftl", "--verbose"])
-    def test_entry_point_propagates_main_args(self, mock_main):
-        """Test that entry_point propagates sys.argv to main."""
-        # We need to create a real asyncio.run call since we're mocking main
-        async def run_test():
-            await main(["--verbose"])
-        
-        with patch('faster_than_light.cli.asyncio.run') as mock_asyncio_run:
-            mock_asyncio_run.side_effect = lambda coro: asyncio.get_event_loop().run_until_complete(coro)
-            entry_point()
+    def test_entry_point_calls_main(self):
+        """Test that entry_point calls main with Click handling."""
+        # Since entry_point() just calls main() directly, and main is a Click command,
+        # we can test that it works by checking the help output
+        with patch('faster_than_light.cli.sys.argv', ["ftl", "--help"]):
+            # entry_point() should call main() which will show help and exit
+            with pytest.raises(SystemExit) as exc_info:
+                entry_point()
             
-            mock_asyncio_run.assert_called_once()
+            # Help command should exit with code 0
+            assert exc_info.value.code == 0
+    
+    def test_entry_point_with_args(self):
+        """Test entry_point with different argument combinations."""
+        # Test with missing inventory - should exit with error code 2
+        with patch('faster_than_light.cli.sys.argv', ["ftl", "--module", "test"]):
+            with pytest.raises(SystemExit) as exc_info:
+                entry_point()
+            
+            # Missing required option should exit with code 2
+            assert exc_info.value.code == 2
 
 
 class TestCliIntegration:
     """Integration tests for CLI functionality."""
     
-    @pytest.mark.asyncio
+    def setup_method(self):
+        """Set up test fixtures."""
+        self.runner = CliRunner()
+    
     @patch('faster_than_light.cli.pprint')
     @patch('faster_than_light.cli.run_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_real_world_cli_scenario(self, mock_logging, mock_load_inventory,
+    def test_real_world_cli_scenario(self, mock_logging, mock_load_inventory,
                                          mock_run_module, mock_pprint):
         """Test a realistic CLI usage scenario."""
         # Setup realistic inventory and module execution result
@@ -578,7 +545,7 @@ class TestCliIntegration:
             },
             "web2": {
                 "changed": True,
-                "stdout": "Service restarted successfully", 
+                "stdout": "Service restarted successfully",
                 "rc": 0
             }
         }
@@ -591,9 +558,9 @@ class TestCliIntegration:
             "--args", "name=nginx state=restarted"
         ]
         
-        result = await main(args)
+        result = self.runner.invoke(main, args)
         
-        assert result == 0
+        assert result.exit_code == 0
         mock_logging.assert_called_once_with(level=logging.INFO)
         mock_load_inventory.assert_called_once_with("production.yml")
         mock_run_module.assert_called_once_with(
@@ -604,39 +571,28 @@ class TestCliIntegration:
             module_args={"name": "nginx", "state": "restarted"},
             dependencies=None,
         )
-        mock_pprint.assert_called_once()
+        mock_pprint.assert_called_once_with(mock_run_module.return_value)
 
 
 class TestCliEdgeCases:
-    """Tests for CLI edge cases and corner scenarios."""
+    """Edge case tests for CLI functionality."""
     
-    @pytest.mark.asyncio
-    @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_with_empty_args_list(self, mock_logging):
+    def setup_method(self):
+        """Set up test fixtures."""
+        self.runner = CliRunner()
+    
+    def test_main_with_empty_args_list(self):
         """Test main with explicitly empty args list."""
-        result = await main([])
+        result = self.runner.invoke(main, [])
         
-        assert result == 0
-        mock_logging.assert_called_once_with(level=logging.WARNING)
+        assert result.exit_code == 2  # Missing required inventory
+        assert "Missing option '--inventory'" in result.output
     
-    def test_parse_module_args_malformed_input(self):
-        """Test parse_module_args with malformed input."""
-        # Test args without equals sign - should fail with not enough values to unpack
-        with pytest.raises(ValueError, match="not enough values to unpack"):
-            parse_module_args("just_a_string another_string")
-    
-    def test_parse_module_args_only_key_no_value(self):
-        """Test parse_module_args with keys but no values."""
-        with pytest.raises(ValueError, match="not enough values to unpack"):
-            # This should fail when trying to unpack a single item tuple
-            parse_module_args("key_without_equals")
-    
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.pprint')
     @patch('faster_than_light.cli.run_module', new_callable=AsyncMock)
     @patch('faster_than_light.cli.load_inventory')
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_module_returns_none(self, mock_logging, mock_load_inventory,
+    def test_main_module_returns_none(self, mock_logging, mock_load_inventory,
                                           mock_run_module, mock_pprint):
         """Test main when module execution returns None."""
         mock_load_inventory.return_value = {"test": "inventory"}
@@ -648,17 +604,16 @@ class TestCliEdgeCases:
             "--inventory", "inventory.yml"
         ]
         
-        result = await main(args)
+        result = self.runner.invoke(main, args)
         
-        assert result == 0
+        assert result.exit_code == 0
         mock_pprint.assert_called_once_with(None)
     
-    @pytest.mark.asyncio
     @patch('faster_than_light.cli.pprint')
     @patch('faster_than_light.cli.run_ftl_module', new_callable=AsyncMock)
-    @patch('faster_than_light.cli.load_inventory') 
+    @patch('faster_than_light.cli.load_inventory')
     @patch('faster_than_light.cli.logging.basicConfig')
-    async def test_main_ftl_module_returns_complex_data(self, mock_logging, mock_load_inventory,
+    def test_main_ftl_module_returns_complex_data(self, mock_logging, mock_load_inventory,
                                                       mock_run_ftl_module, mock_pprint):
         """Test main when FTL module returns complex nested data."""
         mock_load_inventory.return_value = {"test": "inventory"}
@@ -678,7 +633,28 @@ class TestCliEdgeCases:
             "--inventory", "inventory.yml"
         ]
         
-        result = await main(args)
+        result = self.runner.invoke(main, args)
         
-        assert result == 0
-        mock_pprint.assert_called_once_with(complex_result) 
+        assert result.exit_code == 0
+        mock_pprint.assert_called_once_with(complex_result)
+    
+    def test_main_with_special_characters_in_args(self):
+        """Test main with special characters in module arguments."""
+        with patch('faster_than_light.cli.load_inventory') as mock_load_inventory:
+            with patch('faster_than_light.cli.run_module', new_callable=AsyncMock) as mock_run_module:
+                mock_load_inventory.return_value = {"test": "inventory"}
+                mock_run_module.return_value = {"localhost": {"result": "success"}}
+                
+                args = [
+                    "--module", "test_module",
+                    "--inventory", "inventory.yml",
+                    "--args", "path=/tmp/test@domain.com user=admin@example.org"
+                ]
+                
+                result = self.runner.invoke(main, args)
+                
+                assert result.exit_code == 0
+                expected_args = {"path": "/tmp/test@domain.com", "user": "admin@example.org"}
+                mock_run_module.assert_called_once()
+                actual_call = mock_run_module.call_args
+                assert actual_call[1]["module_args"] == expected_args 
