@@ -4,12 +4,13 @@ import os
 import sys
 import tempfile
 import base64
-import ftl_gate
+import ftl_gate  # type: ignore
 import importlib.resources
 import shutil
 import logging
 import traceback
 import stat
+from typing import Any, Optional, Union, Tuple, Dict, List, cast
 
 logger = logging.getLogger("ftl_gate")
 
@@ -17,33 +18,38 @@ logger = logging.getLogger("ftl_gate")
 class ModuleNotFoundException(Exception):
     pass
 
-class StdinReader(object):
+class StdinReader:
 
-    async def read(self, n):
+    async def read(self, n: int) -> bytes:
         loop = asyncio.get_running_loop()
         result = await loop.run_in_executor(None, sys.stdin.read, n)
         if isinstance(result, str):
             result = result.encode()
-        return result
+        return cast(bytes, result)
 
 
-class StdoutWriter(object):
+class StdoutWriter:
 
-    def write(self, data):
+    def write(self, data: bytes) -> None:
         sys.stdout.write(data.decode())
 
 
-async def connect_stdin_stdout():
+async def connect_stdin_stdout() -> Tuple[Union[asyncio.StreamReader, StdinReader], Union[asyncio.StreamWriter, StdoutWriter]]:
     loop = asyncio.get_event_loop()
+    reader: Union[asyncio.StreamReader, StdinReader]
+    writer: Union[asyncio.StreamWriter, StdoutWriter]
+    
     try:
         # Try to connect to pipes
-        reader = asyncio.StreamReader()
-        protocol = asyncio.StreamReaderProtocol(reader)
+        stream_reader = asyncio.StreamReader()
+        protocol = asyncio.StreamReaderProtocol(stream_reader)
         await loop.connect_read_pipe(lambda: protocol, sys.stdin)
         w_transport, w_protocol = await loop.connect_write_pipe(
             asyncio.streams.FlowControlMixin, sys.stdout
         )
-        writer = asyncio.StreamWriter(w_transport, w_protocol, reader, loop)
+        stream_writer = asyncio.StreamWriter(w_transport, w_protocol, stream_reader, loop)
+        reader = stream_reader
+        writer = stream_writer
     except ValueError:
         # Fall back to simple reader and writer
         reader = StdinReader()
@@ -51,7 +57,7 @@ async def connect_stdin_stdout():
     return reader, writer
 
 
-async def read_message(reader):
+async def read_message(reader: Union[asyncio.StreamReader, StdinReader]) -> Tuple[Optional[str], Optional[Any]]:
 
     while True:
 
@@ -95,7 +101,8 @@ async def read_message(reader):
                 if value:
                     # logger.info(f'{length_hexadecimal} {value}')
                     try:
-                        return json.loads(value)
+                        parsed_message = json.loads(value)
+                        return cast(Tuple[Optional[str], Optional[Any]], parsed_message)
                     except BaseException:
                         # print(value)
                         raise
@@ -103,7 +110,7 @@ async def read_message(reader):
                     continue
 
 
-def send_message(writer, msg_type, data):
+def send_message(writer: Union[asyncio.StreamWriter, StdoutWriter], msg_type: str, data: Any) -> None:
 
     # A message has a Length[Type, Data] format.
     # The first 8 bytes are the length in hexadecimal
@@ -119,7 +126,7 @@ def send_message(writer, msg_type, data):
     writer.write(message)
 
 
-async def check_output(cmd, env=None, stdin=None):
+async def check_output(cmd: str, env: Optional[Dict[str, str]] = None, stdin: Optional[bytes] = None) -> Tuple[bytes, bytes]:
     logger.debug(f'check_output {cmd} create')
     proc = await asyncio.create_subprocess_shell(
         cmd,
@@ -135,7 +142,7 @@ async def check_output(cmd, env=None, stdin=None):
     return stdout, stderr
 
 
-def is_binary_module(module):
+def is_binary_module(module: bytes) -> bool:
     try:
         module.decode()
         return False
@@ -143,25 +150,25 @@ def is_binary_module(module):
         return True
 
 
-def is_new_style_module(module):
+def is_new_style_module(module: bytes) -> bool:
     if b"AnsibleModule(" in module:
         return True
     else:
         return False
 
 
-def is_want_json_module(module):
+def is_want_json_module(module: bytes) -> bool:
     if b"WANT_JSON" in module:
         return True
     else:
         return False
 
 
-def get_python_path():
+def get_python_path() -> str:
     return os.pathsep.join(sys.path)
 
 
-async def gate_run_module(writer, module_name, module=None, module_args=None):
+async def gate_run_module(writer: Union[asyncio.StreamWriter, StdoutWriter], module_name: str, module: Optional[str] = None, module_args: Optional[Dict[str, Any]] = None) -> None:
     logger.info(module_name)
     tempdir = tempfile.mkdtemp(prefix="ftl-module")
     try:
@@ -171,27 +178,27 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
         env["PYTHONPATH"] = get_python_path()
         if module is not None:
             logger.info("loading module from message")
-            module = base64.b64decode(module)
+            module_bytes = base64.b64decode(module)
             with open(module_file, "wb") as f:
-                f.write(module)
+                f.write(module_bytes)
         else:
             logger.info("loading module from ftl_gate")
             modules = importlib.resources.files(ftl_gate)
             with open(module_file, "wb") as f2:
                 try:
-                    module = importlib.resources.files(ftl_gate).joinpath(module_name).read_bytes()
+                    module_bytes = importlib.resources.files(ftl_gate).joinpath(module_name).read_bytes()
                 except FileNotFoundError:
                     logger.info(f"Module {module_name} not found in gate")
                     raise ModuleNotFoundException(module_name)
-                f2.write(module)
-        if is_binary_module(module):
+                f2.write(module_bytes)
+        if is_binary_module(module_bytes):
             logger.info("is_binary_module")
             args = os.path.join(tempdir, "args")
             with open(args, "w") as f:
                 f.write(json.dumps(module_args))
             os.chmod(module_file, stat.S_IEXEC | stat.S_IREAD)
             stdout, stderr = await check_output(f"{module_file} {args}")
-        elif is_new_style_module(module):
+        elif is_new_style_module(module_bytes):
             logger.info(f"is_new_style_module {module_file}")
             logger.info(f"ANSIBLE_MODULE_ARGS {json.dumps(dict(ANSIBLE_MODULE_ARGS=module_args))}")
             stdout, stderr = await check_output(
@@ -200,7 +207,7 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
                 env=env,
             )
             logger.info(f"is_new_style_module {module_file} complete")
-        elif is_want_json_module(module):
+        elif is_want_json_module(module_bytes):
             logger.info("is_want_json_module")
             args = os.path.join(tempdir, "args")
             with open(args, "w") as f:
@@ -232,21 +239,21 @@ async def gate_run_module(writer, module_name, module=None, module_args=None):
 
 
 
-async def run_ftl_module(writer, module_name, module, module_args=None):
+async def run_ftl_module(writer: Union[asyncio.StreamWriter, StdoutWriter], module_name: str, module: str, module_args: Optional[Dict[str, Any]] = None) -> None:
 
     module_compiled = compile(base64.b64decode(module), module_name, "exec")
 
-    globals = {"__file__": module_name}
-    locals = {}
+    globals_dict: Dict[str, Any] = {"__file__": module_name}
+    locals_dict: Dict[str, Any] = {}
 
-    exec(module_compiled, globals, locals)
+    exec(module_compiled, globals_dict, locals_dict)
     logger.info("Calling FTL module")
-    result = await locals["main"]()
+    result = await locals_dict["main"]()
     logger.info("Sending FTLModuleResult")
     send_message(writer, "FTLModuleResult", dict(result=result))
 
 
-async def main(args):
+async def main(args: List[str]) -> Optional[int]:
 
     logging.basicConfig(format="%(asctime)s - %(message)s", filename="/tmp/ftl_gate.log", level=logging.DEBUG)
 
@@ -263,20 +270,26 @@ async def main(args):
             if msg_type is None:
                 logger.info("End of input")
                 send_message(writer, "Goodbye", {})
-                return
+                return None
             elif msg_type == "Hello":
                 logger.info("hello")
                 send_message(writer, msg_type, data)
             elif msg_type == "Module":
                 logger.info("Module")
-                await gate_run_module(writer, **data)
+                if data is not None and isinstance(data, dict):
+                    await gate_run_module(writer, **data)
+                else:
+                    send_message(writer, "Error", {"message": "Invalid Module data"})
             elif msg_type == "FTLModule":
                 logger.info("FTLModule")
-                await run_ftl_module(writer, **data)
+                if data is not None and isinstance(data, dict):
+                    await run_ftl_module(writer, **data)
+                else:
+                    send_message(writer, "Error", {"message": "Invalid FTLModule data"})
             elif msg_type == "Shutdown":
                 logger.info("Shutdown")
                 send_message(writer, "Goodbye", {})
-                return
+                return None
             else:
                 send_message(
                     writer, "Error", dict(message=f"Unknown message type {msg_type}")
