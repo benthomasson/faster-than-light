@@ -18,7 +18,7 @@ import pytest
 sys.modules["ftl_gate"] = MagicMock()
 
 # Import the module under test
-import faster_than_light.ftl_gate.__main__ as ftl_main
+import faster_than_light.ftl_gate.__main__ as ftl_main  # noqa
 
 
 class TestStdinReader:

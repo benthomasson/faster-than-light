@@ -206,7 +206,7 @@ class TestGateTypeAnnotations:
 
         assert type_hints["conn"] == SSHClientConnection
         assert type_hints["gate_process"] == SSHClientProcess
-        assert type_hints["temp_dir"] == str
+        assert type_hints["temp_dir"] is str
 
 
 class TestGateIntegration:
@@ -265,7 +265,7 @@ class TestGateIntegration:
             "gate_process": mock_process,
             "temp_dir": "/tmp/test",
         }  # Dict
-        assert gate != None
+        assert gate is not None
         assert gate != "string"
         assert gate != 123
 

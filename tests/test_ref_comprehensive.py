@@ -392,7 +392,6 @@ class TestDeref:
 
     def test_deref_integration_with_isinstance_check(self):
         """Test that deref correctly identifies Ref objects."""
-        host = {"key": "value"}
 
         root = Ref(None, "root")
         ref = root.key

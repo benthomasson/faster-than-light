@@ -309,7 +309,7 @@ class TestRunModuleCore:
         mock_create_task.assert_called_once()
 
         # Verify the task was created with properly dereferenced arguments
-        call_args = mock_create_task.call_args[0][
+        mock_create_task.call_args[0][
             0
         ]  # The coroutine passed to create_task
         # We can't easily inspect the coroutine, but we verified refs were detected

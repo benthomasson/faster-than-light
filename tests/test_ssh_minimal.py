@@ -656,7 +656,7 @@ class TestConnectSshAdvanced:
 
         host = {"ansible_host": "server.example.com"}
 
-        result = await connect_ssh(host)
+        await connect_ssh(host)
 
         mock_connect.assert_called_once_with(
             "server.example.com",
@@ -794,7 +794,7 @@ class TestRunModuleRemotelyAdvanced:
         ):
             mock_connect_gate.return_value = Gate(AsyncMock(), AsyncMock(), "/tmp")
 
-            result = await run_module_remotely(
+            await run_module_remotely(
                 "test_host",
                 host,
                 "/path/to/module.py",

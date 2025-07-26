@@ -570,7 +570,7 @@ class TestBuildFtlGateIntegration:
         interpreter = "/usr/bin/python3.9"
         local_interpreter = "/usr/bin/python3.8"
 
-        with patch("builtins.open", mock_open()) as mock_file:
+        with patch("builtins.open", mock_open()):
             result_gate, result_hash = build_ftl_gate(
                 modules=modules,
                 module_dirs=module_dirs,

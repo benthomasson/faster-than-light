@@ -87,7 +87,7 @@ class TestExceptionTypes:
         module_exc = ModuleNotFound("Module error")
         protocol_exc = ProtocolError("Protocol error")
 
-        assert type(module_exc) != type(protocol_exc)
+        assert type(module_exc) is not type(protocol_exc)
         assert not isinstance(module_exc, ProtocolError)
         assert not isinstance(protocol_exc, ModuleNotFound)
 

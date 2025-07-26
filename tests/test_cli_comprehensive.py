@@ -100,7 +100,7 @@ class TestMainBasicArguments:
     def test_main_debug_takes_precedence_over_verbose(self, mock_logging):
         """Test that debug flag takes precedence over verbose."""
         # Need to provide required inventory and module
-        result = self.runner.invoke(
+        self.runner.invoke(
             main,
             ["--debug", "--verbose", "--inventory", "test.yml", "--module", "test"],
         )
