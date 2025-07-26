@@ -62,12 +62,12 @@ class TestEnsureDirectory:
 
     def test_ensure_directory_expands_user(self):
         """Test that ~ is expanded to user home directory."""
-        with patch("os.path.expanduser") as mock_expanduser, patch(
-            "os.path.abspath"
-        ) as mock_abspath, patch("os.path.exists") as mock_exists, patch(
-            "os.makedirs"
-        ) as mock_makedirs:
-
+        with (
+            patch("os.path.expanduser") as mock_expanduser,
+            patch("os.path.abspath") as mock_abspath,
+            patch("os.path.exists") as mock_exists,
+            patch("os.makedirs") as mock_makedirs,
+        ):
             mock_expanduser.return_value = "/home/user/test"
             mock_abspath.return_value = "/home/user/test"
             mock_exists.return_value = True

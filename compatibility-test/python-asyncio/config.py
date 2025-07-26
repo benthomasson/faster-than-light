@@ -2,7 +2,6 @@ import os
 
 
 class _Settings:
-
     def __init__(self):
         if os.path.exists(".env"):
             with open(".env") as f:

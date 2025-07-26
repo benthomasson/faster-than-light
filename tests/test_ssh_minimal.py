@@ -789,8 +789,9 @@ class TestRunModuleRemotelyAdvanced:
         # Host with minimal configuration
         host = {}
 
-        with patch("faster_than_light.ssh.connect_gate") as mock_connect_gate, patch(
-            "faster_than_light.ssh.close_gate"
+        with (
+            patch("faster_than_light.ssh.connect_gate") as mock_connect_gate,
+            patch("faster_than_light.ssh.close_gate"),
         ):
             mock_connect_gate.return_value = Gate(AsyncMock(), AsyncMock(), "/tmp")
 

@@ -442,8 +442,9 @@ class TestRunModuleCore:
 
         custom_gate_builder = MagicMock()
 
-        with patch("asyncio.create_task") as mock_create_task, patch(
-            "asyncio.gather", new_callable=AsyncMock
+        with (
+            patch("asyncio.create_task") as mock_create_task,
+            patch("asyncio.gather", new_callable=AsyncMock),
         ):
             mock_task = MagicMock()
             mock_task.result.return_value = ("host1", {"result": "custom_gate_success"})

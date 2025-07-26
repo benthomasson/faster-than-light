@@ -232,7 +232,6 @@ async def mkdir(
     hosts = unique_hosts(inventory)
 
     for host in hosts:
-
         if gate_cache and host in gate_cache:
             gate = gate_cache.get(host)
             conn = gate.conn if gate else None
@@ -316,7 +315,6 @@ async def copy(
     results = {}
 
     for host in hosts:
-
         if gate_cache and host in gate_cache:
             gate = gate_cache.get(host)
             conn = gate.conn if gate else None
@@ -418,7 +416,6 @@ async def template(
     environment = jinja2.Environment()
 
     for host_name, host in hosts.items():
-
         if gate_cache and host_name in gate_cache:
             gate = gate_cache.get(host_name)
             conn = gate.conn if gate else None
@@ -515,7 +512,6 @@ async def copy_from(
     hosts = unique_hosts(inventory)
 
     for host in hosts:
-
         if gate_cache and host in gate_cache:
             gate = gate_cache.get(host)
             conn = gate.conn if gate else None

@@ -258,7 +258,6 @@ async def read_message(
     """
 
     while True:
-
         # Messages are Length Value
         # Length is a 8 byte field in hexadecimal
         # Value is a length byte field
@@ -921,7 +920,6 @@ async def main(args: List[str]) -> Optional[int]:
     reader, writer = await connect_stdin_stdout()
 
     while True:
-
         try:
             msg_type, data = await read_message(reader)
             if msg_type is None:

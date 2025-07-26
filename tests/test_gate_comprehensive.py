@@ -172,20 +172,16 @@ class TestBuildFtlGateCaching:
         mock_hash_obj.hexdigest.return_value = "new_hash"
         mock_sha256.return_value = mock_hash_obj
 
-        with patch("faster_than_light.gate.tempfile.mkdtemp") as mock_mkdtemp, patch(
-            "faster_than_light.gate.os.mkdir"
-        ), patch("faster_than_light.gate.os.makedirs"), patch(
-            "builtins.open", mock_open()
-        ), patch(
-            "faster_than_light.gate.files"
-        ) as mock_files, patch(
-            "faster_than_light.gate.zipapp.create_archive"
-        ), patch(
-            "faster_than_light.gate.shutil.rmtree"
-        ), patch(
-            "faster_than_light.gate.shutil.copy"
+        with (
+            patch("faster_than_light.gate.tempfile.mkdtemp") as mock_mkdtemp,
+            patch("faster_than_light.gate.os.mkdir"),
+            patch("faster_than_light.gate.os.makedirs"),
+            patch("builtins.open", mock_open()),
+            patch("faster_than_light.gate.files") as mock_files,
+            patch("faster_than_light.gate.zipapp.create_archive"),
+            patch("faster_than_light.gate.shutil.rmtree"),
+            patch("faster_than_light.gate.shutil.copy"),
         ):
-
             mock_mkdtemp.return_value = "/tmp/test_build"
             mock_files.return_value.joinpath.return_value.read_text.return_value = (
                 "# gate main"
@@ -284,14 +280,13 @@ class TestBuildFtlGateModuleInstallation:
         mock_sha256.return_value = mock_hash_obj
         mock_find_module.return_value = None  # Module not found
 
-        with patch("faster_than_light.gate.tempfile.mkdtemp"), patch(
-            "faster_than_light.gate.os.mkdir"
-        ), patch("faster_than_light.gate.os.makedirs"), patch(
-            "builtins.open", mock_open()
-        ), patch(
-            "faster_than_light.gate.files"
+        with (
+            patch("faster_than_light.gate.tempfile.mkdtemp"),
+            patch("faster_than_light.gate.os.mkdir"),
+            patch("faster_than_light.gate.os.makedirs"),
+            patch("builtins.open", mock_open()),
+            patch("faster_than_light.gate.files"),
         ):
-
             with pytest.raises(ModuleNotFound, match="Cannot find missing_module in"):
                 build_ftl_gate(modules=["missing_module"], module_dirs=["/modules"])
 
@@ -602,10 +597,11 @@ class TestBuildFtlGateIntegration:
     @patch("faster_than_light.gate.logger")
     def test_build_ftl_gate_debug_logging(self, mock_logger):
         """Test that debug logging works correctly."""
-        with patch("faster_than_light.gate.ensure_directory"), patch(
-            "faster_than_light.gate.os.path.exists", return_value=True
-        ), patch("faster_than_light.gate.hashlib.sha256") as mock_sha256:
-
+        with (
+            patch("faster_than_light.gate.ensure_directory"),
+            patch("faster_than_light.gate.os.path.exists", return_value=True),
+            patch("faster_than_light.gate.hashlib.sha256") as mock_sha256,
+        ):
             mock_hash_obj = MagicMock()
             mock_hash_obj.hexdigest.return_value = "debug_hash"
             mock_sha256.return_value = mock_hash_obj
