@@ -2,7 +2,7 @@ import glob
 import json
 import os
 import shutil
-from typing import Any, Dict, Generator, List, Optional, TypeVar, Union
+from typing import Any, Dict, Generator, List, Optional, TypeVar
 
 from .exceptions import ModuleNotFound
 from .message import GateMessage
@@ -202,9 +202,9 @@ def process_module_result(message: GateMessage) -> Any:
         {'changed': True}
     """
     if message is None:
-        raise Exception(f"Null message")
+        raise Exception("Null message")
     if len(message) == 0:
-        raise Exception(f"Empty message")
+        raise Exception("Empty message")
     msg_type = message[0]
     if msg_type == "ModuleResult":
         if message[1].get("stdout", None):

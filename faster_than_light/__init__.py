@@ -32,4 +32,6 @@ __all__ = [
     "copy_from_sync",
     "template",
     "template_sync",
+    "mkdir",
+    "mkdir_sync",
 ]

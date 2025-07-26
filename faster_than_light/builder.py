@@ -227,7 +227,6 @@ def main(
         logging.basicConfig(level=logging.INFO)
 
     modules: List[str] = list(module)
-    ftl_modules: Tuple[str, ...] = ftl_module
     module_dirs: List[str] = list(module_dir)
 
     dependencies: Optional[List[str]] = None

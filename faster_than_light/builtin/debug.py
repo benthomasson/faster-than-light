@@ -1,8 +1,6 @@
 #!/usr/bin/python3
 
-import glob
 import json
-import os
 import sys
 
 args = sys.argv

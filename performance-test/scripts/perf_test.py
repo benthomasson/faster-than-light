@@ -43,7 +43,7 @@ def main(args=None):
     start = time.time()
     try:
         subprocess.check_output(parsed_args["<cmd>"], shell=True)
-    except BaseException as e:
+    except BaseException:
         print(parsed_args["<cmd>"])
         raise
     end = time.time()

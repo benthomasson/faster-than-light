@@ -1,12 +1,10 @@
 import os
 import shutil
-import sys
 from pathlib import Path
 from pprint import pprint
 
 import pytest
 import util
-from config import settings
 
 import faster_than_light as ftl
 from faster_than_light.inventory import load_inventory
@@ -71,7 +69,7 @@ async def test_copy():
 
 @pytest.mark.asyncio
 async def test_cron():
-    here = os.path.abspath(os.path.dirname(__file__))
+    os.path.abspath(os.path.dirname(__file__))
     cron, path = util.find_module("ansible.builtin.cron")
     assert cron
     result = await ftl.run_module(
@@ -81,12 +79,12 @@ async def test_cron():
         module_args=dict(name="not here", state="absent"),
     )
     pprint(result)
-    assert result["localhost"]["changed"] == False
+    assert not result["localhost"]["changed"]
 
 
 @pytest.mark.asyncio
 async def test_blockinfile():
-    here = os.path.abspath(os.path.dirname(__file__))
+    os.path.abspath(os.path.dirname(__file__))
     Path("/tmp/blockinfile").touch()
     blockinfile, path = util.find_module("ansible.builtin.blockinfile")
     assert blockinfile
@@ -173,7 +171,7 @@ async def test_file():
         "file",
         module_args=dict(path="/tmp/deleteme.txt", state="absent"),
     )
-    assert result["localhost"]["changed"] == False
+    assert not result["localhost"]["changed"]
 
 
 @pytest.mark.asyncio
@@ -187,7 +185,7 @@ async def test_file2():
         module_args=dict(path="/tmp/touch.txt", state="touch"),
     )
     print(result)
-    assert result["localhost"]["changed"] == True
+    assert result["localhost"]["changed"]
 
 
 @pytest.mark.asyncio
@@ -198,7 +196,7 @@ async def test_find():
         load_inventory("inventory.yml"), [path], "find", module_args=dict(paths="/tmp/")
     )
     print(result)
-    assert result["localhost"]["changed"] == False
+    assert not result["localhost"]["changed"]
     assert result["localhost"]["files"] != []
 
 

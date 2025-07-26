@@ -4,7 +4,7 @@ This module defines custom data types used throughout FTL for representing
 SSH connections, gate processes, and other framework-specific structures.
 """
 
-from typing import Any, NamedTuple
+from typing import NamedTuple
 
 from asyncssh.connection import SSHClientConnection
 from asyncssh.process import SSHClientProcess

@@ -680,7 +680,7 @@ async def gate_run_module(
                 f.write(module_bytes)
         else:
             logger.info("loading module from ftl_gate")
-            modules = importlib.resources.files(ftl_gate)
+            importlib.resources.files(ftl_gate)
             with open(module_file, "wb") as f2:
                 try:
                     module_bytes = (

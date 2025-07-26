@@ -33,7 +33,7 @@ argument parsing and validation.
 
 import asyncio
 import logging
-import sys
+import sys  # noqa
 from pprint import pprint
 from typing import Dict, Optional
 
