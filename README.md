@@ -1,5 +1,7 @@
 # Faster Than Light (FTL)
 
+[![codecov](https://codecov.io/github/benthomasson/faster-than-light/branch/main/graph/badge.svg?token=SRAAGLDORB)](https://codecov.io/github/benthomasson/faster-than-light)
+
 An experimental automation framework built for speed and scalability, designed as a high-performance alternative to Ansible using modern Python asyncio.
 
 ## 🚀 Overview
