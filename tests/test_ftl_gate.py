@@ -1,14 +1,13 @@
 import asyncio
 import base64
 import os
-from pprint import pprint
 
 import pytest
 
 from faster_than_light.exceptions import ModuleNotFound
 from faster_than_light.gate import build_ftl_gate
 from faster_than_light.message import read_message, send_message
-from faster_than_light.module import find_module, run_module_on_host
+from faster_than_light.module import find_module
 from faster_than_light.util import clean_up_ftl_cache, clean_up_tmp
 
 HERE = os.path.dirname(os.path.abspath(__file__))

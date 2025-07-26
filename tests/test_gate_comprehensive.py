@@ -5,10 +5,7 @@ Tests all gate building functionality including caching, module installation,
 dependency management, error handling, and zipapp creation.
 """
 
-import hashlib
-import os
 import sys
-import tempfile
 from subprocess import CalledProcessError
 from unittest.mock import MagicMock, call, mock_open, patch
 

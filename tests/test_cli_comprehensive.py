@@ -6,10 +6,8 @@ module execution, and error handling scenarios using Click's testing framework.
 """
 
 import logging
-import sys
-from unittest.mock import AsyncMock, MagicMock, mock_open, patch
+from unittest.mock import AsyncMock, mock_open, patch
 
-import click
 import pytest
 from click.testing import CliRunner
 

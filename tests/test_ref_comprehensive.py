@@ -5,7 +5,6 @@ Tests the reference system including the Ref class and all associated
 functions for building and dereferencing nested attribute paths.
 """
 
-from unittest.mock import MagicMock, patch
 
 import pytest
 

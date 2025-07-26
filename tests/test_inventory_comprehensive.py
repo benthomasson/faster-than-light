@@ -8,8 +8,7 @@ localhost configuration generation, file operations, and error handling.
 import os
 import sys
 import tempfile
-from io import StringIO
-from unittest.mock import MagicMock, mock_open, patch
+from unittest.mock import mock_open, patch
 
 import pytest
 import yaml

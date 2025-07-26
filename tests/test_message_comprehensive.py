@@ -5,9 +5,8 @@ Tests all message protocol functionality including message sending, reading,
 error handling, and protocol validation.
 """
 
-import asyncio
 import json
-from unittest.mock import AsyncMock, MagicMock, call, patch
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 

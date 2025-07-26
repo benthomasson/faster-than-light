@@ -7,10 +7,7 @@ module type detection, file operations, JSON handling, and error scenarios.
 
 import asyncio
 import json
-import os
-import sys
-import tempfile
-from unittest.mock import AsyncMock, MagicMock, call, mock_open, patch
+from unittest.mock import AsyncMock, MagicMock, mock_open, patch
 
 import pytest
 
@@ -477,7 +474,7 @@ class TestRunModuleLocally:
 
         assert result == ("test_host", {"result": "default interpreter"})
         # Should use sys.executable as default
-        expected_cmd = f"/tmp/test_default/module.py /tmp/test_default/args"
+        expected_cmd = "/tmp/test_default/module.py /tmp/test_default/args"
         mock_check_output.assert_called_once_with(expected_cmd)
 
     @pytest.mark.asyncio

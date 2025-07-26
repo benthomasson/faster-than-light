@@ -4,7 +4,6 @@ Minimal unit tests for faster_than_light.ssh module.
 Tests core SSH functionality with proper async mocking.
 """
 
-import asyncio
 import sys
 from unittest.mock import AsyncMock, MagicMock, patch
 

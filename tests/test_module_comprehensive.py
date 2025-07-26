@@ -5,10 +5,7 @@ Tests all module execution functionality including async orchestration,
 task management, host chunking, ref dereferencing, and error handling.
 """
 
-import asyncio
-import sys
-from asyncio.tasks import Task
-from unittest.mock import AsyncMock, MagicMock, call, patch
+from unittest.mock import AsyncMock, MagicMock, patch
 
 import pytest
 
@@ -22,7 +19,6 @@ from faster_than_light.module import (
     run_module_sync,
 )
 from faster_than_light.ref import Ref
-from faster_than_light.types import Gate
 
 
 class TestExtractTaskResults:

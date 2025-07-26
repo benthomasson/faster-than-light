@@ -8,10 +8,7 @@ I/O classes, execution functions, and the main message processing loop.
 import asyncio
 import base64
 import json
-import os
 import sys
-import tempfile
-from io import BytesIO, StringIO
 
 # Mock the ftl_gate import before importing the module under test
 from unittest.mock import AsyncMock, MagicMock, call, mock_open, patch
