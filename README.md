@@ -2,6 +2,10 @@
 
 [![codecov](https://codecov.io/github/benthomasson/faster-than-light/branch/main/graph/badge.svg?token=SRAAGLDORB)](https://codecov.io/github/benthomasson/faster-than-light)
 
+
+![ci](https://github.com/benthomasson/faster-than-light/actions/workflows/ci.yml/badge.svg)
+
+
 An experimental automation framework built for speed and scalability, designed as a high-performance alternative to Ansible using modern Python asyncio.
 
 ## 🚀 Overview
