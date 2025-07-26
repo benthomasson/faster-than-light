@@ -32,30 +32,33 @@ from .exceptions import ModuleNotFound
 from .gate import build_ftl_gate
 from .local import run_ftl_module_locally, run_module_locally
 from .ref import Ref, deref
-from .ssh import (run_ftl_module_through_gate, run_module_remotely,
-                  run_module_through_gate)
+from .ssh import (
+    run_ftl_module_through_gate,
+    run_module_remotely,
+    run_module_through_gate,
+)
 from .types import Gate
 from .util import chunk, find_module, unique_hosts
 
 
 def extract_task_results(tasks: List[Tuple[str, Task]]) -> Dict[str, Dict[str, Any]]:
     """Extract and aggregate results from completed asyncio tasks.
-    
+
     Processes a list of completed asyncio tasks that represent module executions
     on different hosts. Extracts successful results and converts exceptions into
     error entries with consistent formatting.
-    
+
     Args:
         tasks: List of (host_name, Task) tuples where each Task represents
             a completed module execution. Tasks should return (host_name, result)
             tuples on success.
-    
+
     Returns:
         Dictionary mapping host names to their execution results. Each result
         is a dictionary containing either:
         - Module execution results (varies by module)
         - Error information: {"error": True, "msg": "error description"}
-    
+
     Example:
         >>> import asyncio
         >>> async def mock_task():
@@ -64,7 +67,7 @@ def extract_task_results(tasks: List[Tuple[str, Task]]) -> Dict[str, Dict[str, A
         >>> await task  # Let it complete
         >>> extract_task_results([("web1", task)])
         {'web1': {'changed': True, 'msg': 'success'}}
-        
+
         # Error handling
         >>> async def failing_task():
         ...     raise Exception("Connection failed")
@@ -72,7 +75,7 @@ def extract_task_results(tasks: List[Tuple[str, Task]]) -> Dict[str, Dict[str, A
         >>> # Let it complete with exception
         >>> extract_task_results([("web2", task)])
         {'web2': {'error': True, 'msg': 'Connection failed'}}
-    
+
     Note:
         This function assumes tasks have already completed. It's typically called
         after asyncio.gather() has finished executing all tasks. Exceptions are
@@ -84,7 +87,7 @@ def extract_task_results(tasks: List[Tuple[str, Task]]) -> Dict[str, Dict[str, A
             host_name, result = task.result()
             results[host_name] = result
         except BaseException as e:
-            results[host_name] = {"error": True, 'msg': str(e)}
+            results[host_name] = {"error": True, "msg": str(e)}
     return results
 
 
@@ -93,17 +96,20 @@ async def run_module_on_host(
     host: Dict[str, Any],
     module: str,
     module_args: Dict[str, Any],
-    local_runner: Callable[[str, Dict[str, Any], str, Dict[str, Any]], Awaitable[Tuple[str, Dict[str, Any]]]],
+    local_runner: Callable[
+        [str, Dict[str, Any], str, Dict[str, Any]],
+        Awaitable[Tuple[str, Dict[str, Any]]],
+    ],
     remote_runner: Callable,
     gate_cache: Optional[Dict[str, Gate]],
     gate_builder: Callable[..., Tuple[str, str]],
 ) -> Tuple[str, Dict[str, Any]]:
     """Execute a module on a single host, choosing local or remote execution.
-    
+
     Determines the appropriate execution method (local or remote) based on host
     configuration and delegates to the appropriate runner function. This provides
     a unified interface for module execution regardless of the target location.
-    
+
     Args:
         host_name: Name/identifier of the target host for execution.
         host: Dictionary containing host configuration including connection
@@ -118,11 +124,11 @@ async def run_module_on_host(
             Used only for remote execution.
         gate_builder: Callable that creates gate executables for remote hosts.
             Used only for remote execution.
-    
+
     Returns:
         Tuple of (host_name, execution_results) where execution_results is a
         dictionary containing the module's output.
-    
+
     Example:
         >>> host_config = {"ansible_connection": "local"}
         >>> result = await run_module_on_host(
@@ -132,14 +138,14 @@ async def run_module_on_host(
         >>> host, output = result
         >>> print(f"{host}: {output}")
         localhost: {'ping': 'pong', 'changed': False}
-        
+
         # Remote execution
         >>> remote_host = {"ansible_host": "192.168.1.100"}
         >>> result = await run_module_on_host(
         ...     "web1", remote_host, "./ping.py", {},
         ...     run_module_locally, run_module_through_gate, {}, build_ftl_gate
         ... )
-    
+
     Note:
         Local execution is triggered by setting 'ansible_connection' to 'local'
         in the host configuration. All other configurations default to remote
@@ -148,14 +154,25 @@ async def run_module_on_host(
     if host and host.get("ansible_connection") == "local":
         return await local_runner(host_name, host, module, module_args)
     else:
-        return await run_module_remotely(host_name, host, module, module_args, remote_runner, gate_cache, gate_builder)
+        return await run_module_remotely(
+            host_name,
+            host,
+            module,
+            module_args,
+            remote_runner,
+            gate_cache,
+            gate_builder,
+        )
 
 
 async def _run_module(
     inventory: Dict[str, Any],
     module_dirs: List[str],
     module_name: str,
-    local_runner: Callable[[str, Dict[str, Any], str, Dict[str, Any]], Awaitable[Tuple[str, Dict[str, Any]]]],
+    local_runner: Callable[
+        [str, Dict[str, Any], str, Dict[str, Any]],
+        Awaitable[Tuple[str, Dict[str, Any]]],
+    ],
     remote_runner: Callable,
     gate_cache: Optional[Dict[str, Gate]],
     modules: Optional[List[str]],
@@ -165,12 +182,12 @@ async def _run_module(
     use_gate: Optional[Callable[..., Tuple[str, str]]] = None,
 ) -> Dict[str, Dict[str, Any]]:
     """Core implementation for running modules across an inventory of hosts.
-    
+
     This is the central orchestration function that coordinates module execution
     across multiple hosts with sophisticated features including variable reference
     resolution, host-specific argument overrides, connection chunking for optimal
     performance, and comprehensive error handling.
-    
+
     Key Features:
     - Concurrent execution with intelligent chunking (10 hosts per chunk)
     - Variable reference (Ref) resolution for dynamic configuration
@@ -178,7 +195,7 @@ async def _run_module(
     - Gate connection caching and reuse for performance
     - Flexible gate builder configuration
     - Comprehensive error handling and result aggregation
-    
+
     Args:
         inventory: Ansible-style inventory dictionary containing host groups
             and host configurations. Structure: {"group": {"hosts": {"host": config}}}
@@ -187,7 +204,7 @@ async def _run_module(
         module_name: Name of the module to execute. Must exist in one of the
             module_dirs.
         local_runner: Callable for executing modules locally (e.g., run_module_locally).
-        remote_runner: Callable for executing modules through gates 
+        remote_runner: Callable for executing modules through gates
             (e.g., run_module_through_gate).
         gate_cache: Optional cache for reusing gate connections across hosts.
             Improves performance for multi-host operations.
@@ -200,16 +217,16 @@ async def _run_module(
             argument overrides. Has higher precedence than module_args.
         use_gate: Optional custom gate builder function. If None, uses the
             default build_ftl_gate with provided modules and dependencies.
-    
+
     Returns:
         Dictionary mapping host names to their execution results. Each result
         contains either module output or error information:
         - Success: Module-specific output dictionary
         - Error: {"error": True, "msg": "error description"}
-    
+
     Raises:
         ModuleNotFound: If the specified module cannot be found in any module_dirs.
-    
+
     Example:
         >>> inventory = {
         ...     "webservers": {
@@ -231,13 +248,13 @@ async def _run_module(
             'web1': {'changed': False, 'msg': 'Special message for web1'},
             'web2': {'changed': False, 'msg': 'Hello from FTL'}
         }
-        
+
         # With variable references
         >>> from faster_than_light.ref import Ref
         >>> config = Ref(None, "config")
         >>> module_args = {"dest": config.app.log_path}
         >>> # Each host's config.app.log_path value will be resolved
-    
+
     Note:
         - Hosts are processed in chunks of 10 for optimal performance
         - Variable references (Ref objects) are resolved per-host
@@ -285,7 +302,7 @@ async def _run_module(
             host_specific_args = {}
             if host_args:
                 host_specific_args = host_args.get(host_name, {})
-            if host_specific_args  or has_refs:
+            if host_specific_args or has_refs:
                 # make a copy of module_args since we need to modify it
                 merged_args = module_args.copy() if module_args else {}
                 # refs have lower precedence than host specific args
@@ -298,19 +315,21 @@ async def _run_module(
                 # no host specific args so just reuse module_args
                 merged_args = module_args or {}
             tasks.append(
-                (host_name,
-                asyncio.create_task(
-                    run_module_on_host(
-                        host_name,
-                        host,
-                        module,
-                        merged_args,
-                        local_runner,
-                        remote_runner,
-                        gate_cache,
-                        gate_builder,
-                    )
-                ))
+                (
+                    host_name,
+                    asyncio.create_task(
+                        run_module_on_host(
+                            host_name,
+                            host,
+                            module,
+                            merged_args,
+                            local_runner,
+                            remote_runner,
+                            gate_cache,
+                            gate_builder,
+                        )
+                    ),
+                )
             )
         await asyncio.gather(*[task[1] for task in tasks], return_exceptions=True)
         all_tasks.extend(tasks)
@@ -330,12 +349,12 @@ async def run_module(
     use_gate: Optional[Callable[..., Tuple[str, str]]] = None,
 ) -> Dict[str, Dict[str, Any]]:
     """Execute an Ansible-compatible module across all hosts in an inventory.
-    
+
     This is the primary async interface for running standard automation modules
-    (Ansible-compatible) across multiple hosts concurrently. It provides a 
+    (Ansible-compatible) across multiple hosts concurrently. It provides a
     high-level API with support for variable references, host-specific overrides,
     and optimal performance through connection caching and chunked execution.
-    
+
     Args:
         inventory: Ansible-style inventory dictionary containing host groups
             and configurations. Format: {"group": {"hosts": {"hostname": config}}}
@@ -355,15 +374,15 @@ async def run_module(
             arguments. These override any matching keys in module_args.
         use_gate: Optional custom gate builder function. If provided, replaces
             the default gate building logic.
-    
+
     Returns:
         Dictionary mapping host names to their execution results:
         - Successful execution: Module-specific output (varies by module)
         - Failed execution: {"error": True, "msg": "error description"}
-    
+
     Raises:
         ModuleNotFound: If the specified module cannot be found in module_dirs.
-    
+
     Example:
         >>> # Basic module execution
         >>> inventory = {
@@ -379,7 +398,7 @@ async def run_module(
         ... )
         >>> print(results)
         {'web1': {'ping': 'pong'}, 'web2': {'ping': 'pong'}}
-        
+
         # With module arguments and host-specific overrides
         >>> module_args = {"src": "/etc/hosts", "dest": "/tmp/hosts"}
         >>> host_args = {"web1": {"dest": "/tmp/hosts-web1"}}
@@ -387,13 +406,13 @@ async def run_module(
         ...     inventory, ["/usr/lib/ansible/modules"], "copy",
         ...     module_args=module_args, host_args=host_args
         ... )
-        
+
         # With variable references
         >>> from faster_than_light.ref import Ref
         >>> config = Ref(None, "config")
         >>> module_args = {"dest": config.app.config_path}
         >>> # Each host's config.app.config_path will be resolved differently
-    
+
     Note:
         - Executes Ansible-compatible modules (Python scripts with JSON args)
         - Use run_ftl_module() for FTL-native modules with async main functions
@@ -430,12 +449,12 @@ def run_module_sync(
     use_gate: Optional[Callable[..., Tuple[str, str]]] = None,
 ) -> Dict[str, Dict[str, Any]]:
     """Execute an Ansible-compatible module synchronously across an inventory.
-    
+
     Synchronous wrapper for run_module() that provides a blocking interface
     for non-async contexts. Manages event loop creation and execution, making
     it suitable for use in traditional synchronous applications, scripts,
     and interactive environments.
-    
+
     Args:
         inventory: Ansible-style inventory dictionary containing host groups
             and configurations. Format: {"group": {"hosts": {"hostname": config}}}
@@ -455,15 +474,15 @@ def run_module_sync(
         loop: Optional asyncio event loop to use. If None, creates a new loop.
             Required if you want to reuse gate_cache across multiple calls.
         use_gate: Optional custom gate builder function.
-    
+
     Returns:
         Dictionary mapping host names to their execution results:
         - Successful execution: Module-specific output (varies by module)
         - Failed execution: {"error": True, "msg": "error description"}
-    
+
     Raises:
         ModuleNotFound: If the specified module cannot be found in module_dirs.
-    
+
     Example:
         >>> # Basic synchronous execution
         >>> inventory = {
@@ -476,30 +495,30 @@ def run_module_sync(
         ... )
         >>> print(results)
         {'db1': {'ping': 'pong'}}
-        
+
         # With persistent event loop for gate caching
         >>> import asyncio
         >>> loop = asyncio.new_event_loop()
         >>> gate_cache = {}
-        >>> 
+        >>>
         >>> # Multiple calls reuse the same gates
         >>> results1 = run_module_sync(
         ...     inventory, ["/usr/lib/ansible/modules"], "setup",
         ...     gate_cache=gate_cache, loop=loop
         ... )
         >>> results2 = run_module_sync(
-        ...     inventory, ["/usr/lib/ansible/modules"], "ping", 
+        ...     inventory, ["/usr/lib/ansible/modules"], "ping",
         ...     gate_cache=gate_cache, loop=loop
         ... )
         >>> # Gate connections are reused between calls
-        
+
         # Interactive scripting usage
         >>> module_args = {"name": "nginx", "state": "started"}
         >>> results = run_module_sync(
         ...     inventory, ["/usr/lib/ansible/modules"], "service",
         ...     module_args=module_args
         ... )
-    
+
     Note:
         - Use run_module() instead when already in an async context
         - Gate caching requires providing an event loop parameter
@@ -510,7 +529,9 @@ def run_module_sync(
 
     if loop is None:
         if gate_cache is not None:
-            print('Gate cache is not supported without loop. Start a new event loop and run it in a separate thread.')
+            print(
+                "Gate cache is not supported without loop. Start a new event loop and run it in a separate thread."
+            )
         gate_cache = {}
 
     coro = _run_module(
@@ -547,13 +568,13 @@ async def run_ftl_module(
     use_gate: Optional[Callable[..., Tuple[str, str]]] = None,
 ) -> Dict[str, Dict[str, Any]]:
     """Execute an FTL-native module across all hosts in an inventory.
-    
+
     This is the primary async interface for running FTL-native modules across
     multiple hosts concurrently. FTL modules are Python files with async main
     functions that provide direct integration with FTL's async architecture,
     offering better performance and more flexible return value handling than
     traditional Ansible modules.
-    
+
     Args:
         inventory: Ansible-style inventory dictionary containing host groups
             and configurations. Format: {"group": {"hosts": {"hostname": config}}}
@@ -573,15 +594,15 @@ async def run_ftl_module(
             arguments. These override any matching keys in module_args.
         use_gate: Optional custom gate builder function. If provided, replaces
             the default gate building logic.
-    
+
     Returns:
         Dictionary mapping host names to their execution results:
         - Successful execution: Return value from module's main() function
         - Failed execution: {"error": True, "msg": "error description"}
-    
+
     Raises:
         ModuleNotFound: If the specified module cannot be found in module_dirs.
-    
+
     Example:
         >>> # Basic FTL module execution
         >>> inventory = {
@@ -592,7 +613,7 @@ async def run_ftl_module(
         ...         }
         ...     }
         ... }
-        >>> 
+        >>>
         >>> # FTL module with async main function
         >>> # File: /opt/ftl/modules/health_check.py
         >>> # async def main(host, **args):
@@ -600,7 +621,7 @@ async def run_ftl_module(
         >>> #         url = f"http://{host['ansible_host']}:8080/health"
         >>> #         async with session.get(url) as resp:
         >>> #             return {"status": resp.status, "healthy": resp.status == 200}
-        >>> 
+        >>>
         >>> results = await run_ftl_module(
         ...     inventory, ["/opt/ftl/modules"], "health_check"
         ... )
@@ -609,14 +630,14 @@ async def run_ftl_module(
             'api1': {'status': 200, 'healthy': True},
             'api2': {'status': 503, 'healthy': False}
         }
-        
+
         # With module arguments
         >>> module_args = {"timeout": 30, "retries": 3}
         >>> results = await run_ftl_module(
         ...     inventory, ["/opt/ftl/modules"], "deploy_app",
         ...     module_args=module_args
         ... )
-        
+
         # With variable references and dependencies
         >>> from faster_than_light.ref import Ref
         >>> config = Ref(None, "deployment")
@@ -629,7 +650,7 @@ async def run_ftl_module(
         ...     inventory, ["/opt/ftl/modules"], "advanced_deploy",
         ...     module_args=module_args, dependencies=dependencies
         ... )
-    
+
     Note:
         - FTL modules must have an async main() function signature
         - Modules receive host configuration and custom args as parameters

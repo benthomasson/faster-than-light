@@ -1,5 +1,3 @@
-
-
 import os
 from subprocess import check_output
 
@@ -12,14 +10,20 @@ def test1():
     print(output.decode())
     assert output
 
+
 def test2():
     os.chdir(HERE)
-    output = check_output("ansible -M modules -i inventory.yml -m timetest all".split(" "))
+    output = check_output(
+        "ansible -M modules -i inventory.yml -m timetest all".split(" ")
+    )
     print(output.decode())
     assert output
 
+
 def test3():
     os.chdir(HERE)
-    output = check_output("ansible -M modules -i inventory.yml -m argtest all".split(" "))
+    output = check_output(
+        "ansible -M modules -i inventory.yml -m argtest all".split(" ")
+    )
     print(output.decode())
     assert output

@@ -11,9 +11,11 @@ with open(sys.argv[0]) as f:
 with open(sys.argv[1]) as f:
     more_args = f.read()
 
-print(json.dumps({
-    "args" : args,
-    "more_args": more_args,
-}))
-
-
+print(
+    json.dumps(
+        {
+            "args": args,
+            "more_args": more_args,
+        }
+    )
+)

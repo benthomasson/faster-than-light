@@ -52,6 +52,7 @@ The builder integrates seamlessly with FTL's gate system while providing a
 specialized tool for advanced gate building scenarios, development workflows,
 and automated build pipelines.
 """
+
 import logging
 import sys
 from typing import List, Optional, Tuple
@@ -60,16 +61,17 @@ import click
 
 from faster_than_light.gate import build_ftl_gate
 
-logger = logging.getLogger('builder')
+logger = logging.getLogger("builder")
+
 
 @click.command
-@click.option('--ftl-module', '-f', multiple=True)
-@click.option('--module', '-m', multiple=True)
-@click.option('--module-dir', '-M', multiple=True)
-@click.option('--requirements', '-r', multiple=True)
-@click.option('--interpreter', '-I')
-@click.option('--verbose', '-v', is_flag=True)
-@click.option('--debug', '-d', is_flag=True)
+@click.option("--ftl-module", "-f", multiple=True)
+@click.option("--module", "-m", multiple=True)
+@click.option("--module-dir", "-M", multiple=True)
+@click.option("--requirements", "-r", multiple=True)
+@click.option("--interpreter", "-I")
+@click.option("--verbose", "-v", is_flag=True)
+@click.option("--debug", "-d", is_flag=True)
 def main(
     ftl_module: Tuple[str, ...],
     module: Tuple[str, ...],
@@ -77,15 +79,15 @@ def main(
     requirements: Tuple[str, ...],
     interpreter: Optional[str],
     verbose: bool,
-    debug: bool
+    debug: bool,
 ) -> int:
     """Main CLI function for building FTL gates with comprehensive configuration options.
-    
+
     Orchestrates the complete FTL gate building process with support for multiple
     modules, dependencies, and custom interpreter configurations. Uses Click for
     robust argument parsing and validation, providing a user-friendly interface
     for advanced gate building scenarios.
-    
+
     Args:
         ftl_module: Tuple of FTL module names to include in the gate. Can be
             specified multiple times via -f/--ftl-module flags. Currently
@@ -106,19 +108,19 @@ def main(
             INFO when True, providing operational details during build.
         debug: Boolean flag to enable debug logging. Sets logging level to DEBUG
             when True, providing detailed build process information.
-    
+
     Returns:
         Integer exit code following Unix conventions:
         - 0: Successful gate building
         - Non-zero: Error occurred during building (handled by exceptions)
-    
+
     Raises:
         FileNotFoundError: If requirements files or module directories don't exist.
         ModuleNotFound: If specified modules cannot be found in module directories.
         PermissionError: If file operations fail due to insufficient permissions.
         subprocess.CalledProcessError: If dependency installation fails.
         Various exceptions: From gate building process or file operations.
-    
+
     Example:
         >>> # Called via click CLI - these are internal function calls
         >>> main(
@@ -131,46 +133,46 @@ def main(
         ...     debug=True
         ... )
         0
-    
+
     CLI Usage Examples:
         # Build gate with multiple modules
         ftl-gate-builder -m ping -m setup -M /opt/modules
-        
+
         # Build gate with dependencies
         ftl-gate-builder -m custom_module -r requirements.txt -M ./modules
-        
+
         # Build gate with custom interpreter and debugging
         ftl-gate-builder -m module -I /opt/python3.9/bin/python --debug
-        
+
         # Build gate with multiple requirement files
         ftl-gate-builder -m module -r base.txt -r extra.txt -M ./modules
-    
+
     Click Integration:
         The function uses Click decorators for argument processing:
         - @click.command: Defines the main command entry point
         - @click.option: Configures each command-line option with validation
         - multiple=True: Allows options to be specified multiple times
         - is_flag=True: Treats options as boolean flags
-        
+
     Gate Building Process:
         1. Argument Processing:
            - Converts Click tuples to appropriate data structures
            - Processes requirements files and extracts dependencies
            - Sets default interpreter if not specified
-           
+
         2. Logging Configuration:
            - Configures logging based on verbose/debug flags
            - Provides appropriate detail level for troubleshooting
-           
+
         3. Gate Construction:
            - Calls build_ftl_gate() with processed parameters
            - Handles module discovery and dependency installation
            - Creates self-contained executable archive
-           
+
         4. Output and Results:
            - Displays gate file path and hash information
            - Returns success status for automation workflows
-    
+
     Requirements File Processing:
         Requirements files are processed with the following rules:
         - Empty lines are ignored
@@ -178,39 +180,39 @@ def main(
         - All valid dependency specifications are collected
         - Multiple files are merged into a single dependency list
         - Standard pip requirements format is expected
-        
+
     Module Discovery:
         Modules are discovered using the following process:
         - Each module name is searched in all specified module directories
         - First match found is used (directory order matters)
         - Module files must be readable and accessible
         - Module validation is performed during gate building
-        
+
     Performance Considerations:
         - Gate building can be resource-intensive for large dependency sets
         - Caching system reuses identical gate configurations
         - Module discovery is optimized for typical directory structures
         - Logging configuration impacts build performance minimally
-        
+
     Error Handling:
         - Click handles argument validation and help text generation
         - File operation errors are propagated with clear messages
         - Gate building errors include context for troubleshooting
         - Logging provides detailed information for debugging
-        
+
     Integration Points:
         The function integrates with:
         - build_ftl_gate() for core gate building functionality
         - Click framework for CLI argument processing
         - Python logging system for operational visibility
         - File system for module and requirements file access
-        
+
     Development Notes:
         - The ftl_module parameter is currently collected but not used
         - This may indicate planned future functionality
         - All other parameters are properly processed and used
         - The function maintains compatibility with build_ftl_gate() interface
-        
+
     Note:
         This function serves as the primary interface for the ftl-gate-builder
         command and provides a focused tool for gate building operations
@@ -223,7 +225,7 @@ def main(
         logging.basicConfig(level=logging.DEBUG)
     elif verbose:
         logging.basicConfig(level=logging.INFO)
-    
+
     modules: List[str] = list(module)
     ftl_modules: Tuple[str, ...] = ftl_module
     module_dirs: List[str] = list(module_dir)
@@ -236,60 +238,63 @@ def main(
     if not interpreter:
         interpreter = "/usr/bin/python3"
 
-    gate: Tuple[str, str] = build_ftl_gate(modules, module_dirs, dependencies, interpreter)
+    gate: Tuple[str, str] = build_ftl_gate(
+        modules, module_dirs, dependencies, interpreter
+    )
     print(gate)
     return 0
 
+
 def entry_point() -> None:
     """Package entry point for the FTL gate builder command-line tool.
-    
+
     Provides the primary entry point for the ftl-gate-builder CLI when installed
     as a package. This function bridges the gap between package installation and
     the Click-based main function, enabling the tool to be used as a standalone
     command-line utility for gate building operations.
-    
+
     Returns:
         None. The function handles all execution and exits via the Click framework
         or system calls as appropriate.
-    
+
     Raises:
         SystemExit: Implicitly raised by Click or the main function when execution
             completes or errors occur. Exit codes follow Unix conventions.
         Various exceptions: Propagated from the main function or Click framework
             during CLI processing and gate building operations.
-    
+
     Example:
         >>> # Called automatically when ftl-gate-builder is installed and used
         >>> # Via command line: ftl-gate-builder -m setup -M /opt/modules
         >>> # Or programmatically:
         >>> entry_point()  # Executes with sys.argv
-    
+
     Package Integration:
         This function serves as the entry point defined in:
         - setup.py console_scripts
         - pyproject.toml project.scripts
         - Package installation systems
-        
+
         Example package configuration:
         ```toml
         [project.scripts]
         ftl-gate-builder = "faster_than_light.builder:entry_point"
         ```
-        
+
     Execution Flow:
         1. Extracts command-line arguments from sys.argv[1:]
         2. Passes arguments directly to Click-based main() function
         3. Click handles argument parsing, validation, and help generation
         4. Main function processes arguments and builds gates
         5. Results are displayed and appropriate exit codes returned
-        
+
     Click Integration:
         The function integrates with Click's command processing:
         - Click handles argument parsing and validation
         - Automatic help text generation from decorators
         - Built-in error handling and user feedback
         - Standard CLI conventions and behaviors
-        
+
     Tool Characteristics:
         ftl-gate-builder provides:
         - Standalone gate building without full FTL CLI
@@ -297,27 +302,27 @@ def entry_point() -> None:
         - Advanced configuration options for gate composition
         - Integration with build automation and CI/CD pipelines
         - Development-friendly debugging and logging capabilities
-        
+
     Use Cases:
         - Dedicated gate building in development workflows
         - Automated gate creation in CI/CD pipelines
         - Advanced gate configuration scenarios
         - Build tool integration for custom automation
         - Testing and validation of gate building processes
-        
+
     Performance:
         - Minimal overhead for entry point processing
         - Direct argument passing to Click framework
         - Efficient integration with gate building system
         - Optimized for frequent build operations
-        
+
     Integration Points:
         - Package management systems (pip, conda, etc.)
         - System PATH and executable scripts
         - Build automation tools and CI/CD systems
         - Docker container entry points
         - Development environment tool chains
-        
+
     Comparison with Main FTL CLI:
         ftl-gate-builder vs ftl:
         - Focused on gate building only
@@ -325,7 +330,7 @@ def entry_point() -> None:
         - Lighter weight without full automation framework
         - Specialized for build and development workflows
         - Click-based vs docopt-based argument processing
-        
+
     Note:
         This function is intentionally minimal to provide a clean bridge
         between package installation and the Click-based CLI system. All

@@ -24,9 +24,9 @@ async def run_module_with_inventory(module, **kwargs):
 @pytest.mark.asyncio
 async def test_assemble():
     here = os.path.abspath(os.path.dirname(__file__))
-    with open(os.path.join(here, "fragments", "a.txt"), 'w') as f:
+    with open(os.path.join(here, "fragments", "a.txt"), "w") as f:
         f.write("A\n")
-    with open(os.path.join(here, "fragments", "b.txt"), 'w') as f:
+    with open(os.path.join(here, "fragments", "b.txt"), "w") as f:
         f.write("B\n")
     assemble, path = util.find_module("ansible.builtin.assemble")
     assert assemble
@@ -34,18 +34,21 @@ async def test_assemble():
         load_inventory("inventory.yml"),
         [path],
         "assemble",
-        module_args=dict(src=os.path.join(here, "fragments"), dest="/tmp/assemble_output")
+        module_args=dict(
+            src=os.path.join(here, "fragments"), dest="/tmp/assemble_output"
+        ),
     )
     pprint(result)
     assert result["localhost"]["msg"] == "OK"
     with open("/tmp/assemble_output") as f:
-        assert f.read() == 'A\nB\n'
+        assert f.read() == "A\nB\n"
     os.unlink("/tmp/assemble_output")
+
 
 @pytest.mark.asyncio
 async def test_copy():
     here = os.path.abspath(os.path.dirname(__file__))
-    with open(os.path.join(here, "fragments", "a.txt"), 'w') as f:
+    with open(os.path.join(here, "fragments", "a.txt"), "w") as f:
         f.write("A\n")
     assert os.path.exists(os.path.join(here, "fragments", "a.txt"))
     copy, path = util.find_module("ansible.builtin.copy")
@@ -54,14 +57,17 @@ async def test_copy():
         load_inventory("inventory.yml"),
         [path],
         "copy",
-        module_args=dict(src=os.path.join(here, "fragments", "a.txt"), dest="/tmp/copy_output")
+        module_args=dict(
+            src=os.path.join(here, "fragments", "a.txt"), dest="/tmp/copy_output"
+        ),
     )
     assert os.path.exists(os.path.join(here, "fragments", "a.txt"))
     pprint(result)
     with open("/tmp/copy_output") as f:
-        assert f.read() == 'A\n'
+        assert f.read() == "A\n"
     os.unlink("/tmp/copy_output")
     assert os.path.exists(os.path.join(here, "fragments", "a.txt"))
+
 
 @pytest.mark.asyncio
 async def test_cron():
@@ -72,10 +78,11 @@ async def test_cron():
         load_inventory("inventory.yml"),
         [path],
         "cron",
-        module_args=dict(name="not here", state="absent")
+        module_args=dict(name="not here", state="absent"),
     )
     pprint(result)
-    assert result['localhost']['changed'] == False
+    assert result["localhost"]["changed"] == False
+
 
 @pytest.mark.asyncio
 async def test_blockinfile():
@@ -87,11 +94,12 @@ async def test_blockinfile():
         load_inventory("inventory.yml"),
         [path],
         "blockinfile",
-        module_args=dict(path="/tmp/blockinfile", block="foobar")
+        module_args=dict(path="/tmp/blockinfile", block="foobar"),
     )
     pprint(result)
     assert result["localhost"]["msg"] == "Block inserted"
     os.unlink("/tmp/blockinfile")
+
 
 @pytest.mark.asyncio
 async def test_uri():
@@ -181,19 +189,18 @@ async def test_file2():
     print(result)
     assert result["localhost"]["changed"] == True
 
+
 @pytest.mark.asyncio
 async def test_find():
     find, path = util.find_module("ansible.builtin.find")
     assert find
     result = await ftl.run_module(
-        load_inventory("inventory.yml"),
-        [path],
-        "find",
-        module_args=dict(paths="/tmp/")
+        load_inventory("inventory.yml"), [path], "find", module_args=dict(paths="/tmp/")
     )
     print(result)
     assert result["localhost"]["changed"] == False
     assert result["localhost"]["files"] != []
+
 
 @pytest.mark.asyncio
 async def test_git():
@@ -203,12 +210,16 @@ async def test_git():
         load_inventory("inventory.yml"),
         [path],
         "git",
-        module_args=dict(repo="https://github.com/benthomasson/faster-than-light.git", dest="/tmp/ftl-repo")
+        module_args=dict(
+            repo="https://github.com/benthomasson/faster-than-light.git",
+            dest="/tmp/ftl-repo",
+        ),
     )
     print(result)
     assert result["localhost"]["after"]
     assert os.path.exists("/tmp/ftl-repo")
     shutil.rmtree("/tmp/ftl-repo")
+
 
 @pytest.mark.asyncio
 async def test_group():
@@ -218,23 +229,22 @@ async def test_group():
         load_inventory("inventory.yml"),
         [path],
         "group",
-        module_args=dict(name="foobar")
+        module_args=dict(name="foobar"),
     )
     print(result)
-    assert result["localhost"]['msg'] == "Username and password must be provided.\n"
+    assert result["localhost"]["msg"] == "Username and password must be provided.\n"
+
 
 @pytest.mark.asyncio
 async def test_user():
     user, path = util.find_module("ansible.builtin.user")
     assert user
     result = await ftl.run_module(
-        load_inventory("inventory.yml"),
-        [path],
-        "user",
-        module_args=dict(name="foobar")
+        load_inventory("inventory.yml"), [path], "user", module_args=dict(name="foobar")
     )
     print(result)
-    assert result["localhost"]['msg'] == 'Cannot create user "foobar".'
+    assert result["localhost"]["msg"] == 'Cannot create user "foobar".'
+
 
 @pytest.mark.asyncio
 async def test_hostname():
@@ -244,10 +254,11 @@ async def test_hostname():
         load_inventory("inventory.yml"),
         [path],
         "hostname",
-        module_args=dict(name="foobar")
+        module_args=dict(name="foobar"),
     )
     print(result)
     assert False
+
 
 @pytest.mark.parametrize(
     "module",

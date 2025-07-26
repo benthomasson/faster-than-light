@@ -1,3 +1,3 @@
 #!/usr/bin/python3
 
-print('Bad output')
+print("Bad output")
