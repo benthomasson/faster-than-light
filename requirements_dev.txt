@@ -12,4 +12,5 @@ black
 pytest
 pytest-runner
 pytest-asyncio
+pytest-cov
 mypy
