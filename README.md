@@ -1,10 +1,7 @@
 # Faster Than Light (FTL)
 
 [![codecov](https://codecov.io/github/benthomasson/faster-than-light/branch/main/graph/badge.svg?token=SRAAGLDORB)](https://codecov.io/github/benthomasson/faster-than-light)
-
-
 ![ci](https://github.com/benthomasson/faster-than-light/actions/workflows/ci.yml/badge.svg)
-
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 
