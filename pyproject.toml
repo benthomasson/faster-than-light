@@ -1,6 +1,17 @@
 [project]
 name = "faster_than_light"
-version = "0.1.7"
+version = "0.2.0"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache 2.0 License",
+    "Programming Language :: Python :: 3.13",
+]
+description = "Experimental library for extremely fast, parallelized, and distributed automation."
+authors = [{name = "Ben Thomasson", email = "ben.thomasson@gmail.com"}]
+license = {text = "Apache 2.0"}
+readme = "README.md"
+requires-python = ">=3.13"
 dependencies = [ 'asyncssh',
                  'importlib_resources',
                  'pyyaml',
@@ -12,11 +23,20 @@ dependencies = [ 'asyncssh',
                  'jinja2',
 ]
 
+[project.urls]
+Homepage = "https://github.com/benthomasson/faster-than-light"
+Repository = "https://github.com/benthomasson/faster-than-light.git"
+Issues = "https://github.com/benthomasson/faster-than-light/issues"
+
+[project.optional-dependencies]
+dev = ["pytest>=6.0", "black", "isort", "mypy", "ruff"]
+docs = ["sphinx", "sphinx-rtd-theme"]
+
 [tool.setuptools]
 packages = ["faster_than_light", "faster_than_light.ftl_gate"]
 
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
 build-backend = "setuptools.build_meta"
 
 [project.scripts]
