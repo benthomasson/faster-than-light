@@ -14,6 +14,8 @@ jobs:
           python-version: '3.13'
       - name: Install dependencies
         run: pip install -r requirements_dev.txt
+      - name: Install package
+        run: pip install -e .
       - name: Run tests and collect coverage
         run: pytest --cov app
       - name: Upload coverage to Codecov (arg token)
