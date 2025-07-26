@@ -26,7 +26,8 @@ the main FTL process and remote gate processes running on target hosts.
 
 import json
 import logging
-from typing import NamedTuple, Any, Optional, Union, Protocol
+from typing import Any, NamedTuple, Optional, Protocol, Union
+
 from .exceptions import ProtocolError
 
 logger = logging.getLogger(__name__)

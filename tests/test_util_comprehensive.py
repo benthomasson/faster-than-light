@@ -7,23 +7,18 @@ and proper mocking of file system operations.
 
 import json
 import os
-import pytest
-import tempfile
 import shutil
-from unittest.mock import patch, mock_open, MagicMock
+import tempfile
 from pathlib import Path
+from unittest.mock import MagicMock, mock_open, patch
 
-from faster_than_light.util import (
-    ensure_directory,
-    chunk,
-    find_module,
-    read_module,
-    clean_up_ftl_cache,
-    clean_up_tmp,
-    process_module_result,
-    unique_hosts,
-)
+import pytest
+
 from faster_than_light.exceptions import ModuleNotFound
+from faster_than_light.util import (chunk, clean_up_ftl_cache, clean_up_tmp,
+                                    ensure_directory, find_module,
+                                    process_module_result, read_module,
+                                    unique_hosts)
 
 
 class TestEnsureDirectory:

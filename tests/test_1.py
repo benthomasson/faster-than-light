@@ -2,15 +2,17 @@
 
 import asyncio
 import os
-import pytest
 import subprocess
 from pprint import pprint
+
+import pytest
+
+from faster_than_light.exceptions import ModuleNotFound
 from faster_than_light.inventory import load_inventory
 from faster_than_light.local import check_output
-from faster_than_light.module import run_module, run_ftl_module
-from faster_than_light.util import clean_up_ftl_cache, clean_up_tmp
-from faster_than_light.exceptions import ModuleNotFound
+from faster_than_light.module import run_ftl_module, run_module
 from faster_than_light.ssh import remove_item_from_cache
+from faster_than_light.util import clean_up_ftl_cache, clean_up_tmp
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 

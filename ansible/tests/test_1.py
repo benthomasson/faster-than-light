@@ -1,7 +1,7 @@
 
 
-from subprocess import check_output
 import os
+from subprocess import check_output
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 

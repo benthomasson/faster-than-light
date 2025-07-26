@@ -10,18 +10,17 @@ import json
 import os
 import sys
 import tempfile
+from unittest.mock import AsyncMock, MagicMock, call, mock_open, patch
+
 import pytest
-from unittest.mock import AsyncMock, MagicMock, patch, mock_open, call
+
+from faster_than_light.local import (check_output, is_binary_module,
+                                     is_new_style_module, is_want_json_module,
+                                     run_ftl_module_locally,
+                                     run_module_locally)
+
 # runpy doesn't have a specific RunPathError, it raises standard exceptions
 
-from faster_than_light.local import (
-    check_output,
-    is_binary_module,
-    is_new_style_module,
-    is_want_json_module,
-    run_module_locally,
-    run_ftl_module_locally,
-)
 
 
 class TestCheckOutput:

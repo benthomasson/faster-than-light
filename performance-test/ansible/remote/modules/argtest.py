@@ -1,9 +1,9 @@
 #!/usr/bin/python
 
+import glob
+import json
 import os
 import sys
-import json
-import glob
 
 args = sys.argv
 with open(sys.argv[0]) as f:

@@ -6,17 +6,14 @@ module execution, and error handling scenarios using Click's testing framework.
 """
 
 import logging
-import pytest
 import sys
-from unittest.mock import MagicMock, AsyncMock, patch, mock_open
-from click.testing import CliRunner
-import click
+from unittest.mock import AsyncMock, MagicMock, mock_open, patch
 
-from faster_than_light.cli import (
-    parse_module_args,
-    main,
-    entry_point,
-)
+import click
+import pytest
+from click.testing import CliRunner
+
+from faster_than_light.cli import entry_point, main, parse_module_args
 
 
 class TestParseModuleArgs:

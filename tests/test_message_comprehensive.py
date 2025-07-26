@@ -7,16 +7,13 @@ error handling, and protocol validation.
 
 import asyncio
 import json
-import pytest
-from unittest.mock import AsyncMock, MagicMock, patch, call
+from unittest.mock import AsyncMock, MagicMock, call, patch
 
-from faster_than_light.message import (
-    GateMessage,
-    send_message,
-    send_message_str,
-    read_message,
-)
+import pytest
+
 from faster_than_light.exceptions import ProtocolError
+from faster_than_light.message import (GateMessage, read_message, send_message,
+                                       send_message_str)
 
 
 class TestGateMessage:

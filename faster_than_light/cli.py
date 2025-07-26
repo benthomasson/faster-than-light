@@ -31,15 +31,15 @@ automation frameworks. The CLI is now built using Click for modern, robust
 argument parsing and validation.
 """
 import asyncio
-import click
 import logging
 import sys
-from .module import run_module
-from .module import run_ftl_module
-from .inventory import load_inventory
 from pprint import pprint
+from typing import Dict, Optional
 
-from typing import Optional, Dict
+import click
+
+from .inventory import load_inventory
+from .module import run_ftl_module, run_module
 
 logger = logging.getLogger("cli")
 

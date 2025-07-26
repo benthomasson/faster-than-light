@@ -1,9 +1,11 @@
 
 
 import os
+
 import pytest
-from faster_than_light.util import find_module, read_module
+
 from faster_than_light.exceptions import ModuleNotFound
+from faster_than_light.util import find_module, read_module
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 

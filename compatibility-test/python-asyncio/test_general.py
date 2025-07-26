@@ -1,10 +1,12 @@
 
+import sys
+
 import pytest
 import util
+from config import settings
+
 import faster_than_light as ftl
 from faster_than_light.inventory import load_inventory
-from config import settings
-import sys
 
 
 @pytest.mark.asyncio

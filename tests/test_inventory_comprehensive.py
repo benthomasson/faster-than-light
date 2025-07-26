@@ -8,17 +8,14 @@ localhost configuration generation, file operations, and error handling.
 import os
 import sys
 import tempfile
+from io import StringIO
+from unittest.mock import MagicMock, mock_open, patch
+
 import pytest
 import yaml
-from unittest.mock import MagicMock, patch, mock_open
-from io import StringIO
 
-from faster_than_light.inventory import (
-    load_inventory,
-    load_localhost,
-    write_localhost,
-    entry_point,
-)
+from faster_than_light.inventory import (entry_point, load_inventory,
+                                         load_localhost, write_localhost)
 
 
 class TestLoadInventory:

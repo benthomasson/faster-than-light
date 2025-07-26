@@ -11,12 +11,12 @@ import json
 import os
 import sys
 import tempfile
-import pytest
-from unittest.mock import AsyncMock, MagicMock, patch, mock_open, call
-from io import StringIO, BytesIO
-
+from io import BytesIO, StringIO
 # Mock the ftl_gate import before importing the module under test
-from unittest.mock import MagicMock
+from unittest.mock import AsyncMock, MagicMock, call, mock_open, patch
+
+import pytest
+
 sys.modules['ftl_gate'] = MagicMock()
 
 # Import the module under test

@@ -5,31 +5,21 @@ Tests core SSH functionality with proper async mocking.
 """
 
 import asyncio
-import pytest
 import sys
 from unittest.mock import AsyncMock, MagicMock, patch
 
-from faster_than_light.ssh import (
-    check_version,
-    connect_ssh,
-    mkdir,
-    mkdir_sync,
-    copy,
-    copy_sync,
-    template,
-    template_sync,
-    copy_from,
-    copy_from_sync,
-    send_gate,
-    open_gate,
-    remove_item_from_cache,
-    close_gate,
-    run_module_through_gate,
-    run_ftl_module_through_gate,
-    run_module_remotely,
-)
-from faster_than_light.types import Gate
+import pytest
+
 from faster_than_light.exceptions import ModuleNotFound
+from faster_than_light.ssh import (check_version, close_gate, connect_ssh,
+                                   copy, copy_from, copy_from_sync, copy_sync,
+                                   mkdir, mkdir_sync, open_gate,
+                                   remove_item_from_cache,
+                                   run_ftl_module_through_gate,
+                                   run_module_remotely,
+                                   run_module_through_gate, send_gate,
+                                   template, template_sync)
+from faster_than_light.types import Gate
 
 
 class TestCheckVersion:

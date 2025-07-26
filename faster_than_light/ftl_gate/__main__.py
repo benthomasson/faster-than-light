@@ -31,18 +31,19 @@ logging, and error reporting back to the main FTL process.
 """
 
 import asyncio
+import base64
+import importlib.resources
 import json
+import logging
 import os
+import shutil
+import stat
 import sys
 import tempfile
-import base64
-import ftl_gate  # type: ignore
-import importlib.resources
-import shutil
-import logging
 import traceback
-import stat
-from typing import Any, Optional, Union, Tuple, Dict, List, cast
+from typing import Any, Dict, List, Optional, Tuple, Union, cast
+
+import ftl_gate  # type: ignore
 
 logger = logging.getLogger("ftl_gate")
 

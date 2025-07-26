@@ -5,12 +5,13 @@ Tests all builder CLI functionality including Click option parsing,
 requirements file processing, gate building integration, and error handling.
 """
 
-import pytest
 import sys
-from unittest.mock import MagicMock, patch, mock_open, call
+from unittest.mock import MagicMock, call, mock_open, patch
+
+import pytest
 from click.testing import CliRunner
 
-from faster_than_light.builder import main, entry_point
+from faster_than_light.builder import entry_point, main
 
 
 class TestBuilderMain:

@@ -5,6 +5,7 @@ Tests custom exception classes.
 """
 
 import pytest
+
 from faster_than_light.exceptions import ModuleNotFound, ProtocolError
 
 

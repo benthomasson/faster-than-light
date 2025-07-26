@@ -1,7 +1,8 @@
 
 
-from faster_than_light.inventory import load_inventory
 import os
+
+from faster_than_light.inventory import load_inventory
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 

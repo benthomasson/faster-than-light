@@ -1,11 +1,11 @@
 import glob
+import json
 import os
 import shutil
-import json
+from typing import Any, Dict, Generator, List, Optional, TypeVar, Union
 
-from typing import List, Union, Dict, Generator, TypeVar, Any, Optional
-from .message import GateMessage
 from .exceptions import ModuleNotFound
+from .message import GateMessage
 
 T = TypeVar('T')
 

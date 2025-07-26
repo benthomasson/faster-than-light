@@ -6,22 +6,18 @@ task management, host chunking, ref dereferencing, and error handling.
 """
 
 import asyncio
-import pytest
 import sys
-from unittest.mock import AsyncMock, MagicMock, patch, call
 from asyncio.tasks import Task
+from unittest.mock import AsyncMock, MagicMock, call, patch
 
-from faster_than_light.module import (
-    extract_task_results,
-    run_module_on_host,
-    _run_module,
-    run_module,
-    run_module_sync,
-    run_ftl_module,
-)
-from faster_than_light.types import Gate
+import pytest
+
 from faster_than_light.exceptions import ModuleNotFound
+from faster_than_light.module import (_run_module, extract_task_results,
+                                      run_ftl_module, run_module,
+                                      run_module_on_host, run_module_sync)
 from faster_than_light.ref import Ref
+from faster_than_light.types import Gate
 
 
 class TestExtractTaskResults:

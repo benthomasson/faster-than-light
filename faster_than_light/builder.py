@@ -54,9 +54,9 @@ and automated build pipelines.
 """
 import logging
 import sys
-import click
+from typing import List, Optional, Tuple
 
-from typing import Optional, List, Tuple
+import click
 
 from faster_than_light.gate import build_ftl_gate
 

@@ -14,25 +14,25 @@ Key Features:
 - Both async and sync APIs for flexibility
 """
 
+import asyncio
+import base64
+import logging
 import os
 import sys
-import base64
+import tempfile
+from getpass import getuser
+from typing import Any, Callable, Dict, Optional, Tuple, cast
+
 import asyncssh
 import asyncssh.misc
-import asyncio
-from getpass import getuser
-import logging
 import jinja2
-import tempfile
-
 from asyncssh.connection import SSHClientConnection
 from asyncssh.process import SSHClientProcess
 
-from typing import Dict, Optional, Callable, cast, Tuple, Any
-from .types import Gate
-from .message import send_message_str, read_message, GateMessage
-from .util import process_module_result, unique_hosts
 from .exceptions import ModuleNotFound
+from .message import GateMessage, read_message, send_message_str
+from .types import Gate
+from .util import process_module_result, unique_hosts
 
 logger = logging.getLogger("faster_than_light.ssh")
 

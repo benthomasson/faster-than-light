@@ -9,15 +9,13 @@ import hashlib
 import os
 import sys
 import tempfile
-import pytest
-from unittest.mock import MagicMock, patch, mock_open, call
 from subprocess import CalledProcessError
+from unittest.mock import MagicMock, call, mock_open, patch
 
-from faster_than_light.gate import (
-    use_gate,
-    build_ftl_gate,
-)
+import pytest
+
 from faster_than_light.exceptions import ModuleNotFound
+from faster_than_light.gate import build_ftl_gate, use_gate
 
 
 class TestUseGate:

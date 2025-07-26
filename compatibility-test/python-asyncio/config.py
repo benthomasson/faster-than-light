@@ -2,6 +2,7 @@
 
 import os
 
+
 class _Settings():
 
     def __init__(self):

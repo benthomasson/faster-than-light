@@ -5,9 +5,10 @@ Tests the Gate NamedTuple data structure including creation, field access,
 immutability, type validation, and integration scenarios.
 """
 
-import pytest
-from unittest.mock import MagicMock
 from typing import get_type_hints
+from unittest.mock import MagicMock
+
+import pytest
 
 from faster_than_light.types import Gate
 

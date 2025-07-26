@@ -28,15 +28,14 @@ deployment options for mixed infrastructure environments.
 
 import asyncio
 import json
-import os
-import shutil
-import tempfile
-import sys
-import runpy
 import logging
+import os
+import runpy
+import shutil
+import sys
+import tempfile
 import traceback
-
-from typing import Dict, Tuple, Optional
+from typing import Dict, Optional, Tuple
 
 logger = logging.getLogger('faster_than_light.local')
 

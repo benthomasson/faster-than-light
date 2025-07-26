@@ -1,13 +1,15 @@
-import pytest
-import util
-import faster_than_light as ftl
-from faster_than_light.inventory import load_inventory
-from config import settings
-import sys
 import os
 import shutil
-from pprint import pprint
+import sys
 from pathlib import Path
+from pprint import pprint
+
+import pytest
+import util
+from config import settings
+
+import faster_than_light as ftl
+from faster_than_light.inventory import load_inventory
 
 
 async def run_module_with_inventory(module, **kwargs):

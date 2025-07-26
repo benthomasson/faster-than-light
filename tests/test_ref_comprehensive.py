@@ -5,15 +5,11 @@ Tests the reference system including the Ref class and all associated
 functions for building and dereferencing nested attribute paths.
 """
 
-import pytest
-from unittest.mock import patch, MagicMock
+from unittest.mock import MagicMock, patch
 
-from faster_than_light.ref import (
-    Ref,
-    deref,
-    get_host_path,
-    get_host_value,
-)
+import pytest
+
+from faster_than_light.ref import Ref, deref, get_host_path, get_host_value
 
 
 class TestRef:

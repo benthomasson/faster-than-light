@@ -24,19 +24,18 @@ The module system supports complex automation workflows with:
 """
 
 import asyncio
-from functools import partial
-
-from .gate import build_ftl_gate
-from .util import chunk, find_module
-from .types import Gate
-from .ssh import run_module_through_gate, run_ftl_module_through_gate, run_module_remotely
-from .local import run_module_locally, run_ftl_module_locally
-from .exceptions import ModuleNotFound
-from .ref import Ref, deref
-from .util import unique_hosts
-
-from typing import Dict, Optional, Callable, List, Tuple, Any, Awaitable
 from asyncio.tasks import Task
+from functools import partial
+from typing import Any, Awaitable, Callable, Dict, List, Optional, Tuple
+
+from .exceptions import ModuleNotFound
+from .gate import build_ftl_gate
+from .local import run_ftl_module_locally, run_module_locally
+from .ref import Ref, deref
+from .ssh import (run_ftl_module_through_gate, run_module_remotely,
+                  run_module_through_gate)
+from .types import Gate
+from .util import chunk, find_module, unique_hosts
 
 
 def extract_task_results(tasks: List[Tuple[str, Task]]) -> Dict[str, Dict[str, Any]]:

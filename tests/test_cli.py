@@ -1,11 +1,13 @@
 
 
-import faster_than_light.cli
-import faster_than_light.builder
-import pytest
 import os
 import sys
+
+import pytest
 from click.testing import CliRunner
+
+import faster_than_light.builder
+import faster_than_light.cli
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 

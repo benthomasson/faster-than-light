@@ -34,21 +34,21 @@ Performance Benefits:
 """
 
 import hashlib
+import logging
 import os
-import sys
 import shutil
+import sys
 import tempfile
 import zipapp
-import logging
+from subprocess import check_output
+from typing import List, Optional, Tuple
 
 from importlib_resources import files
+
 import faster_than_light.ftl_gate
-from subprocess import check_output
 
-from .util import ensure_directory, read_module, find_module
 from .exceptions import ModuleNotFound
-
-from typing import Optional, List, Tuple
+from .util import ensure_directory, find_module, read_module
 
 logger = logging.getLogger('faster_than_light.gate')
 
