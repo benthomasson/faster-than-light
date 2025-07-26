@@ -1,0 +1,26 @@
+# Basic coverage settings
+coverage:
+  # Coverage targets
+  status:
+    project:
+      default:
+        target: 80%          # Minimum coverage percentage
+        threshold: 2%        # Allow coverage to drop by 2%
+    patch:
+      default:
+        target: 80%          # Coverage for new code
+        threshold: 5%
+
+# Files/paths to ignore from coverage
+ignore:
+  - "tests/"
+  - "test_*.py" 
+  - "*_test.py"
+  - "setup.py"
+  - "docs/"
+  - "*.md"
+
+# Pull request comment settings
+comment:
+  layout: "header, diff, files"
+  behavior: default
