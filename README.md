@@ -1,5 +1,7 @@
 # Faster Than Light (FTL)
 
+[![Ruff](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/astral-sh/ruff/main/assets/badge/v2.json)](https://github.com/astral-sh/ruff)
+[![image](https://img.shields.io/pypi/v/faster-than-light.svg)](https://pypi.python.org/pypi/faster-than-light)
 [![codecov](https://codecov.io/github/benthomasson/faster-than-light/branch/main/graph/badge.svg?token=SRAAGLDORB)](https://codecov.io/github/benthomasson/faster-than-light)
 ![ci](https://github.com/benthomasson/faster-than-light/actions/workflows/ci.yml/badge.svg)
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
