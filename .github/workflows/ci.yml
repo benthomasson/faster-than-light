@@ -3,6 +3,7 @@ on: [push, pull_request]
 jobs:
   run:
     runs-on: ubuntu-latest
+    environment: codecov
     permissions:
       id-token: write
     steps:
