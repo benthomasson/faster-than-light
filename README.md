@@ -5,6 +5,8 @@
 
 ![ci](https://github.com/benthomasson/faster-than-light/actions/workflows/ci.yml/badge.svg)
 
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+
 
 An experimental automation framework built for speed and scalability, designed as a high-performance alternative to Ansible using modern Python asyncio.
 
