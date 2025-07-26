@@ -7,14 +7,10 @@ coverage:
   status:
     project:
       default:
-        target: 80%          # Minimum coverage percentage
+        target: 90%
         threshold: 2%        # Allow coverage to drop by 2%
-        carryforward: true   # Use last coverage if new builds don't report
-    patch:
-      default:
-        target: 80%          # Coverage for new code
-        threshold: 5%
-        carryforward: true   # Use last coverage if new builds don't report
+        branches:
+          - main
 
 # Files/paths to ignore from coverage
 ignore:
