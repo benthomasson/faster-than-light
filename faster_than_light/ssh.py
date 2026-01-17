@@ -205,7 +205,7 @@ async def connect_ssh(host: Dict[str, str]) -> SSHClientConnection:
 
 
 async def mkdir(
-    inventory: Dict[str, dict], gate_cache: Optional[Dict[str, Gate]], name: str
+    inventory: Dict[str, dict], gate_cache: Optional[Dict[str, Gate]], path: str
 ) -> None:
     """Create directories on all hosts in an inventory.
 
@@ -216,7 +216,7 @@ async def mkdir(
     Args:
         inventory: Ansible-style inventory dictionary containing host groups.
         gate_cache: Optional cache of existing gate connections to reuse.
-        name: Path to the directory to create on remote hosts.
+        path: Path to the directory to create on remote hosts.
 
     Example:
         >>> inventory = {
@@ -240,13 +240,13 @@ async def mkdir(
 
         if conn:
             async with conn.start_sftp_client() as sftp:
-                await sftp.makedirs(name, exist_ok=True)
+                await sftp.makedirs(path, exist_ok=True)
 
 
 def mkdir_sync(
     inventory: Dict[str, dict],
     gate_cache: Optional[Dict[str, Gate]],
-    name: str,
+    path: str,
     loop: Optional[asyncio.AbstractEventLoop] = None,
 ) -> None:
     """Synchronous wrapper for mkdir operation.
@@ -257,7 +257,7 @@ def mkdir_sync(
     Args:
         inventory: Ansible-style inventory dictionary containing host groups.
         gate_cache: Optional cache of existing gate connections to reuse.
-        name: Path to the directory to create on remote hosts.
+        path: Path to the directory to create on remote hosts.
         loop: Optional asyncio event loop to use. If None, creates a new loop.
 
     Example:
@@ -269,7 +269,7 @@ def mkdir_sync(
         Use the async version (mkdir) when possible for better performance
         in async applications.
     """
-    coro = mkdir(inventory, gate_cache, name)
+    coro = mkdir(inventory, gate_cache, path)
 
     if loop is None:
         loop = asyncio.new_event_loop()
